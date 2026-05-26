@@ -48,8 +48,12 @@ function getSiteOrigin(req: Request) {
   return `${proto}://${req.get("host")}`;
 }
 
+function getRequestPath(req: Request, origin: string) {
+  return new URL(req.originalUrl || req.url || "/", origin).pathname;
+}
+
 function getPageUrl(req: Request, origin: string) {
-  const pathname = req.path || "/";
+  const pathname = getRequestPath(req, origin);
   return new URL(pathname, origin).toString();
 }
 
@@ -137,7 +141,9 @@ function injectMeta(html: string, meta: PageMeta) {
 }
 
 async function getMemorialMeta(req: Request): Promise<PageMeta | null> {
-  const match = req.path.match(MEMORIAL_PATH);
+  const origin = getSiteOrigin(req);
+  const requestPath = getRequestPath(req, origin);
+  const match = requestPath.match(MEMORIAL_PATH);
   if (!match) return null;
 
   const slug = decodeURIComponent(match[1] || "");
@@ -146,7 +152,6 @@ async function getMemorialMeta(req: Request): Promise<PageMeta | null> {
   const memorial = await getMemorialShareBySlug(slug);
   if (!memorial) return null;
 
-  const origin = getSiteOrigin(req);
   const url = getPageUrl(req, origin);
   const isShareable =
     memorial.status === "published" && memorial.visibility !== "private";
