@@ -1,6 +1,8 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { churchConfig, routes } from "@/config/church";
+import { toImgUrl } from "@/lib/imageUrl";
+import { trpc } from "@/lib/trpc";
 import {
   ArrowRight,
   BookOpenText,
@@ -8,6 +10,7 @@ import {
   Plus,
   Search,
   TreePine,
+  UserRound,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -33,6 +36,9 @@ const FEATURES = [
 ];
 
 export default function MemorialGarden() {
+  const memorialsQuery = trpc.memorial.list.useQuery();
+  const memorials = memorialsQuery.data ?? [];
+
   return (
     <div className="memorial-shell min-h-screen">
       <Navbar />
@@ -85,6 +91,82 @@ export default function MemorialGarden() {
                 <InfoTile label="가족관" value="별도 보호" />
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="border-b border-[var(--memorial-line)] bg-white py-16 md:py-24">
+          <div className="container">
+            <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <div>
+                <p className="memorial-eyebrow mb-4">Registered People</p>
+                <h2 className="memorial-serif text-3xl md:text-5xl">
+                  등록된 인물
+                </h2>
+              </div>
+              <p className="memorial-body max-w-md text-sm">
+                등록된 성도의 사진과 이름, 직분을 한눈에 확인하고 각 기념관으로
+                바로 이동할 수 있습니다.
+              </p>
+            </div>
+
+            {memorialsQuery.isLoading ? (
+              <div className="border border-[var(--memorial-line)] bg-[#fbfaf8] px-6 py-12 text-center text-sm text-[var(--memorial-ash)]">
+                등록된 인물을 불러오고 있습니다.
+              </div>
+            ) : memorials.length > 0 ? (
+              <div className="grid gap-px bg-[var(--memorial-line)] sm:grid-cols-2 lg:grid-cols-3">
+                {memorials.map(memorial => (
+                  <Link key={memorial.id} href={`${memorial.href}/archive`}>
+                    <article className="group cursor-pointer bg-white">
+                      <div className="aspect-[4/5] overflow-hidden bg-[#f4f2ee]">
+                        {memorial.photoUrl ? (
+                          <img
+                            src={toImgUrl(memorial.photoUrl)}
+                            alt={memorial.photoCaption || memorial.name}
+                            className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(145deg,#f7f5f0,#ebe7de)] text-[var(--memorial-ash)]">
+                            <UserRound
+                              className="h-12 w-12"
+                              strokeWidth={1.2}
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <div className="border-x border-b border-[var(--memorial-line)] p-5">
+                        <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--memorial-brass)]">
+                          {memorial.church}
+                        </p>
+                        <div className="mt-4 flex items-end justify-between gap-4">
+                          <div>
+                            <h3 className="memorial-serif text-2xl text-[var(--memorial-ink)]">
+                              {memorial.name}
+                            </h3>
+                            <p className="mt-2 text-sm text-[var(--memorial-ash)]">
+                              {memorial.role}
+                            </p>
+                          </div>
+                          <ArrowRight className="h-4 w-4 shrink-0 text-[var(--memorial-ink)] transition-transform group-hover:translate-x-1" />
+                        </div>
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="border border-[var(--memorial-line)] bg-[#fbfaf8] px-6 py-12 text-center">
+                <p className="text-sm text-[var(--memorial-ash)]">
+                  아직 공개된 기념관이 없습니다.
+                </p>
+                <Link href={routes.memorialCreate}>
+                  <button className="memorial-button-primary mt-6">
+                    <Plus className="h-4 w-4" />
+                    기념관 만들기
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </section>
 

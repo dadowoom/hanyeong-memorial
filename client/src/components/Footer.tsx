@@ -65,7 +65,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col justify-between gap-3 border-t border-white/14 pt-6 text-xs md:flex-row">
           <p>© 2026 {churchConfig.churchName}. All rights reserved.</p>
-          <p>{churchConfig.serviceName} - 온라인 추모 서비스</p>
+          <p>{churchConfig.serviceName} - 온라인 신앙기념관</p>
         </div>
       </div>
     </footer>

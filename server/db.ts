@@ -299,8 +299,17 @@ export async function listPublicMemorials() {
       summary: memorials.summary,
       status: memorials.status,
       createdAt: memorials.createdAt,
+      photoUrl: memorialGalleryPhotos.photoUrl,
+      photoCaption: memorialGalleryPhotos.caption,
     })
     .from(memorials)
+    .leftJoin(
+      memorialGalleryPhotos,
+      and(
+        eq(memorialGalleryPhotos.memorialId, memorials.id),
+        eq(memorialGalleryPhotos.isRepresentative, 1)
+      )
+    )
     .where(eq(memorials.visibility, "public"))
     .orderBy(desc(memorials.createdAt))
     .limit(100);
