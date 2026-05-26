@@ -23,6 +23,15 @@ const HERO_VIDEO_ID = "haLv3Gtv91M";
 const HERO_VIDEO_START = 0;
 const HERO_VIDEO_SRC = `https://www.youtube-nocookie.com/embed/${HERO_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${HERO_VIDEO_ID}&playsinline=1&rel=0&modestbranding=1&start=${HERO_VIDEO_START}`;
 const HERO_VIDEO_POSTER = `https://img.youtube.com/vi/${HERO_VIDEO_ID}/maxresdefault.jpg`;
+const FEATURED_MEMORIAL = {
+  name: "배정아",
+  role: "권사",
+  church: churchConfig.churchName,
+  years: "1944 - 2026",
+  href: "/memorial/bae-jeonga-kwonsa/archive",
+  image: "/memorial-assets/hanyeong-faces/bae-jeonga.jpg",
+  summary: "예배의 자리를 사랑하고 기도와 환대로 가족과 교회를 섬긴 권사님입니다.",
+};
 
 export default function Home() {
   return (
@@ -109,6 +118,55 @@ export default function Home() {
           id="services"
           className="border-b border-[var(--memorial-night-line)] bg-[var(--memorial-ink)] py-16 text-white md:py-24"
         >
+          <div className="container mb-16 md:mb-24">
+            <div className="grid gap-8 border-y border-white/18 py-10 md:grid-cols-[minmax(0,0.82fr)_minmax(320px,0.58fr)] md:items-center md:py-12">
+              <div>
+                <p className="mb-4 text-xs font-semibold uppercase text-white/62">
+                  Featured Memorial
+                </p>
+                <h2 className="memorial-serif text-[1.75rem] leading-tight text-white md:text-5xl">
+                  최근 등록 신앙기념관
+                </h2>
+                <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68">
+                  {FEATURED_MEMORIAL.name} {FEATURED_MEMORIAL.role}님의 삶과
+                  믿음의 기록이 사진첩, 영상, 책장, 연표와 함께 정리되었습니다.
+                </p>
+              </div>
+
+              <Link href={FEATURED_MEMORIAL.href}>
+                <article className="group grid cursor-pointer overflow-hidden border border-white/18 bg-white text-[var(--memorial-ink)] sm:grid-cols-[132px_minmax(0,1fr)]">
+                  <div className="aspect-[4/3] bg-[#f4f2ee] sm:aspect-auto sm:min-h-44">
+                    <img
+                      src={FEATURED_MEMORIAL.image}
+                      alt={`${FEATURED_MEMORIAL.name} ${FEATURED_MEMORIAL.role}`}
+                      className="h-full w-full object-cover object-center"
+                    />
+                  </div>
+                  <div className="flex min-w-0 flex-col justify-between p-5">
+                    <div>
+                      <p className="truncate text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--memorial-brass)]">
+                        {FEATURED_MEMORIAL.church}
+                      </p>
+                      <h3 className="memorial-serif mt-3 text-2xl">
+                        {FEATURED_MEMORIAL.name} {FEATURED_MEMORIAL.role}
+                      </h3>
+                      <p className="mt-1 text-sm text-[var(--memorial-ash)]">
+                        {FEATURED_MEMORIAL.years}
+                      </p>
+                      <p className="mt-4 text-sm leading-6 text-[var(--memorial-ash)]">
+                        {FEATURED_MEMORIAL.summary}
+                      </p>
+                    </div>
+                    <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[var(--memorial-ink)]">
+                      기념관 보기
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </article>
+              </Link>
+            </div>
+          </div>
+
           <div className="container">
             <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
