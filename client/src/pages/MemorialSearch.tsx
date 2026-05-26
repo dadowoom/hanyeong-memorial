@@ -105,9 +105,7 @@ export default function MemorialSearch() {
 
                 <div className="divide-y divide-[var(--memorial-line)]">
                   {results.map(memorial => {
-                    const href = memorial.isPrivate
-                      ? memorial.href
-                      : `${memorial.href}/archive`;
+                    const href = memorial.href;
 
                     return (
                       <article
@@ -136,7 +134,7 @@ export default function MemorialSearch() {
                           <button className="memorial-button-secondary group min-h-10 w-full px-4 text-sm md:ml-auto md:w-fit">
                             {memorial.isPrivate
                               ? "비밀번호 입력"
-                              : "추모관 자세히 보기"}
+                              : "추모관 입장"}
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                           </button>
                         </Link>

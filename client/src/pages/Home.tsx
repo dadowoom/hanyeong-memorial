@@ -30,7 +30,8 @@ const FEATURED_MEMORIAL = {
   years: "1944 - 2026",
   href: "/memorial/bae-jeonga-kwonsa/archive",
   image: "/memorial-assets/hanyeong-faces/bae-jeonga.jpg",
-  summary: "예배의 자리를 사랑하고 기도와 환대로 가족과 교회를 섬긴 권사님입니다.",
+  summary:
+    "새벽 예배와 중보기도의 자리를 지키며 가족과 한영교회를 섬긴 권사님입니다.",
 };
 
 export default function Home() {

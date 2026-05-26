@@ -18,10 +18,10 @@ import { FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
 import { Link, useRoute } from "wouter";
 
 const serifStyle = { fontFamily: "'Noto Serif KR', serif" } as const;
-const warmGold = "oklch(0.50 0.07 72)";
-const warmText = "oklch(0.25 0.04 50)";
-const mutedText = "oklch(0.42 0.02 55)";
-const memorialPhotoFilter = "contrast(1.02) brightness(1.01) saturate(1.04)";
+const warmGold = "#62666c";
+const warmText = "#17181a";
+const mutedText = "#5f6368";
+const memorialPhotoFilter = "grayscale(1) contrast(1.1) brightness(0.97)";
 
 type TimelineItem = {
   year: string;
@@ -101,7 +101,7 @@ export default function MemorialPublicDetail() {
   return (
     <div
       className="min-h-screen text-[#121212]"
-      style={{ background: "#ffffff" }}
+      style={{ background: "#f8f8f8" }}
     >
       <Navbar />
 
@@ -281,14 +281,14 @@ function MemorialContent({
       <section
         className="relative overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%)",
+          background: "linear-gradient(180deg, #f8f8f8 0%, #ececec 100%)",
         }}
       >
         <GoldDust />
 
         <div className="container relative z-10 py-10 md:py-16 lg:py-20">
           <Link href="/memorial/search">
-            <button className="mb-10 inline-flex h-10 items-center gap-2 border border-[#e6ded1] bg-white px-4 text-sm text-[#4f4638] transition-colors hover:bg-[#faf9f7]">
+            <button className="mb-10 inline-flex h-10 items-center gap-2 border border-[#d7d7db] bg-white px-4 text-sm text-[#3f3f46] transition-colors hover:bg-[#f4f4f5]">
               <ArrowLeft className="h-4 w-4" strokeWidth={1.6} />
               추모관
             </button>
@@ -302,7 +302,7 @@ function MemorialContent({
                   className="text-[11px] font-medium uppercase tracking-[0.28em]"
                   style={{ color: warmGold }}
                 >
-                  {churchConfig.serviceName}
+                  추모관
                 </p>
               </div>
 
@@ -319,7 +319,7 @@ function MemorialContent({
                 {memorial.role}
               </p>
               <p className="mt-2 text-sm" style={{ color: mutedText }}>
-                {memorial.church} 온라인 신앙 기념관
+                {memorial.church} 추모관 입구
               </p>
 
               <div
@@ -329,12 +329,12 @@ function MemorialContent({
 
               <p
                 className="max-w-2xl text-base font-light leading-8 md:text-lg"
-                style={{ ...serifStyle, color: "oklch(0.34 0.04 50)" }}
+                style={{ ...serifStyle, color: "#2f3033" }}
               >
                 {memorial.summary}
               </p>
 
-              <div className="mt-10 grid max-w-xl grid-cols-1 gap-px overflow-hidden border border-[#e6ded1] bg-[#e6ded1] sm:grid-cols-3">
+              <div className="mt-10 grid max-w-xl grid-cols-1 gap-px overflow-hidden border border-[#d7d7db] bg-[#d7d7db] sm:grid-cols-3">
                 <HeroFact label="출생" value={memorial.birthDate} />
                 <HeroFact label="소천" value={memorial.deathDate} />
                 <HeroFact label="교회" value={memorial.church} />
@@ -342,22 +342,22 @@ function MemorialContent({
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link href={`/memorial/${memorial.slug}/archive`}>
-                  <span className="inline-flex h-11 items-center justify-center gap-2 bg-[#2e2218] px-5 text-sm font-medium text-white transition-colors hover:bg-[#4a3420]">
+                  <span className="inline-flex h-11 items-center justify-center gap-2 bg-[#18181b] px-5 text-sm font-medium text-white transition-colors hover:bg-[#2f3033]">
                     <Images className="h-4 w-4" strokeWidth={1.7} />
-                    기념관 자세히 보기
+                    신앙기념관 열기
                   </span>
                 </Link>
                 <a
                   href="#comments"
-                  className="inline-flex h-11 items-center justify-center gap-2 border border-[#1f1d1a] bg-white px-5 text-sm font-medium text-[#1f1d1a] transition-colors hover:bg-[#faf9f7]"
+                  className="inline-flex h-11 items-center justify-center gap-2 border border-[#18181b] bg-white px-5 text-sm font-medium text-[#18181b] transition-colors hover:bg-[#f4f4f5]"
                 >
                   <MessageCircle className="h-4 w-4" strokeWidth={1.7} />
-                  댓글 남기기
+                  추모의 글 남기기
                 </a>
                 <button
                   type="button"
                   onClick={handleKakaoShare}
-                  className="inline-flex h-11 items-center justify-center gap-2 bg-[#fee500] px-5 text-sm font-semibold text-[#241f1f] transition-colors hover:bg-[#f7d900]"
+                  className="inline-flex h-11 items-center justify-center gap-2 border border-[#18181b] bg-[#18181b] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#2f3033]"
                   aria-label="카톡 공유하기"
                 >
                   <KakaoTalkIcon />
@@ -365,13 +365,13 @@ function MemorialContent({
                 </button>
                 <a
                   href="#life"
-                  className="inline-flex h-11 items-center justify-center gap-2 border border-[#e6ded1] bg-white px-5 text-sm font-medium text-[#4f4638] transition-colors hover:bg-[#faf9f7]"
+                  className="inline-flex h-11 items-center justify-center gap-2 border border-[#d7d7db] bg-white px-5 text-sm font-medium text-[#3f3f46] transition-colors hover:bg-[#f4f4f5]"
                 >
                   <BookOpenText className="h-4 w-4" strokeWidth={1.7} />
                   삶의 기록 보기
                 </a>
                 <Link href={`/memorial/${memorial.slug}/family`}>
-                  <span className="inline-flex h-11 items-center justify-center gap-2 border border-[#e6ded1] bg-white px-5 text-sm font-medium text-[#4f4638] transition-colors hover:bg-[#faf9f7]">
+                  <span className="inline-flex h-11 items-center justify-center gap-2 border border-[#d7d7db] bg-white px-5 text-sm font-medium text-[#3f3f46] transition-colors hover:bg-[#f4f4f5]">
                     <LockKeyhole className="h-4 w-4" strokeWidth={1.7} />
                     가족관
                   </span>
@@ -417,7 +417,7 @@ function MemorialContent({
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
             <div className="space-y-6">
               {memorial.verse && (
-                <section className="border border-[#e6ded1] bg-white p-6 md:p-8">
+                <section className="border border-[#d7d7db] bg-white p-6 md:p-8">
                   <p
                     className="text-[17px] font-light leading-relaxed md:text-[21px]"
                     style={{ ...serifStyle, color: warmText }}
@@ -432,7 +432,7 @@ function MemorialContent({
                 </section>
               )}
 
-              <section className="border border-[#e6ded1] bg-[#fbfaf8] p-6 md:p-8">
+              <section className="border border-[#d7d7db] bg-[#f4f4f5] p-6 md:p-8">
                 <div className="mb-5 flex items-center gap-3">
                   <Church
                     className="h-5 w-5"
@@ -473,7 +473,7 @@ function MemorialContent({
               </section>
             </div>
 
-            <article className="border border-[#e6ded1] bg-white p-6 md:p-10">
+            <article className="border border-[#d7d7db] bg-white p-6 md:p-10">
               <p
                 className="mb-4 text-[11px] font-medium uppercase tracking-[0.26em]"
                 style={{ color: warmGold }}
@@ -505,7 +505,7 @@ function MemorialContent({
       {memorial.timeline.length > 0 && (
         <section
           className="py-20 md:py-28"
-          style={{ background: "linear-gradient(180deg, #ffffff, #fbfaf8)" }}
+          style={{ background: "linear-gradient(180deg, #ffffff, #f4f4f5)" }}
         >
           <div className="container">
             <SectionHeader
@@ -514,11 +514,11 @@ function MemorialContent({
               description="하나님과 함께 걸어온 발자취를 시간의 흐름으로 정리했습니다."
             />
 
-            <div className="mx-auto max-w-4xl border-t border-[#e6ded1]">
+            <div className="mx-auto max-w-4xl border-t border-[#d7d7db]">
               {memorial.timeline.map((item, index) => (
                 <article
                   key={`${item.year}-${item.title}-${index}`}
-                  className="grid gap-5 border-b border-[#e6ded1] py-7 md:grid-cols-[140px_1fr]"
+                  className="grid gap-5 border-b border-[#d7d7db] py-7 md:grid-cols-[140px_1fr]"
                 >
                   <p
                     className="text-lg font-light"
@@ -562,7 +562,7 @@ function MemorialContent({
 function CenteredState({ children }: { children: ReactNode }) {
   return (
     <section className="container py-20">
-      <div className="border border-[#e6ded1] bg-white py-20 text-center">
+      <div className="border border-[#d7d7db] bg-white py-20 text-center">
         <p className="text-sm" style={{ color: mutedText }}>
           {children}
         </p>
@@ -577,8 +577,8 @@ function KakaoTalkIcon() {
       aria-hidden="true"
       className="relative inline-flex h-4 w-4 items-center justify-center"
     >
-      <span className="h-3.5 w-4 rounded-[50%] bg-[#241f1f]" />
-      <span className="absolute bottom-0 left-1 h-1.5 w-1.5 rotate-[-28deg] bg-[#241f1f]" />
+      <span className="h-3.5 w-4 rounded-[50%] bg-white" />
+      <span className="absolute bottom-0 left-1 h-1.5 w-1.5 rotate-[-28deg] bg-white" />
     </span>
   );
 }
@@ -648,7 +648,7 @@ function MemorialReminderForm({
   return (
     <form
       onSubmit={submitReminder}
-      className="mt-6 border-t border-[#e6ded1] pt-5"
+      className="mt-6 border-t border-[#d7d7db] pt-5"
     >
       <div className="mb-4 flex items-start gap-3">
         <Phone
@@ -673,7 +673,7 @@ function MemorialReminderForm({
           placeholder="010-0000-0000"
           inputMode="tel"
           maxLength={20}
-          className="h-11 w-full border border-[#e6ded1] bg-white px-3 text-sm text-[#121212] outline-none transition-colors placeholder:text-[#9a9a9a] focus:border-[#8a6a3e]"
+          className="h-11 w-full border border-[#d7d7db] bg-white px-3 text-sm text-[#121212] outline-none transition-colors placeholder:text-[#9a9a9a] focus:border-[#18181b]"
         />
         <label
           className="flex items-start gap-2 text-xs leading-5"
@@ -692,7 +692,7 @@ function MemorialReminderForm({
         <button
           type="submit"
           disabled={subscribeMutation.isPending}
-          className="inline-flex h-11 items-center justify-center gap-2 bg-[#1f1d1a] px-4 text-sm font-medium text-white transition-colors hover:bg-[#33302b] disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-11 items-center justify-center gap-2 bg-[#18181b] px-4 text-sm font-medium text-white transition-colors hover:bg-[#2f3033] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {subscribeMutation.isPending ? "신청 중" : "알림 신청"}
           <Bell className="h-4 w-4" strokeWidth={1.7} />
@@ -728,7 +728,7 @@ function MemorialPortrait({
         style={{ borderColor: warmGold, opacity: 0.16 }}
       />
       <div
-        className="relative overflow-hidden border border-[#e6ded1] bg-white"
+        className="relative overflow-hidden border border-[#d7d7db] bg-white"
         style={{ boxShadow: "0 22px 70px rgba(31, 29, 26, 0.08)" }}
       >
         {portraitPhoto ? (
@@ -739,7 +739,7 @@ function MemorialPortrait({
               className="aspect-[4/5] w-full object-cover"
               style={{ filter: memorialPhotoFilter }}
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#7a5428]/85 to-transparent px-5 py-5 text-center">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#18181b]/88 to-transparent px-5 py-5 text-center">
               <p className="text-xs italic text-white" style={serifStyle}>
                 {memorial.birthDate} - {memorial.deathDate}
               </p>
@@ -764,7 +764,7 @@ function MemorialPortrait({
             </div>
             <div className="relative">
               <div
-                className="mx-auto flex h-32 w-32 items-center justify-center rounded-full border border-[#e6ded1] bg-white text-6xl font-light md:h-40 md:w-40 md:text-7xl"
+                className="mx-auto flex h-32 w-32 items-center justify-center rounded-full border border-[#d7d7db] bg-white text-6xl font-light md:h-40 md:w-40 md:text-7xl"
                 style={{ ...serifStyle, color: warmGold }}
               >
                 {initial}
@@ -930,16 +930,16 @@ function MemorialComments({
       <div className="container">
         <SectionHeader
           eyebrow="Comments"
-          title="댓글"
-          description={`${memorialName}님의 기념관에 기억과 응원의 마음을 짧게 남겨주세요.`}
+          title="추모의 글"
+          description={`${memorialName}님의 추모관에 기억과 위로의 마음을 짧게 남겨주세요.`}
         />
 
         <div className="mx-auto max-w-5xl">
           <form
             onSubmit={submitComment}
-            className="border border-[#e6ded1] bg-white"
+            className="border border-[#d7d7db] bg-white"
           >
-            <div className="grid gap-px bg-[#e6ded1] md:grid-cols-[190px_1fr]">
+            <div className="grid gap-px bg-[#d7d7db] md:grid-cols-[190px_1fr]">
               <label className="bg-white p-5">
                 <span
                   className="text-xs font-medium uppercase tracking-[0.16em]"
@@ -965,44 +965,44 @@ function MemorialComments({
                 <textarea
                   value={content}
                   onChange={event => setContent(event.target.value)}
-                  placeholder="기억이나 응원의 마음을 댓글로 남겨주세요."
+                  placeholder="기억이나 위로의 마음을 남겨주세요."
                   maxLength={2000}
                   rows={5}
                   className="mt-4 w-full resize-none bg-transparent text-sm leading-7 text-[#121212] outline-none placeholder:text-[#9a9a9a]"
                 />
               </label>
             </div>
-            <div className="flex flex-col justify-between gap-3 border-t border-[#e6ded1] bg-[#fbfaf8] p-5 sm:flex-row sm:items-center">
+            <div className="flex flex-col justify-between gap-3 border-t border-[#d7d7db] bg-[#f4f4f5] p-5 sm:flex-row sm:items-center">
               <p className="text-xs leading-6" style={{ color: mutedText }}>
                 {message ||
                   (isPrivate
                     ? "비공개 기념관에만 보관되며 해당 기념관 안에서만 표시됩니다."
-                    : "댓글은 이 기념관 안에서만 표시됩니다.")}
+                    : "추모의 글은 이 추모관 안에서만 표시됩니다.")}
               </p>
               <button
                 type="submit"
                 disabled={createCommentMutation.isPending}
-                className="inline-flex h-11 items-center justify-center gap-2 bg-[#1f1d1a] px-5 text-sm font-medium text-white transition-colors hover:bg-[#33302b] disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-11 items-center justify-center gap-2 bg-[#18181b] px-5 text-sm font-medium text-white transition-colors hover:bg-[#2f3033] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {createCommentMutation.isPending ? "남기는 중" : "댓글 남기기"}
+                {createCommentMutation.isPending ? "남기는 중" : "추모의 글 남기기"}
                 <MessageCircle className="h-4 w-4" strokeWidth={1.7} />
               </button>
             </div>
           </form>
 
-          <div className="mt-8 border-t border-[#e6ded1]">
+          <div className="mt-8 border-t border-[#d7d7db]">
             {commentsQuery.isLoading ? (
               <p
-                className="border-b border-[#e6ded1] py-7 text-sm"
+                className="border-b border-[#d7d7db] py-7 text-sm"
                 style={{ color: mutedText }}
               >
-                댓글을 불러오고 있습니다.
+                추모의 글을 불러오고 있습니다.
               </p>
             ) : commentsQuery.data?.length ? (
               commentsQuery.data.map(comment => (
                 <article
                   key={comment.id}
-                  className="border-b border-[#e6ded1] py-7"
+                  className="border-b border-[#d7d7db] py-7"
                 >
                   <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
                     <p
@@ -1025,10 +1025,10 @@ function MemorialComments({
               ))
             ) : (
               <p
-                className="border-b border-[#e6ded1] py-7 text-sm"
+                className="border-b border-[#d7d7db] py-7 text-sm"
                 style={{ color: mutedText }}
               >
-                아직 남겨진 댓글이 없습니다.
+                아직 남겨진 추모의 글이 없습니다.
               </p>
             )}
           </div>
