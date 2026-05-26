@@ -239,17 +239,17 @@ function HeroVideoBackground() {
         <iframe
           title={`${churchConfig.churchName} 배경 영상`}
           src={HERO_VIDEO_SRC}
-          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0 opacity-42 contrast-110 saturate-[0.55]"
+          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0 opacity-[0.64] brightness-[1.03] contrast-125 saturate-[0.9]"
           allow="autoplay; fullscreen; picture-in-picture"
           tabIndex={-1}
         />
-        <div className="absolute inset-0 bg-[var(--memorial-navy)]/66" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--memorial-cloud)] via-white/68 to-[var(--memorial-navy-soft)]/38" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--memorial-navy-deep)]/16 via-transparent to-[var(--memorial-navy-deep)]/72" />
+        <div className="absolute inset-0 bg-[var(--memorial-navy)]/46" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--memorial-cloud)] via-white/52 to-[var(--memorial-navy-soft)]/24" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--memorial-navy-deep)]/10 via-transparent to-[var(--memorial-navy-deep)]/54" />
       </div>
 
-      <div className="absolute inset-y-0 left-0 w-[56vw] bg-gradient-to-r from-white via-white/92 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_10%,rgba(255,255,255,0.34),transparent_28%),radial-gradient(circle_at_92%_86%,rgba(201,201,205,0.28),transparent_34%)]" />
+      <div className="absolute inset-y-0 left-0 w-[56vw] bg-gradient-to-r from-white via-white/88 to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_10%,rgba(255,255,255,0.22),transparent_28%),radial-gradient(circle_at_92%_86%,rgba(201,201,205,0.18),transparent_34%)]" />
     </div>
   );
 }
