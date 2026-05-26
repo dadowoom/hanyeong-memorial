@@ -147,6 +147,8 @@
       "Segoe UI",
       sans-serif;
     overflow-x: hidden;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -238,6 +240,48 @@
     line-height: 1.75;
   }
 
+  .memorial-action-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.625rem;
+    max-width: 24rem;
+  }
+
+  .memorial-action-row > a {
+    min-width: 0;
+  }
+
+  .memorial-action-row .memorial-button-primary,
+  .memorial-action-row .memorial-button-secondary,
+  .memorial-action-row .memorial-button-light {
+    width: 100%;
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 359px) {
+    .memorial-action-row {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: none;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .memorial-action-row {
+      display: flex;
+      max-width: none;
+    }
+
+    .memorial-action-row .memorial-button-primary,
+    .memorial-action-row .memorial-button-secondary,
+    .memorial-action-row .memorial-button-light {
+      width: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
   .memorial-button-primary,
   .memorial-button-secondary {
     display: inline-flex;
@@ -301,6 +345,15 @@
   .memorial-button-light:hover {
     background: var(--memorial-cloud);
     border-color: var(--memorial-cloud);
+  }
+
+  @media (max-width: 639px) {
+    .memorial-button-primary,
+    .memorial-button-secondary,
+    .memorial-button-light {
+      min-height: 2.75rem;
+      font-size: 0.8125rem;
+    }
   }
 
   .memorial-nav-link {

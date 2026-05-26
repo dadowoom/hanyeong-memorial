@@ -21,18 +21,20 @@ export default function MemorialSearch() {
 
       <main className="pt-16">
         <section className="border-b memorial-section">
-          <div className="container py-16 md:py-24">
+          <div className="container py-14 md:py-24">
             <div className="max-w-3xl">
               <p className="memorial-eyebrow mb-5">Memorials</p>
-              <h1 className="memorial-serif text-4xl md:text-6xl">추모관</h1>
-              <p className="memorial-body mt-6 max-w-xl text-sm">
+              <h1 className="memorial-serif text-[3rem] leading-tight md:text-6xl">
+                추모관
+              </h1>
+              <p className="memorial-body mt-5 max-w-xl text-[15px] leading-7 md:mt-6 md:text-sm">
                 성함을 입력하면 해당 추모관을 찾을 수 있습니다. 전체 명단은
                 공개하지 않습니다.
               </p>
             </div>
 
             <div className="memorial-input-panel mt-10 max-w-3xl">
-              <label className="flex items-center gap-3 px-5 py-4">
+              <label className="flex items-center gap-3 px-4 py-3 md:px-5 md:py-4">
                 <Search
                   className="h-5 w-5 shrink-0 text-[var(--memorial-ash)]"
                   strokeWidth={1.6}
@@ -41,7 +43,7 @@ export default function MemorialSearch() {
                   value={query}
                   onChange={event => setQuery(event.target.value)}
                   placeholder="성함을 두 글자 이상 입력하세요"
-                  className="h-10 min-w-0 flex-1 bg-transparent text-base text-[var(--memorial-ink)] outline-none placeholder:text-[var(--memorial-slate)]"
+                  className="h-10 min-w-0 flex-1 bg-transparent text-[15px] text-[var(--memorial-ink)] outline-none placeholder:text-[var(--memorial-slate)] md:text-base"
                   autoFocus
                 />
               </label>
@@ -65,7 +67,7 @@ export default function MemorialSearch() {
 
             {!canSearch ? (
               <div className="memorial-panel bg-[var(--memorial-cloud)] px-5 py-14 text-center md:py-20">
-                <p className="memorial-serif text-2xl text-[var(--memorial-ink)] md:text-3xl">
+                <p className="memorial-serif text-[1.45rem] leading-snug text-[var(--memorial-ink)] md:text-3xl">
                   찾고 싶은 분의 성함을 입력해주세요.
                 </p>
                 <p className="memorial-body mx-auto mt-5 max-w-md text-sm">
@@ -131,7 +133,7 @@ export default function MemorialSearch() {
                           {memorial.role}
                         </p>
                         <Link href={href}>
-                          <button className="memorial-button-secondary group min-h-10 w-fit px-4 text-sm md:ml-auto">
+                          <button className="memorial-button-secondary group min-h-10 w-full px-4 text-sm md:ml-auto md:w-fit">
                             {memorial.isPrivate
                               ? "비밀번호 입력"
                               : "추모관 자세히 보기"}

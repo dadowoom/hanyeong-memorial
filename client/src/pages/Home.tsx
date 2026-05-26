@@ -32,26 +32,22 @@ export default function Home() {
       <main className="pt-16">
         <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden border-b memorial-section memorial-section-muted">
           <HeroVideoBackground />
-          <div className="container relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-14 md:py-20">
+          <div className="container relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-12 md:py-20">
             <div className="max-w-3xl">
               <p className="memorial-eyebrow mb-6">
                 한영교회 온라인 신앙기념 서비스
               </p>
-              <h1 className="memorial-serif max-w-3xl text-5xl leading-[1.08] sm:text-6xl md:text-8xl">
+              <h1 className="memorial-serif max-w-3xl text-[3.25rem] leading-[1.04] sm:text-6xl md:text-8xl md:leading-[1.08]">
                 <span className="block">한영교회</span>
                 <span className="block">신앙기념관</span>
               </h1>
-              <p className="mt-8 max-w-2xl text-base leading-8 text-[var(--memorial-ash)] md:text-lg">
-                <span className="block">한영교회 신앙기념관은</span>
-                <span className="block">
-                  성도들의 삶 속에 담긴 믿음의 발자취를 소중히 기억하고,
-                </span>
-                <span className="block">
-                  그 신앙의 유산을 오늘과 다음 세대가 함께 이어가도록 돕는
-                  공간입니다.
-                </span>
+              <p className="mt-7 max-w-2xl text-[15px] leading-7 text-[var(--memorial-ash)] md:mt-8 md:text-lg md:leading-8">
+                한영교회 신앙기념관은 <br className="hidden md:block" />
+                성도들의 삶 속에 담긴 믿음의 발자취를 소중히 기억하고,{" "}
+                <br className="hidden md:block" />그 신앙의 유산을 오늘과 다음
+                세대가 함께 이어가도록 돕는 공간입니다.
               </p>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <div className="memorial-action-row mt-9 md:mt-10">
                 <Link href={routes.memorialSearch}>
                   <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
@@ -80,16 +76,12 @@ export default function Home() {
                   <p className="memorial-eyebrow">Values</p>
                   <div className="h-px flex-1 bg-[var(--memorial-ash)] md:mt-8 md:w-16" />
                 </div>
-                <h2 className="memorial-serif max-w-3xl text-xl leading-[1.75] md:text-2xl md:leading-[1.7]">
-                  <span className="block">
-                    「{churchConfig.serviceName}」은 성도의 삶과 믿음과 사랑을
-                  </span>
-                  <span className="block">
-                    가족과 교회의 기억 속에 아름답게 보존하며,
-                  </span>
-                  <span className="block">
-                    다음 세대가 신앙의 이야기를 이어받도록 돕습니다.
-                  </span>
+                <h2 className="memorial-serif max-w-3xl text-[1.35rem] leading-[1.65] md:text-2xl md:leading-[1.7]">
+                  「{churchConfig.serviceName}」은 성도의 삶과 믿음과 사랑을{" "}
+                  <br className="hidden md:block" />
+                  가족과 교회의 기억 속에 아름답게 보존하며,{" "}
+                  <br className="hidden md:block" />
+                  다음 세대가 신앙의 이야기를 이어받도록 돕습니다.
                 </h2>
               </div>
 
@@ -123,7 +115,7 @@ export default function Home() {
                 <p className="mb-4 text-xs font-semibold uppercase text-white/62">
                   Services
                 </p>
-                <h2 className="memorial-serif text-3xl text-white md:text-5xl">
+                <h2 className="memorial-serif text-[1.75rem] leading-tight text-white md:text-5xl">
                   세 가지 서비스
                 </h2>
               </div>
@@ -167,7 +159,7 @@ export default function Home() {
           <div className="container grid gap-10 md:grid-cols-[0.8fr_1.2fr]">
             <div>
               <p className="memorial-eyebrow mb-4">Process</p>
-              <h2 className="memorial-serif text-3xl md:text-5xl">
+              <h2 className="memorial-serif text-[1.75rem] leading-tight md:text-5xl">
                 신앙기념관
                 <br />
                 만들기
@@ -198,9 +190,9 @@ export default function Home() {
                 <p className="mb-4 text-xs font-semibold uppercase text-white/62">
                   {churchConfig.churchName} 성도 전용
                 </p>
-                <h2 className="memorial-serif text-3xl text-white md:text-5xl">
-                  <span className="block">신앙의 유산을</span>
-                  <span className="block">남길 준비가 되어 있나요</span>
+                <h2 className="memorial-serif text-[1.75rem] leading-tight text-white md:text-5xl">
+                  <span className="sm:block">신앙의 유산을</span>
+                  <span className="sm:block">남길 준비가 되어 있나요</span>
                 </h2>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68">
                   성도의 삶과 믿음의 기록을 정리해 가족과 다음 세대가 이어받을
@@ -209,7 +201,7 @@ export default function Home() {
                 </p>
               </div>
               <Link href={routes.memorialCreate}>
-                <button className="memorial-button-light">
+                <button className="memorial-button-light w-full sm:w-auto">
                   시작하기
                   <ArrowRight className="h-4 w-4" />
                 </button>

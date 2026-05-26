@@ -159,22 +159,25 @@ export default function Letters() {
                   Letters
                 </p>
                 <h1
-                  className="max-w-3xl text-5xl font-light leading-[1.12] md:text-7xl"
+                  className="max-w-3xl text-[2.85rem] font-light leading-[1.12] md:text-7xl"
                   style={{ ...serifStyle, color: warmText }}
                 >
                   하늘로 보내는 편지
                 </h1>
               </div>
 
-              <div className="border-l border-[#e6ded1] pl-0 lg:pl-8">
-                <p className="text-base leading-8" style={{ color: mutedText }}>
+              <div className="border-t border-[#e6ded1] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                <p
+                  className="text-[15px] leading-7 md:text-base md:leading-8"
+                  style={{ color: mutedText }}
+                >
                   하늘로 보내는 편지는 추모관 전환 이후 사용하는 공간입니다.
                   기념관 댓글과 분리해, 고인에게 전하는 편지만 조용히 모읍니다.
                 </p>
                 <button
                   type="button"
                   onClick={() => setFormOpen(value => !value)}
-                  className="mt-7 inline-flex h-11 items-center justify-center gap-2 bg-[#1f1d1a] px-5 text-sm font-medium text-white transition-colors hover:bg-[#33302b]"
+                  className="mt-7 inline-flex h-11 w-full items-center justify-center gap-2 bg-[#1f1d1a] px-5 text-sm font-medium text-white transition-colors hover:bg-[#33302b] sm:w-auto"
                 >
                   <PenLine className="h-4 w-4" strokeWidth={1.7} />
                   편지 등록하기
@@ -197,7 +200,7 @@ export default function Letters() {
                   />
                 </label>
               </div>
-              <div className="grid grid-cols-4 border border-[#dbdad7] sm:flex">
+              <div className="grid grid-cols-2 border border-[#dbdad7] sm:flex">
                 {[
                   ["all", "전체"],
                   ["to", "받는 분"],
@@ -208,7 +211,7 @@ export default function Letters() {
                     key={value}
                     type="button"
                     onClick={() => updateField(value as SearchField)}
-                    className={`h-12 px-4 text-sm transition-colors ${
+                    className={`h-11 px-3 text-[13px] transition-colors sm:h-12 sm:px-4 sm:text-sm ${
                       field === value
                         ? "bg-[#1f1d1a] text-white"
                         : "bg-white text-[#4f4638] hover:bg-[#faf9f7]"
@@ -281,7 +284,7 @@ export default function Letters() {
                   <button
                     type="submit"
                     disabled={createLetter.isPending}
-                    className="inline-flex h-11 items-center justify-center gap-2 bg-[#1f1d1a] px-5 text-sm font-medium text-white transition-colors hover:bg-[#33302b] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 bg-[#1f1d1a] px-5 text-sm font-medium text-white transition-colors hover:bg-[#33302b] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                   >
                     {createLetter.isPending ? "남기는 중" : "편지 남기기"}
                     <Send className="h-4 w-4" strokeWidth={1.7} />
@@ -301,7 +304,7 @@ export default function Letters() {
                   : `최근 편지 ${results.length}건`}
               </p>
               <Link href="/memorial/search">
-                <button className="h-10 border border-[#dbdad7] px-4 text-sm text-[#121212] transition-colors hover:bg-[#f6f5f2]">
+                <button className="h-10 w-full border border-[#dbdad7] px-4 text-sm text-[#121212] transition-colors hover:bg-[#f6f5f2] sm:w-auto">
                   추모관
                 </button>
               </Link>
@@ -405,19 +408,19 @@ function LetterCard({
 
   return (
     <article
-      className={`grid h-[300px] overflow-hidden bg-white shadow-[0_10px_28px_rgba(31,29,26,0.14)] ring-1 ring-[#e6ded1] transition-transform duration-300 hover:-translate-y-1 md:grid-cols-[minmax(0,1fr)_92px] lg:grid-cols-[minmax(0,1fr)_112px] ${
+      className={`grid min-h-[270px] overflow-hidden bg-white shadow-[0_10px_28px_rgba(31,29,26,0.14)] ring-1 ring-[#e6ded1] transition-transform duration-300 hover:-translate-y-1 md:h-[300px] md:grid-cols-[minmax(0,1fr)_92px] lg:grid-cols-[minmax(0,1fr)_112px] ${
         stagger ? "md:mt-10" : ""
       }`}
     >
-      <div className="flex min-w-0 flex-col overflow-hidden p-6 md:p-8">
+      <div className="flex min-w-0 flex-col overflow-hidden p-5 md:p-8">
         <div className="flex items-center justify-between gap-3 text-sm text-[#7a7771]">
           <p>No.{String(serial).padStart(3, "0")}</p>
           <p>조회수 : {views}</p>
         </div>
 
-        <div className="mt-8 grid min-w-0 grid-cols-[88px_minmax(0,1fr)] gap-4 md:grid-cols-[108px_minmax(0,1fr)] md:gap-6">
+        <div className="mt-7 grid min-w-0 grid-cols-[64px_minmax(0,1fr)] gap-3 md:mt-8 md:grid-cols-[108px_minmax(0,1fr)] md:gap-6">
           <p
-            className="pt-1 text-6xl italic leading-none text-[#2d2b28] md:text-7xl"
+            className="pt-1 text-4xl italic leading-none text-[#2d2b28] md:text-7xl"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             To
@@ -426,7 +429,7 @@ function LetterCard({
             {href ? (
               <Link href={href}>
                 <span
-                  className="inline-flex max-w-full cursor-pointer items-center gap-2 text-2xl font-light text-[#2d2b28] transition-colors hover:text-[#7f673d] md:text-3xl"
+                  className="inline-flex max-w-full cursor-pointer items-center gap-2 text-xl font-light text-[#2d2b28] transition-colors hover:text-[#7f673d] md:text-3xl"
                   style={serifStyle}
                 >
                   <span className="min-w-0 truncate">{recipient}</span>
@@ -435,14 +438,14 @@ function LetterCard({
               </Link>
             ) : (
               <span
-                className="block max-w-full truncate text-2xl font-light text-[#2d2b28] md:text-3xl"
+                className="block max-w-full truncate text-xl font-light text-[#2d2b28] md:text-3xl"
                 style={serifStyle}
               >
                 {recipient}
               </span>
             )}
             <p
-              className="mt-4 whitespace-pre-line text-center text-base leading-8 text-[#74706b] md:text-[17px]"
+              className="mt-3 whitespace-pre-line text-center text-[15px] leading-7 text-[#74706b] md:mt-4 md:text-[17px] md:leading-8"
               style={{
                 ...serifStyle,
                 display: "-webkit-box",
@@ -457,7 +460,7 @@ function LetterCard({
           </div>
         </div>
 
-        <div className="mt-auto flex items-end justify-between gap-4 pt-6 text-base text-[#2d2b28]">
+        <div className="mt-auto flex items-end justify-between gap-4 pt-5 text-sm text-[#2d2b28] md:pt-6 md:text-base">
           {href ? (
             <Link href={href}>
               <span className="inline-flex items-center gap-1 text-xs font-medium text-[#7f673d] transition-colors hover:text-[#2d2b28]">

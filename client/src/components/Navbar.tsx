@@ -79,6 +79,7 @@ export default function Navbar() {
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-white/8 text-white md:hidden"
             onClick={() => setMobileOpen(open => !open)}
             aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? (
               <X className="h-4 w-4" />
@@ -90,14 +91,14 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-white/14 bg-[var(--memorial-navy)] md:hidden">
-          <div className="container flex flex-col gap-1 py-4">
+        <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/14 bg-[var(--memorial-navy)] md:hidden">
+          <div className="container flex flex-col gap-2 py-4">
             {navItems.map(item => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={closeMobile}
-                className="py-3 text-sm text-white/82"
+                className="rounded-full border border-white/12 px-4 py-3 text-sm font-medium text-white/86 transition-colors hover:bg-white/10 hover:text-white"
               >
                 {item.label}
               </a>
@@ -105,9 +106,9 @@ export default function Navbar() {
             <Link href={routes.memorialCreate}>
               <span
                 onClick={closeMobile}
-                className="py-3 text-sm text-white/82"
+                className="rounded-full border border-white/12 px-4 py-3 text-sm font-medium text-white/86 transition-colors hover:bg-white/10 hover:text-white"
               >
-                기념관 만들기
+                신앙기념관 만들기
               </span>
             </Link>
             <div className="mt-3 border-t border-white/14 pt-4">

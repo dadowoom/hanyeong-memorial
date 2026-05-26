@@ -77,18 +77,18 @@ export default function MemorialGarden() {
         <section className="relative overflow-hidden border-b memorial-section memorial-section-muted">
           <div className="absolute inset-0 bg-[linear-gradient(120deg,#ffffff_0%,#f8f8f8_52%,#f4f4f4_100%)]" />
           <div className="absolute right-0 top-0 hidden h-full w-1/2 border-l border-white/70 bg-[radial-gradient(circle_at_40%_35%,rgba(255,255,255,0.78),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.46),rgba(201,201,205,0.18))] md:block" />
-          <div className="container relative grid gap-10 py-16 md:grid-cols-[minmax(0,0.82fr)_minmax(300px,0.7fr)] md:items-center md:py-24">
+          <div className="container relative grid gap-8 py-14 md:grid-cols-[minmax(0,0.82fr)_minmax(300px,0.7fr)] md:items-center md:gap-10 md:py-24">
             <div>
               <p className="memorial-eyebrow mb-5">Faith Memorial</p>
-              <h1 className="memorial-serif max-w-3xl text-5xl leading-[1.12] md:text-7xl">
+              <h1 className="memorial-serif max-w-3xl text-[3.1rem] leading-[1.08] md:text-7xl md:leading-[1.12]">
                 신앙 기념관
               </h1>
-              <p className="memorial-body mt-8 max-w-2xl text-base">
+              <p className="memorial-body mt-7 max-w-2xl text-[15px] leading-7 md:mt-8 md:text-base">
                 {churchConfig.churchName} 성도들의 삶과 믿음을 가족과 교회가
                 함께 돌아보는 온라인 신앙 기념 공간입니다. 사진첩, 영상, 책장,
                 연표, 댓글 기능을 한영교회에 맞는 차분한 언어로 정리했습니다.
               </p>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <div className="memorial-action-row mt-9 md:mt-10">
                 <Link href={routes.memorialSearch}>
                   <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
@@ -98,7 +98,7 @@ export default function MemorialGarden() {
                 <Link href={routes.memorialCreate}>
                   <button className="memorial-button-secondary">
                     <Plus className="h-4 w-4" />
-                    기념관 만들기
+                    신앙기념관 만들기
                   </button>
                 </Link>
               </div>
@@ -109,7 +109,7 @@ export default function MemorialGarden() {
                 className="h-8 w-8 text-[var(--memorial-ink)]"
                 strokeWidth={1.5}
               />
-              <p className="memorial-serif mt-8 text-2xl leading-10">
+              <p className="memorial-serif mt-7 text-xl leading-8 md:mt-8 md:text-2xl md:leading-10">
                 “한 사람의 믿음은 가족의 기억에 머물고,
                 <br />
                 교회의 길 위에 조용히 이어집니다.”
@@ -129,7 +129,7 @@ export default function MemorialGarden() {
             <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div>
                 <p className="memorial-eyebrow mb-4">Registered People</p>
-                <h2 className="memorial-serif text-3xl md:text-5xl">
+                <h2 className="memorial-serif text-[1.75rem] leading-tight md:text-5xl">
                   등록된 인물
                 </h2>
               </div>
@@ -263,7 +263,7 @@ export default function MemorialGarden() {
                 <Link href={routes.memorialCreate}>
                   <button className="memorial-button-primary mt-6">
                     <Plus className="h-4 w-4" />
-                    기념관 만들기
+                    신앙기념관 만들기
                   </button>
                 </Link>
               </div>
@@ -281,7 +281,7 @@ export default function MemorialGarden() {
                 <p className="mb-4 text-xs font-semibold uppercase text-white/62">
                   Memorial Space
                 </p>
-                <h2 className="memorial-serif text-3xl text-white md:text-5xl">
+                <h2 className="memorial-serif text-[1.75rem] leading-tight text-white md:text-5xl">
                   추모관
                 </h2>
               </div>
@@ -329,7 +329,7 @@ export default function MemorialGarden() {
                 <p className="mb-4 text-xs font-semibold uppercase text-white/62">
                   Functions
                 </p>
-                <h2 className="memorial-serif text-3xl text-white md:text-5xl">
+                <h2 className="memorial-serif text-[1.75rem] leading-tight text-white md:text-5xl">
                   한영교회를 위한 신앙 기념 방식
                 </h2>
               </div>
@@ -371,7 +371,7 @@ export default function MemorialGarden() {
             <div className="memorial-panel grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-10">
               <div>
                 <p className="memorial-eyebrow mb-4">Next</p>
-                <h2 className="memorial-serif text-3xl md:text-5xl">
+                <h2 className="memorial-serif text-[1.75rem] leading-tight md:text-5xl">
                   등록된 추모관으로 이동
                 </h2>
                 <p className="memorial-body mt-5 max-w-xl text-sm">
@@ -381,7 +381,7 @@ export default function MemorialGarden() {
               </div>
 
               <Link href={routes.memorialSearch}>
-                <button className="memorial-button-primary px-5">
+                <button className="memorial-button-primary w-full px-5 sm:w-auto">
                   추모관
                   <ArrowRight className="h-4 w-4" />
                 </button>
