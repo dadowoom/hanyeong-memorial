@@ -168,9 +168,8 @@ export default function Letters() {
 
               <div className="border-l border-[#e6ded1] pl-0 lg:pl-8">
                 <p className="text-base leading-8" style={{ color: mutedText }}>
-                  고인에게 하고 싶은 이야기를 적어 하늘로 보내세요.
-                  추모관에 남겨진 편지와 이곳에서 직접 남긴 편지가 함께
-                  모입니다.
+                  고인에게 하고 싶은 이야기를 적어 하늘로 보내세요. 추모관에
+                  남겨진 편지와 이곳에서 직접 남긴 편지가 함께 모입니다.
                 </p>
                 <button
                   type="button"
@@ -343,22 +342,23 @@ export default function Letters() {
 
             {totalPages > 1 && (
               <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-                {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-                  pageNumber => (
-                    <button
-                      key={pageNumber}
-                      type="button"
-                      onClick={() => setPage(pageNumber)}
-                      className={`h-10 min-w-10 border px-3 text-sm transition-colors ${
-                        safePage === pageNumber
-                          ? "border-[#1f1d1a] bg-[#1f1d1a] text-white"
-                          : "border-[#dbdad7] bg-white text-[#4f4638] hover:bg-[#faf9f7]"
-                      }`}
-                    >
-                      {pageNumber}
-                    </button>
-                  )
-                )}
+                {Array.from(
+                  { length: totalPages },
+                  (_, index) => index + 1
+                ).map(pageNumber => (
+                  <button
+                    key={pageNumber}
+                    type="button"
+                    onClick={() => setPage(pageNumber)}
+                    className={`h-10 min-w-10 border px-3 text-sm transition-colors ${
+                      safePage === pageNumber
+                        ? "border-[#1f1d1a] bg-[#1f1d1a] text-white"
+                        : "border-[#dbdad7] bg-white text-[#4f4638] hover:bg-[#faf9f7]"
+                    }`}
+                  >
+                    {pageNumber}
+                  </button>
+                ))}
               </div>
             )}
           </div>
@@ -461,7 +461,7 @@ function LetterCard({
           {href ? (
             <Link href={href}>
               <span className="inline-flex items-center gap-1 text-xs font-medium text-[#7f673d] transition-colors hover:text-[#2d2b28]">
-                추모관 보기
+                기념관 자세히 보기
                 <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.7} />
               </span>
             </Link>

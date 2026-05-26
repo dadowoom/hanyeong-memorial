@@ -88,7 +88,7 @@ const visibilityOptions: Array<{
   {
     value: "public",
     label: "전체 공개",
-    desc: "누구나 추모관에 들어갈 수 있습니다.",
+    desc: "누구나 기념관에 들어갈 수 있습니다.",
   },
   {
     value: "private",
@@ -222,8 +222,7 @@ export default function MemorialCreate() {
     setForm(current => ({
       ...current,
       visibility,
-      accessPassword:
-        visibility === "private" ? current.accessPassword : "",
+      accessPassword: visibility === "private" ? current.accessPassword : "",
     }));
     setErrors(current => ({
       ...current,
@@ -290,7 +289,8 @@ export default function MemorialCreate() {
     });
 
     if (form.visibility === "private" && !form.accessPassword.trim()) {
-      nextErrors.accessPassword = "비공개 추모관 입장 비밀번호를 입력해 주세요.";
+      nextErrors.accessPassword =
+        "비공개 기념관 입장 비밀번호를 입력해 주세요.";
     }
 
     setErrors(nextErrors);
@@ -310,7 +310,7 @@ export default function MemorialCreate() {
     }
 
     try {
-      setNotice("추모관을 생성하고 있습니다.");
+      setNotice("기념관을 생성하고 있습니다.");
       const created = await createMemorialMutation.mutateAsync({
         ...form,
         slug: slugPreview,
@@ -323,7 +323,7 @@ export default function MemorialCreate() {
 
       localStorage.removeItem(draftKey);
       setCreatedMemorial(created);
-      setNotice("추모관이 생성되었습니다. 바로 확인할 수 있습니다.");
+      setNotice("기념관이 생성되었습니다. 바로 확인할 수 있습니다.");
       setSubmitted(true);
     } catch (error) {
       console.error("[Memorial Create] Failed to save", error);
@@ -355,7 +355,7 @@ export default function MemorialCreate() {
         <main className="container pt-32">
           <div className="border border-[#dbdad7] py-20 text-center">
             <p className="text-sm text-[#616161]">
-              회원가입 또는 로그인 후 추모관을 생성할 수 있습니다.
+              회원가입 또는 로그인 후 기념관을 생성할 수 있습니다.
             </p>
           </div>
         </main>
@@ -372,7 +372,7 @@ export default function MemorialCreate() {
           <div className="container grid gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,1.05fr)]">
             <div>
               <p className="mb-5 text-xs font-medium text-[#616161]">
-                추모관 생성
+                기념관 만들기
               </p>
               <h1
                 className="text-4xl font-normal leading-tight md:text-6xl"
@@ -564,7 +564,7 @@ export default function MemorialCreate() {
                     />
                   </Field>
 
-                  <Field label="추모관 주소">
+                  <Field label="기념관 주소">
                     <input
                       className={inputClass}
                       value={form.slug}
@@ -649,7 +649,7 @@ export default function MemorialCreate() {
                       onChange={event =>
                         updateField("story", event.target.value)
                       }
-                      placeholder="고인의 삶, 신앙, 가족에게 남긴 기억을 간결하게 적어 주세요."
+                      placeholder="성도의 삶, 신앙, 가족에게 남긴 기억을 간결하게 적어 주세요."
                       aria-invalid={Boolean(errors.story)}
                     />
                   </Field>
@@ -855,13 +855,13 @@ export default function MemorialCreate() {
                     </div>
                     <p className="mt-3 text-xs leading-6 text-[#616161]">
                       기본 정보는 검색 결과에 표시됩니다. 비공개로 설정하면
-                      비밀번호를 아는 분만 추모관에 들어갈 수 있습니다.
+                      비밀번호를 아는 분만 기념관에 들어갈 수 있습니다.
                     </p>
                   </Field>
 
                   {form.visibility === "private" && (
                     <Field
-                      label="추모관 입장 비밀번호"
+                      label="기념관 입장 비밀번호"
                       error={errors.accessPassword}
                       required
                     >
@@ -877,7 +877,6 @@ export default function MemorialCreate() {
                       />
                     </Field>
                   )}
-
                 </div>
               </section>
 
@@ -886,12 +885,12 @@ export default function MemorialCreate() {
                   <div>
                     <p className="text-sm font-medium text-[#121212]">
                       {submitted
-                        ? "추모관이 생성되었습니다."
+                        ? "기념관이 생성되었습니다."
                         : "입력 내용을 확인해 주세요."}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-[#616161]">
                       {notice ||
-                        "작성한 내용은 추모관으로 저장됩니다. 이후 필요한 내용은 이어서 보완할 수 있습니다."}
+                        "작성한 내용은 기념관으로 저장됩니다. 이후 필요한 내용은 이어서 보완할 수 있습니다."}
                     </p>
                   </div>
 
@@ -919,7 +918,7 @@ export default function MemorialCreate() {
                     >
                       {createMemorialMutation.isPending
                         ? "저장 중"
-                        : "추모관 생성"}
+                        : "기념관 만들기"}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.6} />
                     </button>
                   </div>

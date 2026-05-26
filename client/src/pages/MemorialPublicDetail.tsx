@@ -108,7 +108,7 @@ export default function MemorialPublicDetail() {
 
       <main className="pt-16">
         {memorialQuery.isLoading ? (
-          <CenteredState>추모관을 불러오고 있습니다.</CenteredState>
+          <CenteredState>기념관을 불러오고 있습니다.</CenteredState>
         ) : isLocked ? (
           <PrivateMemorialGate
             slug={slug}
@@ -119,7 +119,7 @@ export default function MemorialPublicDetail() {
             }}
           />
         ) : memorialQuery.isError || !memorial ? (
-          <CenteredState>추모관을 찾을 수 없습니다.</CenteredState>
+          <CenteredState>기념관을 찾을 수 없습니다.</CenteredState>
         ) : (
           <MemorialContent
             memorial={memorial}
@@ -177,7 +177,7 @@ function PrivateMemorialGate({
               className="text-4xl font-normal leading-tight md:text-6xl"
               style={serifStyle}
             >
-              {status?.name || "비공개 추모관"}
+              {status?.name || "비공개 기념관"}
             </h1>
             {status && (
               <>
@@ -191,7 +191,7 @@ function PrivateMemorialGate({
               </>
             )}
             <p className="mt-8 max-w-xl text-sm leading-7 text-[#616161]">
-              기본 정보는 검색에서 확인할 수 있지만, 추모관의 상세 기록은
+              기본 정보는 검색에서 확인할 수 있지만, 기념관의 상세 기록은
               비밀번호를 아는 분만 열람할 수 있습니다.
             </p>
           </div>
@@ -199,7 +199,7 @@ function PrivateMemorialGate({
           <form onSubmit={handleSubmit} className="border border-[#dbdad7] p-5">
             <LockKeyhole className="mb-5 h-6 w-6 text-[#18181b]" />
             <p className="text-sm font-medium text-[#121212]">
-              추모관 입장 비밀번호
+              기념관 입장 비밀번호
             </p>
             <input
               type="password"
@@ -209,7 +209,9 @@ function PrivateMemorialGate({
               placeholder="비밀번호"
               autoFocus
             />
-            {message && <p className="mt-3 text-xs text-[#9f2a2a]">{message}</p>}
+            {message && (
+              <p className="mt-3 text-xs text-[#9f2a2a]">{message}</p>
+            )}
             <button
               type="submit"
               disabled={verifyAccess.isPending}
@@ -250,8 +252,7 @@ function MemorialContent({
       <section
         className="relative overflow-hidden"
         style={{
-          background:
-            "linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%)",
+          background: "linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%)",
         }}
       >
         <GoldDust />
@@ -260,17 +261,14 @@ function MemorialContent({
           <Link href="/memorial/search">
             <button className="mb-10 inline-flex h-10 items-center gap-2 border border-[#e6ded1] bg-white px-4 text-sm text-[#4f4638] transition-colors hover:bg-[#faf9f7]">
               <ArrowLeft className="h-4 w-4" strokeWidth={1.6} />
-              추모관 목록
+              기념관 목록
             </button>
           </Link>
 
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.98fr)_minmax(300px,0.68fr)] lg:gap-20">
             <div>
               <div className="mb-8 flex items-center gap-3">
-                <span
-                  className="h-px w-8"
-                  style={{ background: warmGold }}
-                />
+                <span className="h-px w-8" style={{ background: warmGold }} />
                 <p
                   className="text-[11px] font-medium uppercase tracking-[0.28em]"
                   style={{ color: warmGold }}
@@ -292,7 +290,7 @@ function MemorialContent({
                 {memorial.role}
               </p>
               <p className="mt-2 text-sm" style={{ color: mutedText }}>
-                {memorial.church} 온라인 추모관
+                {memorial.church} 온라인 신앙 기념관
               </p>
 
               <div
@@ -343,7 +341,10 @@ function MemorialContent({
               </div>
             </div>
 
-            <MemorialPortrait memorial={memorial} portraitPhoto={portraitPhoto} />
+            <MemorialPortrait
+              memorial={memorial}
+              portraitPhoto={portraitPhoto}
+            />
           </div>
         </div>
 
@@ -417,10 +418,7 @@ function MemorialContent({
                     className="flex items-start gap-3"
                     style={{ color: mutedText }}
                   >
-                    <Bell
-                      className="mt-1 h-4 w-4 shrink-0"
-                      strokeWidth={1.6}
-                    />
+                    <Bell className="mt-1 h-4 w-4 shrink-0" strokeWidth={1.6} />
                     <span>추도일 {memorialDayLabel}</span>
                   </p>
                 </div>
@@ -539,7 +537,10 @@ function HeroFact({ label, value }: { label: string; value: string }) {
       >
         {label}
       </p>
-      <p className="text-sm font-medium" style={{ ...serifStyle, color: warmText }}>
+      <p
+        className="text-sm font-medium"
+        style={{ ...serifStyle, color: warmText }}
+      >
         {value || "-"}
       </p>
     </div>
@@ -560,9 +561,7 @@ function MemorialReminderForm({
     onSuccess: data => {
       setPhone("");
       setConsent(false);
-      setMessage(
-        `${data.memorialDay} 추도일 알림 신청이 저장되었습니다.`
-      );
+      setMessage(`${data.memorialDay} 추도일 알림 신청이 저장되었습니다.`);
     },
     onError: error => {
       setMessage(error.message || "알림 신청 중 문제가 생겼습니다.");
@@ -603,15 +602,11 @@ function MemorialReminderForm({
           strokeWidth={1.6}
         />
         <div>
-          <p
-            className="text-sm font-medium"
-            style={{ color: warmText }}
-          >
+          <p className="text-sm font-medium" style={{ color: warmText }}>
             추도일 알림 받기
           </p>
           <p className="mt-1 text-xs leading-5" style={{ color: mutedText }}>
-            휴대폰 번호를 남기면 {memorialDay} 추도일 안내를 받을 수
-            있습니다.
+            휴대폰 번호를 남기면 {memorialDay} 추도일 안내를 받을 수 있습니다.
           </p>
         </div>
       </div>
@@ -625,7 +620,10 @@ function MemorialReminderForm({
           maxLength={20}
           className="h-11 w-full border border-[#e6ded1] bg-white px-3 text-sm text-[#121212] outline-none transition-colors placeholder:text-[#9a9a9a] focus:border-[#8a6a3e]"
         />
-        <label className="flex items-start gap-2 text-xs leading-5" style={{ color: mutedText }}>
+        <label
+          className="flex items-start gap-2 text-xs leading-5"
+          style={{ color: mutedText }}
+        >
           <input
             type="checkbox"
             checked={consent}

@@ -15,13 +15,13 @@ const FEATURES = [
   {
     label: "기록",
     title: "삶과 신앙을 한곳에",
-    desc: "사진첩, 영상, 책장, 연표를 통해 고인의 믿음과 사랑을 차분하게 보존합니다.",
+    desc: "사진첩, 영상, 책장, 연표를 통해 성도의 믿음과 사랑을 차분하게 보존합니다.",
     icon: BookOpenText,
   },
   {
     label: "공유",
     title: "필요한 만큼 열어두기",
-    desc: "공개 추모관과 비공개 추모관을 선택하고, 가족관은 별도 비밀번호로 보호합니다.",
+    desc: "공개 기념관과 비공개 기념관을 선택하고, 가족관은 별도 비밀번호로 보호합니다.",
     icon: Search,
   },
   {
@@ -49,20 +49,20 @@ export default function MemorialGarden() {
               </h1>
               <p className="memorial-body mt-8 max-w-2xl text-base">
                 {churchConfig.churchName} 성도들의 삶과 믿음을 가족과 교회가
-                함께 돌아보는 온라인 신앙 기념 공간입니다. 실제 추모관 기능은
-                그대로 유지하면서, 한영교회에 맞는 차분한 언어로 정리했습니다.
+                함께 돌아보는 온라인 신앙 기념 공간입니다. 사진첩, 영상, 책장,
+                연표, 편지 기능을 한영교회에 맞는 차분한 언어로 정리했습니다.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link href={routes.memorialSearch}>
                   <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
-                    추모관 찾기
+                    기념관 자세히 보기
                   </button>
                 </Link>
                 <Link href={routes.memorialCreate}>
                   <button className="memorial-button-secondary">
                     <Plus className="h-4 w-4" />
-                    추모관 만들기
+                    기념관 만들기
                   </button>
                 </Link>
               </div>
@@ -100,8 +100,8 @@ export default function MemorialGarden() {
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-7 text-white/68">
-                기존 추모관의 핵심 기능은 유지하고, 교회명과 서비스 언어를
-                한영교회 기준으로 정리했습니다.
+                기념관의 핵심 기능은 유지하고, 소천 이후 필요한 추모관 전환은
+                별도 흐름으로 분리해 둘 수 있게 정리했습니다.
               </p>
             </div>
 
@@ -138,17 +138,17 @@ export default function MemorialGarden() {
               <div>
                 <p className="memorial-eyebrow mb-4">Next</p>
                 <h2 className="memorial-serif text-3xl md:text-5xl">
-                  등록된 추모관으로 이동
+                  등록된 기념관으로 이동
                 </h2>
                 <p className="memorial-body mt-5 max-w-xl text-sm">
-                  고인의 성함으로 추모관을 검색하거나, 로그인 후 새 추모관을
-                  만들 수 있습니다.
+                  성함으로 기념관을 검색하거나, 로그인 후 새 기념관을 만들 수
+                  있습니다.
                 </p>
               </div>
 
               <Link href={routes.memorialSearch}>
                 <button className="memorial-button-primary px-5">
-                  추모관 보기
+                  기념관 자세히 보기
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </Link>

@@ -8,7 +8,10 @@ import Navbar from "@/components/Navbar";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getMemorialAccessStorageKey } from "@/config/church";
 import { toImgUrl } from "@/lib/imageUrl";
-import { getNarrativeFontSize, normalizeTextDisplaySize } from "@/lib/textDisplay";
+import {
+  getNarrativeFontSize,
+  normalizeTextDisplaySize,
+} from "@/lib/textDisplay";
 import { trpc } from "@/lib/trpc";
 import {
   ArrowLeft,
@@ -123,8 +126,7 @@ export default function MemorialArchivePage() {
             <section
               className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden"
               style={{
-                background:
-                  "linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%)",
+                background: "linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%)",
               }}
             >
               <GoldDust />
@@ -133,19 +135,22 @@ export default function MemorialArchivePage() {
                 <Link href={`/memorial/${memorial.slug}`}>
                   <button className="mb-10 inline-flex h-10 items-center gap-2 border border-[#e6ded1] bg-white px-4 text-sm text-[#4f4638] transition-colors hover:bg-[#faf9f7]">
                     <ArrowLeft className="h-4 w-4" strokeWidth={1.6} />
-                    추모관으로 돌아가기
+                    기념관으로 돌아가기
                   </button>
                 </Link>
 
                 <div className="grid min-w-0 items-center gap-12 md:grid-cols-2 md:gap-20">
                   <div className="min-w-0">
                     <div className="mb-8 flex items-center gap-3">
-                      <span className="h-px w-8" style={{ background: warmGold }} />
+                      <span
+                        className="h-px w-8"
+                        style={{ background: warmGold }}
+                      />
                       <p
                         className="text-[11px] font-medium uppercase tracking-[0.28em]"
                         style={{ color: warmGold }}
                       >
-                        추모관 만들기 · 개인 기념관
+                        신앙 기념관
                       </p>
                     </div>
 
@@ -173,7 +178,10 @@ export default function MemorialArchivePage() {
                       {memorial.church} 가족 기록관
                     </p>
 
-                    <div className="my-8 h-px w-16" style={{ background: warmGold }} />
+                    <div
+                      className="my-8 h-px w-16"
+                      style={{ background: warmGold }}
+                    />
 
                     <div
                       className="max-w-2xl break-words font-light leading-8"
@@ -200,9 +208,21 @@ export default function MemorialArchivePage() {
                     </div>
 
                     <div className="mt-10 grid max-w-xl grid-cols-1 gap-px overflow-hidden border border-[#e6ded1] bg-[#e6ded1] sm:grid-cols-3">
-                      <ArchiveFact icon={<CalendarDays className="h-4 w-4" />} label="출생" value={memorial.birthDate} />
-                      <ArchiveFact icon={<CalendarDays className="h-4 w-4" />} label="소천" value={memorial.deathDate} />
-                      <ArchiveFact icon={<Church className="h-4 w-4" />} label="교회" value={memorial.church} />
+                      <ArchiveFact
+                        icon={<CalendarDays className="h-4 w-4" />}
+                        label="출생"
+                        value={memorial.birthDate}
+                      />
+                      <ArchiveFact
+                        icon={<CalendarDays className="h-4 w-4" />}
+                        label="소천"
+                        value={memorial.deathDate}
+                      />
+                      <ArchiveFact
+                        icon={<Church className="h-4 w-4" />}
+                        label="교회"
+                        value={memorial.church}
+                      />
                     </div>
 
                     <div className="mt-8 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -332,7 +352,10 @@ export default function MemorialArchivePage() {
                   </div>
 
                   <article>
-                    <div className="mb-6 h-px w-10" style={{ background: warmGold }} />
+                    <div
+                      className="mb-6 h-px w-10"
+                      style={{ background: warmGold }}
+                    />
                     <h2
                       className="text-2xl font-light"
                       style={{ ...serifStyle, color: warmText }}
@@ -382,10 +405,7 @@ export default function MemorialArchivePage() {
               />
             </div>
             <div id="book">
-              <MemorialBookSection
-                memorialId={memorial.id}
-                isAdmin={isAdmin}
-              />
+              <MemorialBookSection memorialId={memorial.id} isAdmin={isAdmin} />
             </div>
             <MemorialLettersSection
               memorialSlug={memorial.slug}
@@ -420,7 +440,10 @@ function ArchiveFact({
         {icon}
         {label}
       </p>
-      <p className="text-sm font-medium" style={{ ...serifStyle, color: warmText }}>
+      <p
+        className="text-sm font-medium"
+        style={{ ...serifStyle, color: warmText }}
+      >
         {value || "-"}
       </p>
     </div>
@@ -456,9 +479,18 @@ function SectionHeader({
         </p>
       )}
       <div className="mt-6 flex items-center justify-center gap-3">
-        <span className="h-px w-10" style={{ background: warmGold, opacity: 0.55 }} />
-        <span className="h-1.5 w-1.5 rounded-full" style={{ background: warmGold }} />
-        <span className="h-px w-10" style={{ background: warmGold, opacity: 0.55 }} />
+        <span
+          className="h-px w-10"
+          style={{ background: warmGold, opacity: 0.55 }}
+        />
+        <span
+          className="h-1.5 w-1.5 rounded-full"
+          style={{ background: warmGold }}
+        />
+        <span
+          className="h-px w-10"
+          style={{ background: warmGold, opacity: 0.55 }}
+        />
       </div>
     </div>
   );

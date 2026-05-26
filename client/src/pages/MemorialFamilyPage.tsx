@@ -151,7 +151,7 @@ export default function MemorialFamilyPage() {
             {statusQuery.isLoading ? (
               <StateBlock text="가족관을 불러오고 있습니다." />
             ) : statusQuery.isError || !status ? (
-              <StateBlock text="추모관을 찾을 수 없습니다." />
+              <StateBlock text="기념관을 찾을 수 없습니다." />
             ) : !hasFamilyRoom ? (
               <StateBlock text="아직 준비된 가족관이 없습니다." />
             ) : room ? (
@@ -222,12 +222,15 @@ function PasswordGate({
           >
             가족관
           </h1>
-          <p className="mt-5 text-lg font-light text-[#7f673d]" style={serifStyle}>
+          <p
+            className="mt-5 text-lg font-light text-[#7f673d]"
+            style={serifStyle}
+          >
             {memorialName} {memorialRole}
           </p>
           <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-[#6f6a61]">
-            이 공간은 유족과 가족을 위한 비공개 공간입니다. 전달받은
-            비밀번호를 입력한 뒤 들어갈 수 있습니다.
+            이 공간은 유족과 가족을 위한 비공개 공간입니다. 전달받은 비밀번호를
+            입력한 뒤 들어갈 수 있습니다.
           </p>
         </div>
 
@@ -242,9 +245,7 @@ function PasswordGate({
           autoFocus
           className="h-12 w-full border border-[#e6ded1] bg-white px-4 text-base outline-none transition-colors focus:border-[#1f1d1a]"
         />
-        {message && (
-          <p className="mt-3 text-sm text-red-500">{message}</p>
-        )}
+        {message && <p className="mt-3 text-sm text-red-500">{message}</p>}
         <button
           type="submit"
           disabled={isPending}
@@ -286,7 +287,9 @@ function UnlockedRoom({ room }: { room: FamilyRoom }) {
               <h3 className="text-xl font-light" style={serifStyle}>
                 {note.title}
               </h3>
-              <p className="mt-4 text-sm leading-7 text-[#6f6a61]">{note.body}</p>
+              <p className="mt-4 text-sm leading-7 text-[#6f6a61]">
+                {note.body}
+              </p>
             </article>
           );
         })}

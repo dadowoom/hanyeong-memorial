@@ -13,14 +13,14 @@ export const routes = {
 
 export const navItems = [
   { label: "신앙 기념관", href: routes.memorialGarden },
-  { label: "추모관", href: routes.memorialSearch },
+  { label: "기념관 찾기", href: routes.memorialSearch },
   { label: "하늘로 보내는 편지", href: routes.letters },
   { label: "서비스", href: routes.services },
 ] as const;
 
 export const serviceLinks = [
-  { label: "추모관", href: routes.memorialSearch, type: "route" },
-  { label: "추모관 만들기", href: routes.memorialCreate, type: "route" },
+  { label: "기념관 자세히 보기", href: routes.memorialSearch, type: "route" },
+  { label: "기념관 만들기", href: routes.memorialCreate, type: "route" },
   { label: "서비스", href: routes.services, type: "hash" },
 ] as const;
 
@@ -28,13 +28,13 @@ export const homeCopy = {
   services: [
     {
       number: "01",
-      title: "추모관 만들기",
-      desc: "고인의 생애와 신앙의 기록을 사진, 글, 연혁으로 정리합니다.",
+      title: "기념관 만들기",
+      desc: "성도의 생애와 신앙의 기록을 사진, 글, 연혁으로 정리합니다.",
     },
     {
       number: "02",
-      title: "기억 전하기",
-      desc: "등록된 내용을 바탕으로 품위 있는 부고장과 공유 링크를 준비합니다.",
+      title: "기념관 공유하기",
+      desc: "등록된 내용을 바탕으로 가족과 교회 공동체가 함께 볼 수 있는 링크를 준비합니다.",
     },
     {
       number: "03",
@@ -43,15 +43,16 @@ export const homeCopy = {
     },
   ],
   steps: [
-    "회원가입 후 바로 시작합니다.",
-    "고인 기본 정보와 사진, 생애 기록을 입력합니다.",
-    "추모관을 생성하고 링크를 가족과 공동체에 공유합니다.",
+    "회원가입 후 기념관 만들기를 시작합니다.",
+    "성도의 기본 정보와 사진, 생애 기록을 입력합니다.",
+    "기념관을 생성하고 링크를 가족과 공동체에 공유합니다.",
+    "소천 이후에는 별도의 추모관 전환하기 흐름으로 추모관을 열 수 있습니다.",
   ],
   values: [
     {
       number: "01",
       title: "가족에게는 위로",
-      desc: "고인의 사진과 이야기, 추모의 글을 통해 사랑하는 이를 다시 만나고, 슬픔을 믿음 안에서 위로로 품습니다.",
+      desc: "성도의 사진과 이야기, 신앙의 글을 통해 사랑하는 이를 다시 만나고, 삶의 기록을 믿음 안에서 위로로 품습니다.",
     },
     {
       number: "02",

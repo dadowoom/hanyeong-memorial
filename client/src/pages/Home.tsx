@@ -52,13 +52,13 @@ export default function Home() {
                 <Link href={routes.memorialSearch}>
                   <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
-                    신앙기념관
+                    기념관 자세히 보기
                   </button>
                 </Link>
                 <Link href={routes.memorialCreate}>
                   <button className="memorial-button-secondary">
                     <Plus className="h-4 w-4" />
-                    신앙기념관 만들기
+                    기념관 만들기
                   </button>
                 </Link>
               </div>
@@ -79,7 +79,7 @@ export default function Home() {
                 </div>
                 <h2 className="memorial-serif max-w-3xl text-xl leading-[1.75] md:text-2xl md:leading-[1.7]">
                   <span className="block">
-                    「{churchConfig.serviceName}」은 고인의 삶과 믿음과 사랑을
+                    「{churchConfig.serviceName}」은 성도의 삶과 믿음과 사랑을
                   </span>
                   <span className="block">
                     가족과 교회의 기억 속에 아름답게 보존하며,
@@ -164,9 +164,9 @@ export default function Home() {
             <div>
               <p className="memorial-eyebrow mb-4">Process</p>
               <h2 className="memorial-serif text-3xl md:text-5xl">
-                마음 남기기
+                기념관
                 <br />
-                절차
+                만들기
               </h2>
             </div>
             <div className="border-t memorial-section">
@@ -195,11 +195,12 @@ export default function Home() {
                   {churchConfig.churchName} 성도 전용
                 </p>
                 <h2 className="memorial-serif text-3xl text-white md:text-5xl">
-                  기억을 남길 준비가 되었나요
+                  기념관을 만들 준비가 되었나요
                 </h2>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68">
-                  회원가입 후 고인을 등록하고, 온라인 추모관과 부고장을 만들 수
-                  있습니다. 방문록 작성은 누구나 참여할 수 있습니다.
+                  회원가입 후 성도의 삶과 신앙을 등록하고, 온라인 기념관을 만들
+                  수 있습니다. 소천 이후에는 추모관 전환하기 흐름으로 추모관을
+                  열 수 있습니다.
                 </p>
               </div>
               <Link href={routes.memorialCreate}>
