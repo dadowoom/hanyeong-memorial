@@ -35,15 +35,14 @@ export default function Home() {
           <div className="container relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-14 md:py-20">
             <div className="max-w-3xl">
               <p className="memorial-eyebrow mb-6">
-                {churchConfig.serviceTagline}
+                한영교회 온라인 신앙기념 서비스
               </p>
               <h1 className="memorial-serif max-w-3xl text-5xl leading-[1.08] sm:text-6xl md:text-8xl">
-                {churchConfig.serviceName}
+                <span className="block">한영교회</span>
+                <span className="block">신앙기념관</span>
               </h1>
               <p className="mt-8 max-w-2xl text-base leading-8 text-[var(--memorial-ash)] md:text-lg">
-                <span className="block">
-                  {churchConfig.serviceTitle} 「{churchConfig.serviceName}」은
-                </span>
+                <span className="block">한영교회 신앙기념관은</span>
                 <span className="block">
                   믿음으로 살다 주님 품에 안긴 성도들의 삶과 신앙을 기억하는
                   거룩한 공간입니다.
@@ -53,13 +52,13 @@ export default function Home() {
                 <Link href={routes.memorialSearch}>
                   <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
-                    추모관
+                    신앙기념관
                   </button>
                 </Link>
                 <Link href={routes.memorialCreate}>
                   <button className="memorial-button-secondary">
                     <Plus className="h-4 w-4" />
-                    추모관 만들기
+                    신앙기념관 만들기
                   </button>
                 </Link>
               </div>
