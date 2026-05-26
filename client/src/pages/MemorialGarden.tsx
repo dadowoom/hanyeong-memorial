@@ -12,6 +12,7 @@ import {
   TreePine,
   UserRound,
 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { Link } from "wouter";
 
 const FEATURES = [
@@ -36,8 +37,19 @@ const FEATURES = [
 ];
 
 export default function MemorialGarden() {
+  const [personQuery, setPersonQuery] = useState("");
   const memorialsQuery = trpc.memorial.list.useQuery();
   const memorials = memorialsQuery.data ?? [];
+  const filteredMemorials = useMemo(() => {
+    const keyword = personQuery.trim().toLowerCase();
+    if (!keyword) return memorials;
+
+    return memorials.filter(memorial =>
+      [memorial.name, memorial.role, memorial.church]
+        .filter(Boolean)
+        .some(value => value.toLowerCase().includes(keyword))
+    );
+  }, [memorials, personQuery]);
 
   return (
     <div className="memorial-shell min-h-screen">
@@ -96,7 +108,7 @@ export default function MemorialGarden() {
 
         <section className="border-b border-[var(--memorial-line)] bg-white py-16 md:py-24">
           <div className="container">
-            <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div>
                 <p className="memorial-eyebrow mb-4">Registered People</p>
                 <h2 className="memorial-serif text-3xl md:text-5xl">
@@ -109,21 +121,39 @@ export default function MemorialGarden() {
               </p>
             </div>
 
+            <div className="mb-8 grid gap-3 md:grid-cols-[minmax(0,420px)_1fr] md:items-center">
+              <label className="flex h-12 items-center gap-3 border border-[var(--memorial-line)] bg-white px-4">
+                <Search
+                  className="h-4 w-4 shrink-0 text-[var(--memorial-ash)]"
+                  strokeWidth={1.6}
+                />
+                <input
+                  value={personQuery}
+                  onChange={event => setPersonQuery(event.target.value)}
+                  placeholder="이름, 직분, 교회로 검색"
+                  className="h-full min-w-0 flex-1 bg-transparent text-sm text-[var(--memorial-ink)] outline-none placeholder:text-[var(--memorial-slate)]"
+                />
+              </label>
+              <p className="text-sm text-[var(--memorial-ash)] md:text-right">
+                등록 인물 {filteredMemorials.length}명
+              </p>
+            </div>
+
             {memorialsQuery.isLoading ? (
               <div className="border border-[var(--memorial-line)] bg-[#fbfaf8] px-6 py-12 text-center text-sm text-[var(--memorial-ash)]">
                 등록된 인물을 불러오고 있습니다.
               </div>
-            ) : memorials.length > 0 ? (
-              <div className="grid gap-px bg-[var(--memorial-line)] sm:grid-cols-2 lg:grid-cols-3">
-                {memorials.map(memorial => (
+            ) : filteredMemorials.length > 0 ? (
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {filteredMemorials.map(memorial => (
                   <Link key={memorial.id} href={`${memorial.href}/archive`}>
-                    <article className="group cursor-pointer bg-white">
-                      <div className="aspect-[4/5] overflow-hidden bg-[#f4f2ee]">
+                    <article className="group cursor-pointer border border-[var(--memorial-line)] bg-white">
+                      <div className="aspect-[4/3] overflow-hidden bg-[#f4f2ee]">
                         {memorial.photoUrl ? (
                           <img
                             src={toImgUrl(memorial.photoUrl)}
                             alt={memorial.photoCaption || memorial.name}
-                            className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
+                            className="h-full w-full object-cover object-top grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(145deg,#f7f5f0,#ebe7de)] text-[var(--memorial-ash)]">
@@ -134,16 +164,16 @@ export default function MemorialGarden() {
                           </div>
                         )}
                       </div>
-                      <div className="border-x border-b border-[var(--memorial-line)] p-5">
-                        <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--memorial-brass)]">
+                      <div className="p-4">
+                        <p className="truncate text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--memorial-brass)]">
                           {memorial.church}
                         </p>
-                        <div className="mt-4 flex items-end justify-between gap-4">
-                          <div>
-                            <h3 className="memorial-serif text-2xl text-[var(--memorial-ink)]">
+                        <div className="mt-3 flex items-end justify-between gap-4">
+                          <div className="min-w-0">
+                            <h3 className="memorial-serif truncate text-xl text-[var(--memorial-ink)]">
                               {memorial.name}
                             </h3>
-                            <p className="mt-2 text-sm text-[var(--memorial-ash)]">
+                            <p className="mt-1 truncate text-sm text-[var(--memorial-ash)]">
                               {memorial.role}
                             </p>
                           </div>
@@ -157,7 +187,9 @@ export default function MemorialGarden() {
             ) : (
               <div className="border border-[var(--memorial-line)] bg-[#fbfaf8] px-6 py-12 text-center">
                 <p className="text-sm text-[var(--memorial-ash)]">
-                  아직 공개된 기념관이 없습니다.
+                  {memorials.length === 0
+                    ? "아직 공개된 기념관이 없습니다."
+                    : "검색 결과가 없습니다."}
                 </p>
                 <Link href={routes.memorialCreate}>
                   <button className="memorial-button-primary mt-6">
@@ -167,6 +199,57 @@ export default function MemorialGarden() {
                 </Link>
               </div>
             )}
+          </div>
+        </section>
+
+        <section
+          id="memorial-space"
+          className="scroll-mt-20 border-b border-[var(--memorial-night-line)] bg-[var(--memorial-ink)] py-16 text-white md:py-24"
+        >
+          <div className="container">
+            <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:items-start">
+              <div>
+                <p className="mb-4 text-xs font-semibold uppercase text-white/62">
+                  Memorial Space
+                </p>
+                <h2 className="memorial-serif text-3xl text-white md:text-5xl">
+                  추모관
+                </h2>
+              </div>
+              <div className="border-t border-white/18">
+                {[
+                  [
+                    "전환 준비",
+                    "신앙기념관으로 기록을 먼저 정리하고, 소천 이후 필요한 시점에 추모관으로 전환할 수 있습니다.",
+                  ],
+                  [
+                    "등록 공간",
+                    "추후 추모관으로 전환된 인물은 이 영역에 별도로 모아 가족과 교회 공동체가 찾을 수 있게 준비합니다.",
+                  ],
+                  [
+                    "확장 기능",
+                    "추모관에는 사진첩, 영상, 연표와 함께 하늘로 보내는 편지 기능을 열 수 있습니다.",
+                  ],
+                ].map(([title, desc], index) => (
+                  <article
+                    key={title}
+                    className="grid gap-5 border-b border-white/18 py-6 md:grid-cols-[96px_1fr]"
+                  >
+                    <span className="text-sm text-white/46">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="memorial-serif text-xl text-white">
+                        {title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-7 text-white/68">
+                        {desc}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 

@@ -5,6 +5,7 @@ export { churchConfig };
 export const routes = {
   home: "/",
   memorialGarden: "/memorial-garden",
+  memorialSpace: "/memorial-garden#memorial-space",
   memorialSearch: "/memorial/search",
   memorialCreate: "/memorial/create",
   letters: "/letters",
@@ -13,6 +14,7 @@ export const routes = {
 
 export const navItems = [
   { label: "신앙 기념관", href: routes.memorialGarden },
+  { label: "추모관", href: routes.memorialSpace },
   { label: "기념관 찾기", href: routes.memorialSearch },
   { label: "서비스", href: routes.services },
 ] as const;
