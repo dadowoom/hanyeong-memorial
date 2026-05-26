@@ -88,40 +88,43 @@ export default function MemorialGarden() {
           </div>
         </section>
 
-        <section className="border-b memorial-section bg-white py-16 md:py-24">
+        <section className="border-b border-[var(--memorial-night-line)] bg-[var(--memorial-ink)] py-16 text-white md:py-24">
           <div className="container">
             <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
-                <p className="memorial-eyebrow mb-4">Functions</p>
-                <h2 className="memorial-serif text-3xl md:text-5xl">
+                <p className="mb-4 text-xs font-semibold uppercase text-white/62">
+                  Functions
+                </p>
+                <h2 className="memorial-serif text-3xl text-white md:text-5xl">
                   한영교회를 위한 기억 방식
                 </h2>
               </div>
-              <p className="memorial-body max-w-md text-sm">
+              <p className="max-w-md text-sm leading-7 text-white/68">
                 기존 추모관의 핵심 기능은 유지하고, 교회명과 서비스 언어를
                 한영교회 기준으로 정리했습니다.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-px bg-[var(--memorial-line)] md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-px bg-white/16 md:grid-cols-3">
               {FEATURES.map(feature => {
                 const Icon = feature.icon;
                 return (
                   <article
                     key={feature.label}
-                    className="bg-[var(--memorial-cloud)] p-6 md:p-8"
+                    className="bg-[var(--memorial-graphite)] p-6 md:p-8"
                   >
                     <div className="mb-12 flex items-start justify-between">
-                      <span className="text-xs text-[var(--memorial-ash)]">
+                      <span className="text-xs text-white/48">
                         {feature.label}
                       </span>
-                      <Icon
-                        className="h-5 w-5 text-[var(--memorial-ink)]"
-                        strokeWidth={1.5}
-                      />
+                      <Icon className="h-5 w-5 text-white" strokeWidth={1.5} />
                     </div>
-                    <h3 className="memorial-serif text-xl">{feature.title}</h3>
-                    <p className="memorial-body mt-4 text-sm">{feature.desc}</p>
+                    <h3 className="memorial-serif text-xl text-white">
+                      {feature.title}
+                    </h3>
+                    <p className="mt-4 text-sm leading-7 text-white/66">
+                      {feature.desc}
+                    </p>
                   </article>
                 );
               })}

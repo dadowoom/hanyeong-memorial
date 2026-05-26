@@ -113,37 +113,43 @@ export default function Home() {
 
         <section
           id="services"
-          className="border-b memorial-section memorial-section-muted py-16 md:py-24"
+          className="border-b border-[var(--memorial-night-line)] bg-[var(--memorial-ink)] py-16 text-white md:py-24"
         >
           <div className="container">
             <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
-                <p className="memorial-eyebrow mb-4">Services</p>
-                <h2 className="memorial-serif text-3xl md:text-5xl">
+                <p className="mb-4 text-xs font-semibold uppercase text-white/62">
+                  Services
+                </p>
+                <h2 className="memorial-serif text-3xl text-white md:text-5xl">
                   세 가지 서비스
                 </h2>
               </div>
-              <p className="memorial-body max-w-md text-sm">
+              <p className="max-w-md text-sm leading-7 text-white/68">
                 등록부터 공유, 공동체의 추모까지 흐름을 단순하게 정리했습니다.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-px bg-[var(--memorial-line)] md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-px bg-white/16 md:grid-cols-3">
               {SERVICES.map(service => {
                 const Icon = service.icon;
                 return (
-                  <article key={service.number} className="bg-white p-6 md:p-8">
+                  <article
+                    key={service.number}
+                    className="bg-[var(--memorial-graphite)] p-6 md:p-8"
+                  >
                     <div className="mb-12 flex items-start justify-between">
-                      <span className="text-sm text-[var(--memorial-slate)]">
+                      <span className="text-sm text-white/48">
                         {service.number}
                       </span>
-                      <Icon
-                        className="h-5 w-5 text-[var(--memorial-ink)]"
-                        strokeWidth={1.5}
-                      />
+                      <Icon className="h-5 w-5 text-white" strokeWidth={1.5} />
                     </div>
-                    <h3 className="memorial-serif text-xl">{service.title}</h3>
-                    <p className="memorial-body mt-4 text-sm">{service.desc}</p>
+                    <h3 className="memorial-serif text-xl text-white">
+                      {service.title}
+                    </h3>
+                    <p className="mt-4 text-sm leading-7 text-white/66">
+                      {service.desc}
+                    </p>
                   </article>
                 );
               })}
@@ -184,21 +190,21 @@ export default function Home() {
 
         <section id="membership" className="bg-white py-16 md:py-24">
           <div className="container">
-            <div className="memorial-panel grid gap-10 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-10">
+            <div className="grid gap-10 rounded-lg border border-[var(--memorial-ink)] bg-[var(--memorial-ink)] p-6 text-white md:grid-cols-[1fr_auto] md:items-center md:p-10">
               <div>
-                <p className="memorial-eyebrow mb-4">
+                <p className="mb-4 text-xs font-semibold uppercase text-white/62">
                   {churchConfig.churchName} 성도 전용
                 </p>
-                <h2 className="memorial-serif text-3xl md:text-5xl">
+                <h2 className="memorial-serif text-3xl text-white md:text-5xl">
                   기억을 남길 준비가 되었나요
                 </h2>
-                <p className="memorial-body mt-5 max-w-2xl text-sm">
+                <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68">
                   회원가입 후 고인을 등록하고, 온라인 추모관과 부고장을 만들 수
                   있습니다. 방문록 작성은 누구나 참여할 수 있습니다.
                 </p>
               </div>
               <Link href={routes.memorialCreate}>
-                <button className="memorial-button-primary">
+                <button className="memorial-button-light">
                   시작하기
                   <ArrowRight className="h-4 w-4" />
                 </button>
@@ -228,13 +234,13 @@ function HeroVideoBackground() {
         <iframe
           title={`${churchConfig.churchName} 배경 영상`}
           src={HERO_VIDEO_SRC}
-          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0 opacity-40 contrast-95 saturate-[0.72]"
+          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0 opacity-42 contrast-110 saturate-[0.55]"
           allow="autoplay; fullscreen; picture-in-picture"
           tabIndex={-1}
         />
-        <div className="absolute inset-0 bg-white/58" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--memorial-cloud)] via-white/62 to-white/18" />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/24 via-transparent to-[var(--memorial-cloud)]/78" />
+        <div className="absolute inset-0 bg-[var(--memorial-ink)]/72" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--memorial-cloud)] via-white/68 to-[var(--memorial-ink)]/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--memorial-ink)]/18 via-transparent to-[var(--memorial-ink)]/76" />
       </div>
 
       <div className="absolute inset-y-0 left-0 w-[56vw] bg-gradient-to-r from-white via-white/92 to-transparent" />

@@ -111,11 +111,14 @@
   --memorial-ink: #191c1f;
   --memorial-black: #000000;
   --memorial-cloud: #f4f4f4;
+  --memorial-frost: #f8f9fb;
   --memorial-white: #ffffff;
   --memorial-slate: #8d969e;
   --memorial-ash: #505a63;
   --memorial-line: #c9c9cd;
   --memorial-tint: #ebebf0;
+  --memorial-graphite: #202428;
+  --memorial-night-line: rgba(255, 255, 255, 0.16);
   --memorial-page-max-width: 1200px;
   --memorial-section-gap: 96px;
   --memorial-card-padding: 24px;
@@ -270,6 +273,31 @@
     background: var(--memorial-cloud);
   }
 
+  .memorial-button-light {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid var(--memorial-white);
+    border-radius: var(--memorial-radius-button);
+    background: var(--memorial-white);
+    color: var(--memorial-ink);
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .memorial-button-light:hover {
+    background: var(--memorial-cloud);
+    border-color: var(--memorial-cloud);
+  }
+
   .memorial-nav-link {
     border-radius: var(--memorial-radius-button);
     color: var(--memorial-ash);
@@ -289,6 +317,13 @@
     border: 1px solid var(--memorial-line);
     border-radius: var(--memorial-radius-panel);
     background: var(--memorial-white);
+  }
+
+  .memorial-panel-dark {
+    border: 1px solid var(--memorial-night-line);
+    border-radius: var(--memorial-radius-panel);
+    background: var(--memorial-graphite);
+    color: var(--memorial-white);
   }
 
   .memorial-input-panel {
