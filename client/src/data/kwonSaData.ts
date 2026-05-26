@@ -6,8 +6,8 @@ export const PERSON_INFO = {
   title: "권사",
   fullTitle: "이순자 권사",
   typedName: "이 순 자",
-  typedTitle: "소망교회 권사",
-  church: "소망교회",
+  typedTitle: "한영교회 권사",
+  church: "한영교회",
   subtitle: "하나님의 사랑 안에서 살아온 80년의 신앙 여정",
   heroQuote: "여호와는 나의 목자시니 내게 부족함이 없으리로다",
   heroQuoteRef: "시편 23:1",
@@ -28,8 +28,8 @@ export const TIMELINE_ITEMS = [
   },
   {
     year: "1963",
-    title: "소망교회 첫 출석",
-    description: "열여덟 살에 소망교회에 처음 출석하였습니다. 예배 중 성령의 감동을 받아 하나님께 삶을 드리기로 결심한 날이었습니다.",
+    title: "한영교회 첫 출석",
+    description: "열여덟 살에 한영교회에 처음 출석하였습니다. 예배 중 성령의 감동을 받아 하나님께 삶을 드리기로 결심한 날이었습니다.",
     category: "결심",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1979-seminary-SRrr4X9aV8sR6KSNgfqcuD.webp",
   },
@@ -43,7 +43,7 @@ export const TIMELINE_ITEMS = [
   {
     year: "1975",
     title: "권사 임직",
-    description: "오랜 신앙 생활과 헌신을 인정받아 소망교회 권사로 임직되었습니다. 임직 후에도 더욱 겸손하게 교회를 섬기는 삶을 살아가셨습니다.",
+    description: "오랜 신앙 생활과 헌신을 인정받아 한영교회 권사로 임직되었습니다. 임직 후에도 더욱 겸손하게 교회를 섬기는 삶을 살아가셨습니다.",
     category: "안수",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1983-ordination-7aDktJ8bQBcauNbvL6fLgC.webp",
   },
@@ -71,7 +71,7 @@ export const TIMELINE_ITEMS = [
   {
     year: "2024",
     title: "하나님의 품으로",
-    description: "2024년 봄, 소망교회 성도들의 기도와 사랑 속에서 하나님의 품으로 돌아가셨습니다. 마지막 순간까지 '감사합니다, 하나님'을 고백하셨습니다.",
+    description: "2024년 봄, 한영교회 성도들의 기도와 사랑 속에서 하나님의 품으로 돌아가셨습니다. 마지막 순간까지 '감사합니다, 하나님'을 고백하셨습니다.",
     category: "은퇴",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-2024-retirement-gbCPQXseZhCxafxEWABAri.webp",
   },
@@ -82,7 +82,7 @@ export const FAITH_CHAPTERS = [
     chapter: "제1장",
     title: "부르심",
     subtitle: "하나님의 음성을 듣다",
-    content: "어린 시절 어머니의 새벽기도 소리를 들으며 하나님을 처음 만났습니다. 열여덟 살에 소망교회에서 성령의 감동을 받아 하나님께 삶을 드리기로 결심하였습니다.",
+    content: "어린 시절 어머니의 새벽기도 소리를 들으며 하나님을 처음 만났습니다. 열여덟 살에 한영교회에서 성령의 감동을 받아 하나님께 삶을 드리기로 결심하였습니다.",
     verse: "내가 주의 목소리를 들었나이다 — 이사야 6:8",
     icon: "십자가",
   },
@@ -112,9 +112,9 @@ export const FAITH_CHAPTERS = [
   },
   {
     chapter: "제5장",
-    title: "소망",
-    subtitle: "영원한 소망을 품다",
-    content: "마지막 순간까지 하나님을 향한 소망을 잃지 않으셨습니다. 손자녀들을 위해 기도하며 신앙의 유산을 다음 세대에 전하고자 하셨습니다.",
+    title: "믿음",
+    subtitle: "영원한 믿음을 품다",
+    content: "마지막 순간까지 하나님을 향한 믿음을 잃지 않으셨습니다. 손자녀들을 위해 기도하며 신앙의 유산을 다음 세대에 전하고자 하셨습니다.",
     verse: "인자가 온 것은 섬김을 받으려 함이 아니라 도리어 섬기려 함이라 — 마태복음 20:28",
     icon: "비둘기",
   },
@@ -131,7 +131,7 @@ export const SERVICE_STATS = [
 
 export const GALLERY_ITEMS = [
   {
-    title: "소망교회 첫 출석",
+    title: "한영교회 첫 출석",
     year: "1963",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1979-seminary-SRrr4X9aV8sR6KSNgfqcuD.webp",
   },

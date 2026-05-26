@@ -1,0 +1,22 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F8F7F4"/>
+  <path d="M0 0H1200V630H0V0Z" fill="url(#paper)"/>
+  <rect x="86" y="78" width="1028" height="474" stroke="#D7D2C8" stroke-width="2"/>
+  <rect x="116" y="108" width="968" height="414" stroke="#E7E2D8" stroke-width="1"/>
+  <path d="M186 210H278" stroke="#18181B" stroke-width="2"/>
+  <path d="M922 420H1014" stroke="#18181B" stroke-width="2"/>
+  <text x="186" y="182" fill="#5F5A50" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="500" letter-spacing="0">한영교회 온라인 추모 서비스</text>
+  <text x="186" y="318" fill="#121212" font-family="Noto Serif KR, AppleMyungjo, serif" font-size="88" font-weight="400" letter-spacing="0">한영 추모관</text>
+  <text x="188" y="382" fill="#4A4946" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="400" letter-spacing="0">성도의 삶과 믿음을 가족과 교회의 기억 속에 보존합니다</text>
+  <text x="188" y="462" fill="#7A756C" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="400" letter-spacing="0">HANYEONG MEMORIAL</text>
+  <circle cx="958" cy="226" r="58" stroke="#C8B98A" stroke-width="2"/>
+  <path d="M958 183V269" stroke="#18181B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M916 226H1000" stroke="#18181B" stroke-width="4" stroke-linecap="round"/>
+  <defs>
+    <radialGradient id="paper" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(930 126) rotate(132) scale(700 900)">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.52" stop-color="#F8F7F4"/>
+      <stop offset="1" stop-color="#EEEAE1"/>
+    </radialGradient>
+  </defs>
+</svg>

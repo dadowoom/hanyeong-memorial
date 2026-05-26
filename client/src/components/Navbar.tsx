@@ -1,15 +1,9 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { churchConfig, navItems, routes } from "@/config/church";
 import { getLoginUrl } from "@/const";
 import { Menu, Plus, Search, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
-
-const navItems = [
-  { label: "소망동산", href: "/somang-hill" },
-  { label: "추모관", href: "/memorial/search" },
-  { label: "하늘로 보내는 편지", href: "/letters" },
-  { label: "서비스", href: "/#services" },
-];
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -31,10 +25,10 @@ export default function Navbar() {
                   className="block text-sm font-normal text-[#121212]"
                   style={{ fontFamily: "'Noto Serif KR', serif" }}
                 >
-                  소망이 있는 곳
+                  {churchConfig.serviceName}
                 </span>
                 <span className="block text-[10px] tracking-[0.16em] text-[#616161]">
-                  소망교회 추모관
+                  {churchConfig.serviceSubtitle}
                 </span>
               </div>
             </div>
@@ -53,7 +47,7 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <Link href="/memorial/search">
+            <Link href={routes.memorialSearch}>
               <button className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-[#dbdad7] bg-white px-4 text-xs font-medium text-[#121212] transition-colors hover:bg-[#f6f5f2]">
                 <Search className="h-3.5 w-3.5" />
                 추모관
@@ -110,7 +104,7 @@ export default function Navbar() {
                 {item.label}
               </a>
             ))}
-            <Link href="/memorial/search">
+            <Link href={routes.memorialSearch}>
               <span
                 onClick={closeMobile}
                 className="py-3 text-sm text-[#121212]"
@@ -118,12 +112,12 @@ export default function Navbar() {
                 추모관
               </span>
             </Link>
-            <Link href="/memorial/create">
+            <Link href={routes.memorialCreate}>
               <span
                 onClick={closeMobile}
                 className="py-3 text-sm text-[#121212]"
               >
-                소망 만들기
+                추모관 만들기
               </span>
             </Link>
             <div className="mt-3 border-t border-[#dbdad7] pt-4">

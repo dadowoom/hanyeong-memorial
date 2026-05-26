@@ -38,7 +38,7 @@ const events: TimelineEvent[] = [
   {
     year: "1983",
     title: "세례 받음",
-    description: "소망교회에서 세례를 받고 본격적인 신앙의 여정을 시작. 이때부터 매주 빠짐없이 예배에 참석하는 삶을 살아감.",
+    description: "한영교회에서 세례를 받고 본격적인 신앙의 여정을 시작. 이때부터 매주 빠짐없이 예배에 참석하는 삶을 살아감.",
     icon: "✝",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/timeline-1983-baptism-ePHFdmvLiFTZ5bY9GtQG6s.webp",
   },
@@ -59,7 +59,7 @@ const events: TimelineEvent[] = [
   {
     year: "1995",
     title: "집사 임명",
-    description: "소망교회 집사로 임명되어 교회 건축 위원회와 재정 위원회에서 헌신적으로 봉사를 시작함.",
+    description: "한영교회 집사로 임명되어 교회 건축 위원회와 재정 위원회에서 헌신적으로 봉사를 시작함.",
     icon: "✝",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/timeline-1995-deacon-2WfRRnxtr6TBqggrjkXfkH.webp",
   },
@@ -87,7 +87,7 @@ const events: TimelineEvent[] = [
   {
     year: "현재",
     title: "신앙의 여정은 계속됩니다",
-    description: "손자녀 3명의 자랑스러운 할아버지이자, 소망교회의 든든한 기둥으로 오늘도 묵묵히 신앙의 길을 걸어가고 있음.",
+    description: "손자녀 3명의 자랑스러운 할아버지이자, 한영교회의 든든한 기둥으로 오늘도 묵묵히 신앙의 길을 걸어가고 있음.",
     icon: "✝",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/timeline-present-VM9SrbDeekzb4bSd6qctAS.webp",
   },

@@ -5,7 +5,7 @@ CREATE TABLE `memorials` (
 	`role` varchar(80) NOT NULL,
 	`birthDate` varchar(20) NOT NULL,
 	`deathDate` varchar(20) NOT NULL,
-	`church` varchar(160) NOT NULL DEFAULT '소망교회',
+	`church` varchar(160) NOT NULL DEFAULT '한영교회',
 	`familyContact` varchar(120),
 	`familyPhone` varchar(80),
 	`verse` text,

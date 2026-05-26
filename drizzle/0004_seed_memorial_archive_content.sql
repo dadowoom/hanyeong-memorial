@@ -43,7 +43,7 @@ SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/Mgh5Mk5AA
 FROM `memorials` WHERE `slug` = 'lee-soonja-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/lee-soonja/portrait');
 --> statement-breakpoint
 INSERT INTO `memorial_gallery_photos` (`memorialId`, `photoUrl`, `photoKey`, `caption`, `year`, `sortOrder`, `isRepresentative`)
-SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1979-seminary-SRrr4X9aV8sR6KSNgfqcuD.webp', 'seed/lee-soonja/1963-first-worship', '소망교회 첫 출석', '1963', 1, 0
+SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1979-seminary-SRrr4X9aV8sR6KSNgfqcuD.webp', 'seed/lee-soonja/1963-first-worship', '한영교회 첫 출석', '1963', 1, 0
 FROM `memorials` WHERE `slug` = 'lee-soonja-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/lee-soonja/1963-first-worship');
 --> statement-breakpoint
 INSERT INTO `memorial_gallery_photos` (`memorialId`, `photoUrl`, `photoKey`, `caption`, `year`, `sortOrder`, `isRepresentative`)
@@ -83,46 +83,46 @@ SELECT `id`, 'https://images.unsplash.com/photo-1519741497674-611481863552?w=900
 FROM `memorials` WHERE `slug` = 'kim-yohan-elder' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-yohan/2018-anniversary');
 --> statement-breakpoint
 INSERT INTO `memorial_gallery_photos` (`memorialId`, `photoUrl`, `photoKey`, `caption`, `year`, `sortOrder`, `isRepresentative`)
-SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/Mgh5Mk5AAaqsycpXA9tc7E/memorial_elder_woman-VLyrQ8BXGGoAo339g3C8yL.webp', 'seed/kim-somang/portrait', '김소망 권사', '2026', 0, 1
-FROM `memorials` WHERE `slug` = 'kim-somang-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-somang/portrait');
+SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/Mgh5Mk5AAaqsycpXA9tc7E/memorial_elder_woman-VLyrQ8BXGGoAo339g3C8yL.webp', 'seed/kim-eunhye/portrait', '김은혜 권사', '2026', 0, 1
+FROM `memorials` WHERE `slug` = 'kim-eunhye-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-eunhye/portrait');
 --> statement-breakpoint
 INSERT INTO `memorial_gallery_photos` (`memorialId`, `photoUrl`, `photoKey`, `caption`, `year`, `sortOrder`, `isRepresentative`)
-SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1979-seminary-SRrr4X9aV8sR6KSNgfqcuD.webp', 'seed/kim-somang/1986-first-worship', '소망교회 첫 출석', '1986', 1, 0
-FROM `memorials` WHERE `slug` = 'kim-somang-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-somang/1986-first-worship');
+SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1979-seminary-SRrr4X9aV8sR6KSNgfqcuD.webp', 'seed/kim-eunhye/1986-first-worship', '한영교회 첫 출석', '1986', 1, 0
+FROM `memorials` WHERE `slug` = 'kim-eunhye-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-eunhye/1986-first-worship');
 --> statement-breakpoint
 INSERT INTO `memorial_gallery_photos` (`memorialId`, `photoUrl`, `photoKey`, `caption`, `year`, `sortOrder`, `isRepresentative`)
-SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1983-ordination-7aDktJ8bQBcauNbvL6fLgC.webp', 'seed/kim-somang/1994-ordination', '권사 임직', '1994', 2, 0
-FROM `memorials` WHERE `slug` = 'kim-somang-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-somang/1994-ordination');
+SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1983-ordination-7aDktJ8bQBcauNbvL6fLgC.webp', 'seed/kim-eunhye/1994-ordination', '권사 임직', '1994', 2, 0
+FROM `memorials` WHERE `slug` = 'kim-eunhye-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-eunhye/1994-ordination');
 --> statement-breakpoint
 INSERT INTO `memorial_gallery_photos` (`memorialId`, `photoUrl`, `photoKey`, `caption`, `year`, `sortOrder`, `isRepresentative`)
-SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-2022-grandchildren-5N63ftfLe4iHY27LkwfFtd.webp', 'seed/kim-somang/2018-family', '가족과 함께', '2018', 3, 0
-FROM `memorials` WHERE `slug` = 'kim-somang-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-somang/2018-family');
+SELECT `id`, 'https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-2022-grandchildren-5N63ftfLe4iHY27LkwfFtd.webp', 'seed/kim-eunhye/2018-family', '가족과 함께', '2018', 3, 0
+FROM `memorials` WHERE `slug` = 'kim-eunhye-kwonsa' AND NOT EXISTS (SELECT 1 FROM `memorial_gallery_photos` WHERE `photoKey` = 'seed/kim-eunhye/2018-family');
 --> statement-breakpoint
 INSERT INTO `memorial_videos` (`memorialId`, `title`, `description`, `youtubeVideoId`, `isVisible`, `sortOrder`)
-SELECT `id`, '소망의 길을 기억하며', '가족이 함께 보는 추모 영상입니다.', 'Ehp3DZxB9G4', 1, 0
-FROM `memorials` WHERE `slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-somang-kwonsa') AND NOT EXISTS (SELECT 1 FROM `memorial_videos` WHERE `memorial_videos`.`memorialId` = `memorials`.`id`);
+SELECT `id`, '믿음의 길을 기억하며', '가족이 함께 보는 추모 영상입니다.', 'Ehp3DZxB9G4', 1, 0
+FROM `memorials` WHERE `slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-eunhye-kwonsa') AND NOT EXISTS (SELECT 1 FROM `memorial_videos` WHERE `memorial_videos`.`memorialId` = `memorials`.`id`);
 --> statement-breakpoint
 INSERT INTO `memorial_books` (`memorialId`, `title`, `subtitle`, `coverPhotoUrl`, `coverPhotoKey`, `publishedYear`, `sortOrder`)
 SELECT `id`, '신앙의 여정', '가족이 기록한 생애와 믿음의 발자취', NULL, NULL, '2026', 0
-FROM `memorials` WHERE `slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-somang-kwonsa') AND NOT EXISTS (SELECT 1 FROM `memorial_books` WHERE `memorial_books`.`memorialId` = `memorials`.`id`);
+FROM `memorials` WHERE `slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-eunhye-kwonsa') AND NOT EXISTS (SELECT 1 FROM `memorial_books` WHERE `memorial_books`.`memorialId` = `memorials`.`id`);
 --> statement-breakpoint
 INSERT INTO `memorial_book_pages` (`bookId`, `title`, `content`, `photoUrl`, `photoKey`, `dateYear`, `dateMonth`, `dateDay`, `sortOrder`)
-SELECT b.`id`, '소망교회와 만나다', '예배의 자리에서 삶의 중심을 다시 세우고, 교회 공동체와 함께 신앙의 길을 걷기 시작했습니다.', g.`photoUrl`, g.`photoKey`, '1965', NULL, NULL, 0
+SELECT b.`id`, '한영교회와 만나다', '예배의 자리에서 삶의 중심을 다시 세우고, 교회 공동체와 함께 신앙의 길을 걷기 시작했습니다.', g.`photoUrl`, g.`photoKey`, '1965', NULL, NULL, 0
 FROM `memorial_books` b
 JOIN `memorials` m ON m.`id` = b.`memorialId`
 LEFT JOIN `memorial_gallery_photos` g ON g.`memorialId` = m.`id` AND g.`sortOrder` = 1
-WHERE m.`slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-somang-kwonsa') AND NOT EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id`);
+WHERE m.`slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-eunhye-kwonsa') AND NOT EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id`);
 --> statement-breakpoint
 INSERT INTO `memorial_book_pages` (`bookId`, `title`, `content`, `photoUrl`, `photoKey`, `dateYear`, `dateMonth`, `dateDay`, `sortOrder`)
 SELECT b.`id`, '가정과 섬김', '가족을 믿음 안에서 돌보고, 작은 자리에서도 교회와 이웃을 섬기는 삶을 이어갔습니다.', g.`photoUrl`, g.`photoKey`, '1980', NULL, NULL, 1
 FROM `memorial_books` b
 JOIN `memorials` m ON m.`id` = b.`memorialId`
 LEFT JOIN `memorial_gallery_photos` g ON g.`memorialId` = m.`id` AND g.`sortOrder` = 2
-WHERE m.`slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-somang-kwonsa') AND EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id` AND p.`sortOrder` = 0) AND NOT EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id` AND p.`sortOrder` = 1);
+WHERE m.`slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-eunhye-kwonsa') AND EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id` AND p.`sortOrder` = 0) AND NOT EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id` AND p.`sortOrder` = 1);
 --> statement-breakpoint
 INSERT INTO `memorial_book_pages` (`bookId`, `title`, `content`, `photoUrl`, `photoKey`, `dateYear`, `dateMonth`, `dateDay`, `sortOrder`)
-SELECT b.`id`, '감사로 남은 기억', '마지막까지 감사와 소망을 붙들었던 삶은 가족과 성도들에게 오래 남을 믿음의 유산이 되었습니다.', g.`photoUrl`, g.`photoKey`, '2024', NULL, NULL, 2
+SELECT b.`id`, '감사로 남은 기억', '마지막까지 믿음을 붙들었던 삶은 가족과 성도들에게 오래 남을 신앙의 유산이 되었습니다.', g.`photoUrl`, g.`photoKey`, '2024', NULL, NULL, 2
 FROM `memorial_books` b
 JOIN `memorials` m ON m.`id` = b.`memorialId`
 LEFT JOIN `memorial_gallery_photos` g ON g.`memorialId` = m.`id` AND g.`sortOrder` = 3
-WHERE m.`slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-somang-kwonsa') AND EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id` AND p.`sortOrder` = 1) AND NOT EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id` AND p.`sortOrder` = 2);
+WHERE m.`slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-eunhye-kwonsa') AND EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id` AND p.`sortOrder` = 1) AND NOT EXISTS (SELECT 1 FROM `memorial_book_pages` p WHERE p.`bookId` = b.`id` AND p.`sortOrder` = 2);

@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { getMemorialAccessStorageKey } from "@/config/church";
 import { trpc } from "@/lib/trpc";
 import {
   ArrowLeft,
@@ -35,8 +36,6 @@ type FamilyRoomStatus = {
 };
 
 const serifStyle = { fontFamily: "'Noto Serif KR', serif" } as const;
-const getMemorialAccessStorageKey = (slug: string) =>
-  `somang.memorialAccess.${slug}`;
 const readStoredAccessToken = (slug: string) => {
   if (!slug || typeof window === "undefined") return "";
   return sessionStorage.getItem(getMemorialAccessStorageKey(slug)) || "";

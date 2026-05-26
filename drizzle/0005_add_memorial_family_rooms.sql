@@ -17,7 +17,7 @@ CREATE INDEX `memorial_family_rooms_memorialId_idx` ON `memorial_family_rooms` (
 INSERT INTO `memorial_family_rooms` (`memorialId`, `passwordHash`, `title`, `intro`)
 SELECT
   `id`,
-  SHA2(CONCAT('somang-family:', '1234'), 256),
+  '76153b59ee1eb681b99dc467b4f6894f3f3e95abd19db088a4804f6c5518e146',
   '김영수 장로님 가족관',
   '가족들이 서로에게만 남기고 싶은 기억과 안부, 조용한 고백을 모아두는 공간입니다. 공개 추모관에 담기 어려운 개인적인 마음은 이곳에서 천천히 이어갈 수 있습니다.'
 FROM `memorials`

@@ -3,8 +3,8 @@ import MemorialDetailSimple from "@/components/MemorialDetailSimple";
 const person = {
   name: "이순자",
   fullName: "故 이순자 권사",
-  role: "소망교회 권사",
-  church: "소망교회",
+  role: "한영교회 권사",
+  church: "한영교회",
   dates: "1945 - 2024",
   photo:
     "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/Mgh5Mk5AAaqsycpXA9tc7E/memorial_elder_woman-VLyrQ8BXGGoAo339g3C8yL.webp",
@@ -15,7 +15,7 @@ const person = {
   stats: [
     { label: "섬김", value: "55년" },
     { label: "직분", value: "권사" },
-    { label: "공동체", value: "소망교회" },
+    { label: "공동체", value: "한영교회" },
   ],
   timeline: [
     {
@@ -25,8 +25,8 @@ const person = {
     },
     {
       year: "1972",
-      title: "소망교회 등록",
-      desc: "소망교회에서 예배와 봉사의 삶을 이어가기 시작했습니다.",
+      title: "한영교회 등록",
+      desc: "한영교회에서 예배와 봉사의 삶을 이어가기 시작했습니다.",
     },
     {
       year: "1991",
@@ -49,7 +49,7 @@ const person = {
       body: "늘 먼저 안부를 묻던 따뜻한 마음을 기억합니다.",
     },
     {
-      name: "소망교회",
+      name: "한영교회",
       body: "권사님의 조용한 섬김과 신앙의 발자취에 감사드립니다.",
     },
   ],

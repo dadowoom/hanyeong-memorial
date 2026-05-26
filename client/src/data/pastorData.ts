@@ -4,8 +4,8 @@ export const PASTOR_INFO = {
   title: "장로",
   fullTitle: "김영수 장로",
   typedName: "김 영 수",
-  typedTitle: "소망교회 원로장로",
-  church: "소망교회",
+  typedTitle: "한영교회 원로장로",
+  church: "한영교회",
   subtitle: "평생을 믿음으로 살아온 한 성도의 아름다운 이야기",
   heroQuote: "내가 선한 싸움을 싸우고 나의 달려갈 길을 마치고 믿음을 지켰으니 이제 후로는 나를 위하여 의의 면류관이 예비되었으므로",
   heroQuoteRef: "디모데후서 4:7-8",
@@ -19,10 +19,10 @@ export const PASTOR_INFO = {
 export const TIMELINE_ITEMS = [
   { year: "1942", title: "경남 진주에서 출생", description: "경상남도 진주의 기독교 가정에서 태어났습니다. 어머니의 무릎에서 드리던 기도와 찬송이 평생 신앙의 뿌리가 되었습니다.", category: "탄생", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1960-birth-h3oawzwRRgs9V5LuTAXFmK.webp" },
   { year: "1961", title: "진주고등학교 졸업 및 상경", description: "고등학교 졸업 후 서울로 상경하여 새로운 삶을 시작했습니다. 낯선 도시에서도 교회를 먼저 찾아 신앙의 닻을 내렸습니다.", category: "청년", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1979-seminary-SRrr4X9aV8sR6KSNgfqcuD.webp" },
-  { year: "1965", title: "소망교회 등록", description: "소망교회에 등록하여 신앙 공동체의 일원이 되었습니다. 이후 60여 년간 한 교회를 섬기며 변함없는 믿음을 지켜왔습니다.", category: "신앙", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1983-ordination-7aDktJ8bQBcauNbvL6fLgC.webp" },
-  { year: "1968", title: "박정순 권사님과 결혼", description: "소망교회 청년부에서 만난 박정순 권사님과 결혼하여 믿음의 가정을 이루었습니다. 두 분은 평생 함께 교회를 섬기는 아름다운 동반자가 되었습니다.", category: "가정", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1985-wedding-bjQWo7kDiwRR99t7uMFuSk.webp" },
+  { year: "1965", title: "한영교회 등록", description: "한영교회에 등록하여 신앙 공동체의 일원이 되었습니다. 이후 60여 년간 한 교회를 섬기며 변함없는 믿음을 지켜왔습니다.", category: "신앙", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1983-ordination-7aDktJ8bQBcauNbvL6fLgC.webp" },
+  { year: "1968", title: "박정순 권사님과 결혼", description: "한영교회 청년부에서 만난 박정순 권사님과 결혼하여 믿음의 가정을 이루었습니다. 두 분은 평생 함께 교회를 섬기는 아름다운 동반자가 되었습니다.", category: "가정", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1985-wedding-bjQWo7kDiwRR99t7uMFuSk.webp" },
   { year: "1978", title: "집사 임직", description: "오랜 헌신과 섬김 끝에 집사로 임직되었습니다. 교회 재정부와 봉사부에서 묵묵히 일하며 공동체를 든든히 받쳐왔습니다.", category: "임직", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1987-first-church-UoHvvAf3b4FtBvMjsTfaRS.webp" },
-  { year: "1990", title: "장로 장립", description: "소망교회 제7대 장로로 장립되었습니다. 장립 예배에서 흘린 눈물은 하나님 앞에 드리는 헌신의 서약이었습니다. 이후 30여 년간 장로로서 교회를 섬겼습니다.", category: "장립", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1990-revival-eV4ToKxSgwRVmKoKVUwWEW.webp" },
+  { year: "1990", title: "장로 장립", description: "한영교회 제7대 장로로 장립되었습니다. 장립 예배에서 흘린 눈물은 하나님 앞에 드리는 헌신의 서약이었습니다. 이후 30여 년간 장로로서 교회를 섬겼습니다.", category: "장립", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-1990-revival-eV4ToKxSgwRVmKoKVUwWEW.webp" },
   { year: "1998", title: "교회 건축 헌금 및 봉사", description: "새 성전 건축을 위해 가족과 함께 기도하며 헌금으로 동참했습니다. 건축 기간 내내 현장에서 봉사하며 성전 건축의 산 증인이 되었습니다.", category: "봉사", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-2000-new-church-TeB5MqSnZwtXjD7VqAtHHe.webp" },
   { year: "2005", title: "원로장로 추대", description: "오랜 섬김과 헌신을 인정받아 원로장로로 추대되었습니다. 후배 장로들에게 늘 기도하는 장로가 되라고 권면하셨습니다.", category: "원로", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-2006-anniversary-X7CHuM4mt4dNvsoURDPXXU.webp" },
   { year: "2015", title: "손자녀 세례 — 3대의 신앙", description: "첫 손자녀가 유아세례를 받는 날, 김영수 장로님은 눈물로 감사 기도를 드렸습니다. 3대가 하나님을 섬기는 것이 내 평생의 소원이었다고 고백하셨습니다.", category: "가정", image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/LbiqkwDAoVEVoVeykeSW5m/pastor-2022-grandchildren-5N63ftfLe4iHY27LkwfFtd.webp" },
@@ -43,7 +43,7 @@ export const SERVICE_STATS = [
   { label: "가정 예배", value: 3000, suffix: "회", icon: "✝" },
   { label: "자녀", value: 3, suffix: "명", icon: "✝" },
   { label: "손자녀", value: 7, suffix: "명", icon: "✝" },
-  { label: "소망교회 출석", value: 60, suffix: "년", icon: "✝" },
+  { label: "한영교회 출석", value: 60, suffix: "년", icon: "✝" },
 ];
 
 export const GALLERY_ITEMS = [
@@ -62,7 +62,7 @@ export const GALLERY_ITEMS = [
 ];
 
 export const QUOTE = {
-  text: "두렵지 않습니다. 주님이 기다리고 계십니다. 내가 선한 싸움을 싸우고 달려갈 길을 마쳤으니, 이제 주님 품에 안기는 것이 기쁨입니다. 사랑하는 가족들, 소망교회 성도님들, 함께해 주셔서 감사합니다.",
+  text: "두렵지 않습니다. 주님이 기다리고 계십니다. 내가 선한 싸움을 싸우고 달려갈 길을 마쳤으니, 이제 주님 품에 안기는 것이 기쁨입니다. 사랑하는 가족들, 한영교회 성도님들, 함께해 주셔서 감사합니다.",
   author: "김영수 장로",
 };
 

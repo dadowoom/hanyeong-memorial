@@ -8,6 +8,7 @@ import {
   uniqueIndex,
   varchar,
 } from "drizzle-orm/mysql-core";
+import { DEFAULT_CHURCH_NAME } from "../shared/church";
 
 /**
  * Core user table backing auth flow.
@@ -54,7 +55,7 @@ export const memorials = mysqlTable("memorials", {
   role: varchar("role", { length: 80 }).notNull(),
   birthDate: varchar("birthDate", { length: 20 }).notNull(),
   deathDate: varchar("deathDate", { length: 20 }).notNull(),
-  church: varchar("church", { length: 160 }).default("소망교회").notNull(),
+  church: varchar("church", { length: 160 }).default(DEFAULT_CHURCH_NAME).notNull(),
   familyContact: varchar("familyContact", { length: 120 }),
   familyPhone: varchar("familyPhone", { length: 80 }),
   verse: text("verse"),

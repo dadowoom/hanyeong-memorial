@@ -1,5 +1,5 @@
 /**
- * MemorialDemo — 소망 만들기 데모 페이지
+ * MemorialDemo — 추모관 만들기 데모 페이지
  * Style: Warm Chronicle (크림/아이보리 + 따뜻한 골드)
  * 1인 하드코딩 시연용 — 김요한 장로님
  */
@@ -16,22 +16,22 @@ const PERSON = {
   title: "장로",
   birth: "1942년 3월 15일",
   death: null, // 살아계신 분
-  church: "소망교회",
-  role: "원로장로 · 소망교회 창립멤버",
+  church: "한영교회",
+  role: "원로장로 · 한영교회 창립멤버",
   intro: "60년 신앙의 여정, 가족과 교회를 위해 헌신한 삶",
   photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&h=1000&fit=crop&auto=format&q=80",
   verse: "내가 선한 싸움을 싸우고 나의 달려갈 길을 마치고 믿음을 지켰으니",
   verseRef: "디모데후서 4:7",
-  summary: "1942년 서울에서 태어나 소망교회 창립 멤버로 60여 년간 교회와 함께 걸어온 김요한 장로님. 세 자녀를 신앙 안에서 키우고, 교회 건축과 선교 사역에 평생을 헌신하셨습니다.",
+  summary: "1942년 서울에서 태어나 한영교회 창립 멤버로 60여 년간 교회와 함께 걸어온 김요한 장로님. 세 자녀를 신앙 안에서 키우고, 교회 건축과 선교 사역에 평생을 헌신하셨습니다.",
 };
 
 const TIMELINE = [
   { year: "1942", title: "출생", desc: "서울 종로구에서 태어남" },
   { year: "1960", title: "신앙 결단", desc: "18세에 세례를 받고 신앙생활 시작" },
   { year: "1968", title: "결혼", desc: "이은혜 권사와 교회 결혼식을 올림" },
-  { year: "1977", title: "소망교회 창립 참여", desc: "소망교회 창립 멤버로 함께 시작" },
+  { year: "1977", title: "한영교회 창립 참여", desc: "한영교회 창립 멤버로 함께 시작" },
   { year: "1985", title: "집사 임직", desc: "교회 재정 집사로 섬기기 시작" },
-  { year: "1995", title: "장로 임직", desc: "소망교회 장로로 임직, 30년 섬김의 시작" },
+  { year: "1995", title: "장로 임직", desc: "한영교회 장로로 임직, 30년 섬김의 시작" },
   { year: "2010", title: "선교 후원", desc: "아프리카 케냐 선교사 파송 후원 시작" },
   { year: "2020", title: "원로장로 추대", desc: "평생 헌신에 감사하며 원로장로로 추대" },
 ];
@@ -58,7 +58,7 @@ const GALLERY = [
 const MESSAGES = [
   { name: "이은혜 권사", relation: "배우자", msg: "평생 믿음으로 가정을 이끌어 주셔서 감사합니다. 당신의 기도가 우리 가족의 힘이었습니다." },
   { name: "김성민 목사", relation: "장남", msg: "아버지의 신앙을 이어받아 목사가 된 것이 제 삶의 가장 큰 축복입니다." },
-  { name: "박담임 목사", relation: "소망교회 담임목사", msg: "장로님의 헌신과 기도가 소망교회를 지금의 모습으로 세웠습니다. 진심으로 감사드립니다." },
+  { name: "박담임 목사", relation: "한영교회 담임목사", msg: "장로님의 헌신과 기도가 한영교회를 지금의 모습으로 세웠습니다. 진심으로 감사드립니다." },
   { name: "최집사", relation: "교회 성도", msg: "장로님께서 항상 먼저 손을 내밀어 주셨습니다. 그 따뜻함을 잊지 못합니다." },
 ];
 
@@ -155,7 +155,7 @@ export default function MemorialDemo() {
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-8 h-px" style={{ background: "oklch(0.65 0.12 70)" }} />
                 <p className="text-xs tracking-widest" style={{ color: "oklch(0.65 0.12 70)", letterSpacing: "0.3em" }}>
-                  소망 만들기 · 개인 기념관
+                  추모관 만들기 · 개인 기념관
                 </p>
               </div>
 
@@ -405,7 +405,7 @@ export default function MemorialDemo() {
                 </h3>
                 <div className="space-y-4 text-sm leading-relaxed" style={{ color: "oklch(0.4 0.04 50)", fontWeight: 300, lineHeight: 1.9 }}>
                   <p>18세에 세례를 받은 이후, 김요한 장로님은 단 한 번도 신앙의 길에서 벗어나지 않으셨습니다. 어려운 시절에도 주일 예배를 빠지지 않으셨고, 새벽 기도를 30년 넘게 이어오셨습니다.</p>
-                  <p>소망교회 창립 멤버로서 교회 건축 헌금을 위해 개인 재산을 아낌없이 내놓으셨고, 케냐 선교사 파송을 위해 매달 후원을 이어오고 계십니다.</p>
+                  <p>한영교회 창립 멤버로서 교회 건축 헌금을 위해 개인 재산을 아낌없이 내놓으셨고, 케냐 선교사 파송을 위해 매달 후원을 이어오고 계십니다.</p>
                   <p>"믿음은 행동으로 증명된다"는 것이 장로님의 삶의 철학입니다. 말씀보다 삶으로 먼저 보여주신 분입니다.</p>
                 </div>
               </div>

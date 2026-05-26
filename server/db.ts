@@ -1,4 +1,5 @@
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "crypto";
+import { churchConfig } from "@shared/church";
 import { and, asc, desc, eq, isNull, like, or } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
@@ -384,13 +385,13 @@ export async function updateMemorial(
 
 export function hashFamilyRoomPassword(password: string) {
   return createHash("sha256")
-    .update(`somang-family:${password}`)
+    .update(`${churchConfig.storage.familyRoomPasswordSalt}:${password}`)
     .digest("hex");
 }
 
 export function hashMemorialAccessPassword(password: string) {
   return createHash("sha256")
-    .update(`somang-memorial-access:${password}`)
+    .update(`${churchConfig.storage.memorialAccessPasswordSalt}:${password}`)
     .digest("hex");
 }
 
@@ -399,7 +400,7 @@ export function createMemorialAccessToken(
   accessPasswordHash: string
 ) {
   return createHash("sha256")
-    .update(`somang-memorial-token:${slug}:${accessPasswordHash}`)
+    .update(`${churchConfig.storage.memorialAccessTokenSalt}:${slug}:${accessPasswordHash}`)
     .digest("hex");
 }
 

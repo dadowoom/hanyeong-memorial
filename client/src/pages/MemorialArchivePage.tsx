@@ -6,6 +6,7 @@ import MemorialLettersSection from "@/components/memorial/MemorialLettersSection
 import MemorialVideoSection from "@/components/memorial/MemorialVideoSection";
 import Navbar from "@/components/Navbar";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { getMemorialAccessStorageKey } from "@/config/church";
 import { toImgUrl } from "@/lib/imageUrl";
 import { getNarrativeFontSize, normalizeTextDisplaySize } from "@/lib/textDisplay";
 import { trpc } from "@/lib/trpc";
@@ -51,8 +52,6 @@ const warmGold = "oklch(0.50 0.07 72)";
 const warmText = "oklch(0.25 0.04 50)";
 const mutedText = "oklch(0.42 0.02 55)";
 const memorialPhotoFilter = "grayscale(1) contrast(1.04) brightness(1.02)";
-const getMemorialAccessStorageKey = (slug: string) =>
-  `somang.memorialAccess.${slug}`;
 const readStoredAccessToken = (slug: string) => {
   if (!slug || typeof window === "undefined") return "";
   return sessionStorage.getItem(getMemorialAccessStorageKey(slug)) || "";
@@ -146,7 +145,7 @@ export default function MemorialArchivePage() {
                         className="text-[11px] font-medium uppercase tracking-[0.28em]"
                         style={{ color: warmGold }}
                       >
-                        소망 만들기 · 개인 기념관
+                        추모관 만들기 · 개인 기념관
                       </p>
                     </div>
 

@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { churchConfig, getMemorialAccessStorageKey } from "@/config/church";
 import { toImgUrl } from "@/lib/imageUrl";
 import { trpc } from "@/lib/trpc";
 import {
@@ -62,9 +63,6 @@ type AccessStatus = {
   summary: string;
   isPrivate: boolean;
 };
-
-const getMemorialAccessStorageKey = (slug: string) =>
-  `somang.memorialAccess.${slug}`;
 
 const readStoredAccessToken = (slug: string) => {
   if (!slug || typeof window === "undefined") return "";
@@ -277,7 +275,7 @@ function MemorialContent({
                   className="text-[11px] font-medium uppercase tracking-[0.28em]"
                   style={{ color: warmGold }}
                 >
-                  Somang Memorial
+                  {churchConfig.serviceName}
                 </p>
               </div>
 

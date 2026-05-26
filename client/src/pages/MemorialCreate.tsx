@@ -1,6 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { churchConfig, memorialCreateDraftKey } from "@/config/church";
 import { trpc } from "@/lib/trpc";
 import {
   ArrowRight,
@@ -49,14 +50,14 @@ type CreatedMemorial = {
   href: string;
 };
 
-const draftKey = "somang.memorialCreateDraft";
+const draftKey = memorialCreateDraftKey;
 
 const initialForm: MemorialForm = {
   name: "",
   role: "",
   birthDate: "",
   deathDate: "",
-  church: "소망교회",
+  church: churchConfig.churchName,
   familyContact: "",
   familyPhone: "",
   slug: "",
@@ -377,7 +378,7 @@ export default function MemorialCreate() {
                 className="text-4xl font-normal leading-tight md:text-6xl"
                 style={{ fontFamily: "'Noto Serif KR', serif" }}
               >
-                아름다운 소망을
+                아름다운 기억을
                 <br />
                 만드세요
               </h1>
@@ -386,7 +387,7 @@ export default function MemorialCreate() {
                   사랑하는 분의 삶과 믿음을 조용히 담아
                 </span>
                 <span className="block">
-                  가족과 교회가 오래 기억할 수 있는 소망을 남겨보세요.
+                  가족과 교회가 오래 기억할 수 있는 기록을 남겨보세요.
                 </span>
               </p>
             </div>
@@ -559,7 +560,7 @@ export default function MemorialCreate() {
                       onChange={event =>
                         updateField("church", event.target.value)
                       }
-                      placeholder="소망교회"
+                      placeholder={churchConfig.churchName}
                     />
                   </Field>
 

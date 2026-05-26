@@ -14,7 +14,7 @@ import Login from "./pages/Login";
 import MemorialSearch from "./pages/MemorialSearch";
 import MemorialDark from "./pages/MemorialDark";
 import MemorialPublicDetail from "./pages/MemorialPublicDetail";
-import SomangHill from "./pages/SomangHill";
+import MemorialGarden from "./pages/MemorialGarden";
 import MemorialArchivePage from "./pages/MemorialArchivePage";
 import MemorialFamilyPage from "./pages/MemorialFamilyPage";
 
@@ -30,7 +30,7 @@ function Router() {
       <Route path={"/letters"} component={Letters} />
       <Route path={"/memorial/search"} component={MemorialSearch} />
       <Route path={"/memorial/dark"} component={MemorialDark} />
-      <Route path={"/somang-hill"} component={SomangHill} />
+      <Route path={"/memorial-garden"} component={MemorialGarden} />
       <Route path={"/memorial/:slug/archive"} component={MemorialArchivePage} />
       <Route path={"/memorial/:slug/family"} component={MemorialFamilyPage} />
       <Route path={"/memorial/:slug"} component={MemorialPublicDetail} />

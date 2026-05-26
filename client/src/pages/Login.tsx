@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { routes } from "@/config/church";
 import { trpc } from "@/lib/trpc";
 import { ArrowRight, Check, LockKeyhole, Mail, Phone, User } from "lucide-react";
 import type { ReactNode } from "react";
@@ -27,7 +28,7 @@ function getInitialMode(): Mode {
   const mode = params.get("mode");
   const redirect = params.get("redirect");
 
-  if (mode === "signup" || redirect === "/memorial/create") {
+  if (mode === "signup" || redirect === routes.memorialCreate) {
     return "signup";
   }
 
@@ -55,7 +56,7 @@ export default function Login() {
   const loginMutation = trpc.auth.login.useMutation();
   const signupMutation = trpc.auth.signup.useMutation();
   const redirectPath = useMemo(getRedirectPath, []);
-  const isCreateRedirect = redirectPath === "/memorial/create";
+  const isCreateRedirect = redirectPath === routes.memorialCreate;
 
   useEffect(() => {
     if (meQuery.data) {
@@ -135,7 +136,7 @@ export default function Login() {
           <div className="container grid gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.72fr)] lg:items-start">
             <div>
               <p className="mb-5 text-xs font-medium tracking-[0.24em] text-[#777]">
-                SOMANG ACCOUNT
+                HANYEONG ACCOUNT
               </p>
               <h1
                 className="text-4xl font-normal leading-tight md:text-6xl"
@@ -143,17 +144,17 @@ export default function Login() {
               >
                 회원가입 후 바로
                 <br />
-                소망을 남깁니다
+                기억을 남깁니다
               </h1>
               <p className="mt-6 max-w-lg text-sm leading-7 text-[#616161]">
-                소망 만들기는 회원가입 또는 로그인 후 이용할 수 있습니다.
+                추모관 만들기는 회원가입 또는 로그인 후 이용할 수 있습니다.
                 가입을 마치면 바로 추모관 생성 화면으로 이어집니다.
               </p>
 
               <div className="mt-10 grid gap-px border border-[#dbdad7] bg-[#dbdad7] sm:grid-cols-3">
                 {[
                   ["01", "회원가입"],
-                  ["02", "소망 만들기"],
+                  ["02", "추모관 만들기"],
                   ["03", "추모관 생성"],
                 ].map(([number, text]) => (
                   <div key={number} className="bg-white p-5">
@@ -189,7 +190,7 @@ export default function Login() {
                 <form onSubmit={submitLogin} className="mt-8 space-y-6">
                   {isCreateRedirect && (
                     <div className="border border-[#dbdad7] p-4 text-sm leading-6 text-[#616161]">
-                      이미 계정이 있다면 로그인 후 소망 만들기를 이어갈 수
+                      이미 계정이 있다면 로그인 후 추모관 만들기를 이어갈 수
                       있습니다.
                     </div>
                   )}
@@ -232,7 +233,7 @@ export default function Login() {
                 <form onSubmit={submitSignup} className="mt-8 space-y-6">
                   {isCreateRedirect && (
                     <div className="border border-[#dbdad7] p-4 text-sm leading-6 text-[#616161]">
-                      처음 이용하시는 경우 회원가입을 마치면 바로 소망 만들기
+                      처음 이용하시는 경우 회원가입을 마치면 바로 추모관 만들기
                       화면으로 이동합니다.
                     </div>
                   )}

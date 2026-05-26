@@ -1,4 +1,5 @@
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { DEFAULT_CHURCH_NAME } from "@shared/church";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import type { User } from "../drizzle/schema";
@@ -43,7 +44,7 @@ const memorialCreateInput = z.object({
   role: z.string().trim().min(1).max(80),
   birthDate: z.string().trim().min(1).max(20),
   deathDate: z.string().trim().min(1).max(20),
-  church: z.string().trim().max(160).default("소망교회"),
+  church: z.string().trim().max(160).default(DEFAULT_CHURCH_NAME),
   familyContact: z.string().trim().max(120).optional(),
   familyPhone: z.string().trim().max(80).optional(),
   slug: z.string().trim().max(120).optional(),
@@ -369,7 +370,7 @@ export const appRouter = router({
           role: input.role,
           birthDate: input.birthDate,
           deathDate: input.deathDate,
-          church: input.church || "소망교회",
+          church: input.church || DEFAULT_CHURCH_NAME,
           familyContact: input.familyContact || null,
           familyPhone: input.familyPhone || null,
           slug: input.slug || input.name,

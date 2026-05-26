@@ -14,7 +14,7 @@ const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663470178900/Lbiqkw
 
 interface HeroSectionDarkProps {
   name: string;       // 예: "김요한"
-  church: string;     // 예: "소망교회 권사"
+  church: string;     // 예: "한영교회 권사"
   title?: string;     // 직함 (없으면 church를 그대로 사용)
   heroQuote?: string; // 히어로 인용구 (없으면 기본값 사용)
   heroQuoteRef?: string;

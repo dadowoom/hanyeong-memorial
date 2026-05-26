@@ -5,10 +5,10 @@ SET `memorialDay` = CASE `slug`
   WHEN 'kim-youngsu-elder' THEN '매년 4월 7일'
   WHEN 'kim-yohan-elder' THEN '매년 6월 12일'
   WHEN 'lee-soonja-kwonsa' THEN '매년 9월 3일'
-  WHEN 'kim-somang-kwonsa' THEN '매년 5월 22일'
+  WHEN 'kim-eunhye-kwonsa' THEN '매년 5월 22일'
   ELSE `memorialDay`
 END
-WHERE `slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-somang-kwonsa');
+WHERE `slug` IN ('kim-youngsu-elder', 'kim-yohan-elder', 'lee-soonja-kwonsa', 'kim-eunhye-kwonsa');
 --> statement-breakpoint
 CREATE TABLE `memorial_reminder_subscriptions` (
   `id` int AUTO_INCREMENT NOT NULL,

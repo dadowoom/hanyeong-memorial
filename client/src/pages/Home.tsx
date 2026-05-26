@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { churchConfig, homeCopy, routes } from "@/config/church";
 import {
   ArrowRight,
   BookOpenText,
@@ -10,50 +11,13 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 
-const SERVICES = [
-  {
-    number: "01",
-    title: "소망 만들기",
-    desc: "고인의 생애와 신앙의 기록을 사진, 글, 연혁으로 정리합니다.",
-    icon: BookOpenText,
-  },
-  {
-    number: "02",
-    title: "소망 전하기",
-    desc: "등록된 내용을 바탕으로 품위 있는 부고장과 공유 링크를 준비합니다.",
-    icon: Send,
-  },
-  {
-    number: "03",
-    title: "소망 남기기",
-    desc: "교회 공동체가 방문록과 헌화로 기억의 마음을 남길 수 있습니다.",
-    icon: Flower2,
-  },
-];
-
-const STEPS = [
-  "회원가입 후 바로 시작합니다.",
-  "고인 기본 정보와 사진, 생애 기록을 입력합니다.",
-  "추모관을 생성하고 링크를 가족과 공동체에 공유합니다.",
-];
-
-const VALUES = [
-  {
-    number: "01",
-    title: "가족에게는 위로",
-    desc: "고인의 사진과 이야기, 추모의 글을 통해 사랑하는 이를 다시 만나고, 슬픔을 믿음 안에서 위로로 품습니다.",
-  },
-  {
-    number: "02",
-    title: "교회에는 기억",
-    desc: "한 사람의 예배와 봉사, 기도와 헌신은 소망교회가 걸어온 믿음의 길 위에 남겨진 귀한 흔적입니다.",
-  },
-  {
-    number: "03",
-    title: "다음 세대에는 신앙의 유산",
-    desc: "자녀와 손주들이 부모와 조부모의 삶의 고백을 만나고, 말로 다 전하지 못한 신앙의 이야기를 이어받습니다.",
-  },
-];
+const SERVICE_ICONS = [BookOpenText, Send, Flower2] as const;
+const SERVICES = homeCopy.services.map((service, index) => ({
+  ...service,
+  icon: SERVICE_ICONS[index] ?? BookOpenText,
+}));
+const STEPS = homeCopy.steps;
+const VALUES = homeCopy.values;
 
 const HERO_VIDEO_ID = "3HO-vSy2Ras";
 const HERO_VIDEO_START = 103;
@@ -71,17 +35,17 @@ export default function Home() {
           <div className="container relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-14 md:py-20">
             <div className="max-w-3xl">
               <p className="mb-6 text-[11px] font-medium tracking-[0.28em] text-[#3f3f3f] uppercase">
-                소망교회 온라인 추모 서비스
+                {churchConfig.serviceTagline}
               </p>
               <h1
                 className="max-w-3xl text-5xl font-normal leading-[1.08] sm:text-6xl md:text-8xl"
                 style={{ fontFamily: "'Noto Serif KR', serif" }}
               >
-                소망이 있는 곳
+                {churchConfig.serviceName}
               </h1>
               <p className="mt-8 max-w-2xl text-base leading-8 text-[#333333] md:text-lg">
                 <span className="block">
-                  소망교회 디지털추모관 「소망이 있는 곳」은
+                  {churchConfig.serviceTitle} 「{churchConfig.serviceName}」은
                 </span>
                 <span className="block">
                   믿음으로 살다 주님 품에 안긴 성도들의 삶과 신앙을
@@ -89,16 +53,16 @@ export default function Home() {
                 </span>
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                <Link href="/memorial/search">
+                <Link href={routes.memorialSearch}>
                   <button className="inline-flex h-12 items-center justify-center gap-2 bg-[#18181b] px-6 text-sm font-medium text-white transition-opacity hover:opacity-90">
                     <Search className="h-4 w-4" />
                     추모관
                   </button>
                 </Link>
-                <Link href="/memorial/create">
+                <Link href={routes.memorialCreate}>
                   <button className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[#dbdad7] bg-white px-6 text-sm font-medium text-[#121212] transition-colors hover:bg-[#f6f5f2]">
                     <Plus className="h-4 w-4" />
-                    소망 만들기
+                    추모관 만들기
                   </button>
                 </Link>
               </div>
@@ -124,7 +88,7 @@ export default function Home() {
                   style={{ fontFamily: "'Noto Serif KR', serif" }}
                 >
                   <span className="block">
-                    「소망이 있는 곳」은 고인의 삶과 믿음과 사랑을
+                    「{churchConfig.serviceName}」은 고인의 삶과 믿음과 사랑을
                   </span>
                   <span className="block">
                     가족과 교회의 기억 속에 아름답게 보존하며,
@@ -223,7 +187,7 @@ export default function Home() {
                 className="text-3xl font-normal tracking-[-0.02em] md:text-5xl"
                 style={{ fontFamily: "'Noto Serif KR', serif" }}
               >
-                소망 남기기
+                마음 남기기
                 <br />
                 절차
               </h2>
@@ -249,20 +213,20 @@ export default function Home() {
             <div className="grid gap-10 border border-[#dbdad7] p-6 md:grid-cols-[1fr_auto] md:items-center md:p-10">
               <div>
                 <p className="mb-4 text-[11px] font-medium tracking-[0.28em] text-[#616161] uppercase">
-                  소망교회 성도 전용
+                  {churchConfig.churchName} 성도 전용
                 </p>
                 <h2
                   className="text-3xl font-normal tracking-[-0.02em] md:text-5xl"
                   style={{ fontFamily: "'Noto Serif KR', serif" }}
                 >
-                  소망을 남길 준비가 되었나요
+                  기억을 남길 준비가 되었나요
                 </h2>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-[#616161]">
                   회원가입 후 고인을 등록하고, 온라인 추모관과 부고장을 만들
                   수 있습니다. 방문록 작성은 누구나 참여할 수 있습니다.
                 </p>
               </div>
-              <Link href="/memorial/create">
+              <Link href={routes.memorialCreate}>
                 <button className="inline-flex h-12 items-center justify-center gap-2 bg-[#18181b] px-6 text-sm font-medium text-white transition-opacity hover:opacity-90">
                   시작하기
                   <ArrowRight className="h-4 w-4" />
@@ -291,7 +255,7 @@ function HeroVideoBackground() {
         style={{ backgroundImage: `url(${HERO_VIDEO_POSTER})` }}
       >
         <iframe
-          title="소망교회 배경 영상"
+          title={`${churchConfig.churchName} 배경 영상`}
           src={HERO_VIDEO_SRC}
           className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0 opacity-70 contrast-105 saturate-[0.85]"
           allow="autoplay; fullscreen; picture-in-picture"

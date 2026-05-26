@@ -1,11 +1,12 @@
 import fs from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
+import { churchConfig } from "@shared/church";
 
 export const UPLOAD_DIR =
   process.env.UPLOAD_DIR ||
   (process.env.NODE_ENV === "production"
-    ? "/var/www/somang-memorial/uploads"
+    ? `/var/www/${churchConfig.uploadDirectoryName}/uploads`
     : path.join(process.cwd(), "uploads"));
 
 export const UPLOAD_URL_PREFIX = "/uploads";
