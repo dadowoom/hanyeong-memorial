@@ -31,7 +31,7 @@ type MemorialGallerySectionProps = {
   isAdmin: boolean;
 };
 
-const memorialPhotoFilter = "grayscale(1) contrast(1.04) brightness(1.02)";
+const memorialPhotoFilter = "contrast(1.02) brightness(1.01) saturate(1.04)";
 
 export default function MemorialGallerySection({
   memorialId,
@@ -135,8 +135,7 @@ export default function MemorialGallerySection({
       id="gallery"
       className="relative overflow-hidden py-20 md:py-32"
       style={{
-        background:
-          "linear-gradient(180deg, #ffffff, #fbfaf8, #ffffff)",
+        background: "linear-gradient(180deg, #ffffff, #fbfaf8, #ffffff)",
       }}
       onDragOver={event => {
         event.preventDefault();
@@ -209,7 +208,9 @@ export default function MemorialGallerySection({
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <p className="mt-3 text-sm text-[#6f5123]">업로드 중 {progress}%</p>
+              <p className="mt-3 text-sm text-[#6f5123]">
+                업로드 중 {progress}%
+              </p>
             </div>
           </div>
         )}
@@ -221,11 +222,11 @@ export default function MemorialGallerySection({
             {photos.map((photo, index) => (
               <article
                 key={photo.id}
-                  className="group relative overflow-hidden bg-white shadow-[0_10px_30px_rgba(31,29,26,0.05)]"
-                  style={{
-                    gridRow: index % 5 === 0 ? "span 2" : "span 1",
-                    border: "1px solid #e6ded1",
-                  }}
+                className="group relative overflow-hidden bg-white shadow-[0_10px_30px_rgba(31,29,26,0.05)]"
+                style={{
+                  gridRow: index % 5 === 0 ? "span 2" : "span 1",
+                  border: "1px solid #e6ded1",
+                }}
               >
                 <button
                   type="button"
@@ -239,7 +240,9 @@ export default function MemorialGallerySection({
                     style={{ filter: memorialPhotoFilter }}
                   />
                   <span className="absolute inset-0 bg-gradient-to-t from-[#6f5123]/0 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-hover:from-[#6f5123]/75" />
-                  {(photo.caption || photo.year || photo.isRepresentative === 1) && (
+                  {(photo.caption ||
+                    photo.year ||
+                    photo.isRepresentative === 1) && (
                     <span className="absolute bottom-0 left-0 right-0 translate-y-0 bg-gradient-to-t from-[#6f5123]/80 to-transparent p-4 text-white transition-transform duration-500 md:translate-y-full md:group-hover:translate-y-0">
                       {photo.isRepresentative === 1 && (
                         <span className="mb-2 inline-flex items-center gap-1 text-[11px]">
@@ -341,7 +344,9 @@ export default function MemorialGallerySection({
           photos={photos}
           index={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
-          onPrev={() => setLightboxIndex(value => Math.max(0, (value ?? 0) - 1))}
+          onPrev={() =>
+            setLightboxIndex(value => Math.max(0, (value ?? 0) - 1))
+          }
           onNext={() =>
             setLightboxIndex(value =>
               Math.min(photos.length - 1, (value ?? 0) + 1)
@@ -417,8 +422,12 @@ function Lightbox({
         />
         {(photo.caption || photo.year) && (
           <div className="border-t border-[#e6ded1] bg-white px-5 py-4 text-center">
-            {photo.caption && <p className="text-sm text-[#2e2218]">{photo.caption}</p>}
-            {photo.year && <p className="mt-1 text-xs text-[#7a674a]">{photo.year}</p>}
+            {photo.caption && (
+              <p className="text-sm text-[#2e2218]">{photo.caption}</p>
+            )}
+            {photo.year && (
+              <p className="mt-1 text-xs text-[#7a674a]">{photo.year}</p>
+            )}
           </div>
         )}
       </div>

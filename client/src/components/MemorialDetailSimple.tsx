@@ -51,7 +51,7 @@ export default function MemorialDetailSimple({
               <img
                 src={person.photo}
                 alt={person.fullName}
-                className="aspect-[4/5] w-full max-w-md object-cover grayscale"
+                className="aspect-[4/5] w-full max-w-md object-cover"
               />
             </div>
 

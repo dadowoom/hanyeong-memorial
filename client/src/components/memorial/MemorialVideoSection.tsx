@@ -180,7 +180,7 @@ export default function MemorialVideoSection({
                 <img
                   src={toImgUrl(coverImageUrl)}
                   alt={`${memorialName} 영상 기록`}
-                  className="absolute inset-0 h-full w-full object-cover grayscale"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               ) : (
                 <div className="absolute inset-0 bg-[#2e2218]" />
@@ -189,7 +189,10 @@ export default function MemorialVideoSection({
               <div className="absolute inset-0 bg-gradient-to-t from-[#1f1d1a]/72 via-transparent to-white/10" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="flex h-16 w-16 items-center justify-center border border-white/70 bg-white/82 text-[#2e2218] shadow-[0_16px_50px_rgba(31,29,26,0.18)]">
-                  <Play className="ml-1 h-7 w-7 fill-current" strokeWidth={1.6} />
+                  <Play
+                    className="ml-1 h-7 w-7 fill-current"
+                    strokeWidth={1.6}
+                  />
                 </span>
               </div>
               <div className="absolute bottom-6 left-6 right-6">
@@ -207,8 +210,8 @@ export default function MemorialVideoSection({
 
             <div className="flex flex-col justify-center p-6 md:p-9">
               <p className="text-sm leading-7 text-[#6f6a61]">
-                사진과 글로 다 담기 어려운 고인의 표정과 목소리를 함께
-                기억할 수 있도록 영상 기록을 준비하는 공간입니다.
+                사진과 글로 다 담기 어려운 고인의 표정과 목소리를 함께 기억할 수
+                있도록 영상 기록을 준비하는 공간입니다.
               </p>
               <div className="mt-8 border-t border-[#e6ded1] pt-6">
                 <p className="text-xs font-medium uppercase tracking-[0.24em] text-[#7f673d]">
@@ -294,7 +297,7 @@ export default function MemorialVideoSection({
                           )}
                         </span>
                         {hidden && (
-                            <span className="mt-1 inline-block border border-[#e6ded1] px-2 py-0.5 text-[11px] text-[#6f6a61]">
+                          <span className="mt-1 inline-block border border-[#e6ded1] px-2 py-0.5 text-[11px] text-[#6f6a61]">
                             숨김
                           </span>
                         )}
@@ -366,8 +369,7 @@ export default function MemorialVideoSection({
             {showAddForm ? (
               <div className="border border-[#e6ded1] bg-white p-4">
                 <p className="mb-3 flex items-center gap-2 text-sm font-medium text-[#4f4638]">
-                  <Youtube className="h-4 w-4" />
-                  새 영상 추가
+                  <Youtube className="h-4 w-4" />새 영상 추가
                 </p>
                 <input
                   value={newTitle}

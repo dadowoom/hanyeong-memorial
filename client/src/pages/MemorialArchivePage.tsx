@@ -54,7 +54,7 @@ const serifStyle = { fontFamily: "'Noto Serif KR', serif" } as const;
 const warmGold = "oklch(0.50 0.07 72)";
 const warmText = "oklch(0.25 0.04 50)";
 const mutedText = "oklch(0.42 0.02 55)";
-const memorialPhotoFilter = "grayscale(1) contrast(1.04) brightness(1.02)";
+const memorialPhotoFilter = "contrast(1.02) brightness(1.01) saturate(1.04)";
 const readStoredAccessToken = (slug: string) => {
   if (!slug || typeof window === "undefined") return "";
   return sessionStorage.getItem(getMemorialAccessStorageKey(slug)) || "";
