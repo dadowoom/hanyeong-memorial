@@ -58,7 +58,7 @@ export default function Home() {
                 <Link href={routes.memorialCreate}>
                   <button className="memorial-button-secondary">
                     <Plus className="h-4 w-4" />
-                    기념관 만들기
+                    신앙기념관 만들기
                   </button>
                 </Link>
               </div>
@@ -125,7 +125,8 @@ export default function Home() {
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-7 text-white/68">
-                등록부터 공유, 공동체의 추모까지 흐름을 단순하게 정리했습니다.
+                등록부터 공유, 공동체 댓글까지 신앙기념관 운영 흐름을 단순하게
+                정리했습니다.
               </p>
             </div>
 
@@ -164,7 +165,7 @@ export default function Home() {
             <div>
               <p className="memorial-eyebrow mb-4">Process</p>
               <h2 className="memorial-serif text-3xl md:text-5xl">
-                기념관
+                신앙기념관
                 <br />
                 만들기
               </h2>
@@ -195,12 +196,12 @@ export default function Home() {
                   {churchConfig.churchName} 성도 전용
                 </p>
                 <h2 className="memorial-serif text-3xl text-white md:text-5xl">
-                  기념관을 만들 준비가 되었나요
+                  신앙기념관을 만들 준비가 되었나요
                 </h2>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68">
-                  회원가입 후 성도의 삶과 신앙을 등록하고, 온라인 기념관을 만들
-                  수 있습니다. 소천 이후에는 추모관 전환하기 흐름으로 추모관을
-                  열 수 있습니다.
+                  회원가입 후 성도의 삶과 신앙을 등록하고, 온라인 신앙기념관을
+                  만들 수 있습니다. 소천 이후에는 별도 전환 흐름으로 추모관을 열
+                  수 있습니다.
                 </p>
               </div>
               <Link href={routes.memorialCreate}>

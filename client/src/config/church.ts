@@ -19,7 +19,7 @@ export const navItems = [
 
 export const serviceLinks = [
   { label: "기념관 자세히 보기", href: routes.memorialSearch, type: "route" },
-  { label: "기념관 만들기", href: routes.memorialCreate, type: "route" },
+  { label: "신앙기념관 만들기", href: routes.memorialCreate, type: "route" },
   { label: "서비스", href: routes.services, type: "hash" },
 ] as const;
 
@@ -27,7 +27,7 @@ export const homeCopy = {
   services: [
     {
       number: "01",
-      title: "기념관 만들기",
+      title: "신앙기념관 만들기",
       desc: "성도의 생애와 신앙의 기록을 사진, 글, 연혁으로 정리합니다.",
     },
     {
@@ -42,10 +42,9 @@ export const homeCopy = {
     },
   ],
   steps: [
-    "회원가입 후 기념관 만들기를 시작합니다.",
-    "성도의 기본 정보와 사진, 생애 기록을 입력합니다.",
-    "기념관을 생성하고 링크를 가족과 공동체에 공유합니다.",
-    "소천 이후에는 별도의 추모관 전환하기 흐름으로 추모관을 열 수 있습니다.",
+    "회원가입 후 신앙기념관 만들기를 시작합니다.",
+    "성도의 기본 정보와 사진, 신앙과 생애 기록을 입력합니다.",
+    "신앙기념관을 생성하고 링크를 가족과 교회 공동체에 공유합니다.",
   ],
   values: [
     {
