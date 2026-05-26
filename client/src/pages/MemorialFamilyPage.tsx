@@ -136,7 +136,7 @@ export default function MemorialFamilyPage() {
                         가족 전용 공간
                       </p>
                       <p className="mt-2 text-sm leading-7 text-[#6f6a61]">
-                        공개 추모관과 분리된 비공개 기록 공간입니다.
+                        공개 기념관과 분리된 비공개 기록 공간입니다.
                       </p>
                     </div>
                   </div>

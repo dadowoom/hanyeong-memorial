@@ -165,24 +165,65 @@ export const appRouter = router({
     me: publicProcedure.query(opts =>
       opts.ctx.user ? toPublicUser(opts.ctx.user) : null
     ),
-    signup: publicProcedure.input(authSignupInput).mutation(async ({ ctx, input }) => {
-      const created = await createLocalUser({
-        name: input.name,
-        email: input.email,
-        phone: input.phone,
-        password: input.password,
-      });
-
-      if (!created) {
-        throw new TRPCError({
-          code: "CONFLICT",
-          message: "이미 가입된 이메일입니다.",
+    signup: publicProcedure
+      .input(authSignupInput)
+      .mutation(async ({ ctx, input }) => {
+        const created = await createLocalUser({
+          name: input.name,
+          email: input.email,
+          phone: input.phone,
+          password: input.password,
         });
-      }
 
-      if (created.approvalStatus === "approved") {
-        const sessionToken = await sdk.createSessionToken(created.openId, {
-          name: created.name || normalizeEmail(input.email),
+        if (!created) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "이미 가입된 이메일입니다.",
+          });
+        }
+
+        if (created.approvalStatus === "approved") {
+          const sessionToken = await sdk.createSessionToken(created.openId, {
+            name: created.name || normalizeEmail(input.email),
+            expiresInMs: ONE_YEAR_MS,
+          });
+          const cookieOptions = getSessionCookieOptions(ctx.req);
+          ctx.res.cookie(COOKIE_NAME, sessionToken, {
+            ...cookieOptions,
+            maxAge: ONE_YEAR_MS,
+          });
+        }
+
+        return {
+          user: toPublicUser(created),
+          approvalStatus: created.approvalStatus,
+          firstAdmin: created.role === "admin",
+        };
+      }),
+    login: publicProcedure
+      .input(authLoginInput)
+      .mutation(async ({ ctx, input }) => {
+        const user = await getUserByEmail(input.email);
+        if (
+          !user?.passwordHash ||
+          !verifyUserPassword(input.password, user.passwordHash)
+        ) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "이메일 또는 비밀번호가 맞지 않습니다.",
+          });
+        }
+
+        const signedInAt = new Date();
+        await upsertUser({
+          openId: user.openId,
+          approvalStatus: "approved",
+          approvedAt: user.approvedAt ?? signedInAt,
+          lastSignedIn: signedInAt,
+        });
+
+        const sessionToken = await sdk.createSessionToken(user.openId, {
+          name: user.name || normalizeEmail(input.email),
           expiresInMs: ONE_YEAR_MS,
         });
         const cookieOptions = getSessionCookieOptions(ctx.req);
@@ -190,50 +231,16 @@ export const appRouter = router({
           ...cookieOptions,
           maxAge: ONE_YEAR_MS,
         });
-      }
 
-      return {
-        user: toPublicUser(created),
-        approvalStatus: created.approvalStatus,
-        firstAdmin: created.role === "admin",
-      };
-    }),
-    login: publicProcedure.input(authLoginInput).mutation(async ({ ctx, input }) => {
-      const user = await getUserByEmail(input.email);
-      if (!user?.passwordHash || !verifyUserPassword(input.password, user.passwordHash)) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "이메일 또는 비밀번호가 맞지 않습니다.",
-        });
-      }
-
-      const signedInAt = new Date();
-      await upsertUser({
-        openId: user.openId,
-        approvalStatus: "approved",
-        approvedAt: user.approvedAt ?? signedInAt,
-        lastSignedIn: signedInAt,
-      });
-
-      const sessionToken = await sdk.createSessionToken(user.openId, {
-        name: user.name || normalizeEmail(input.email),
-        expiresInMs: ONE_YEAR_MS,
-      });
-      const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.cookie(COOKIE_NAME, sessionToken, {
-        ...cookieOptions,
-        maxAge: ONE_YEAR_MS,
-      });
-
-      return {
-        user: toPublicUser({
-          ...user,
-          approvalStatus: "approved",
-          approvedAt: user.approvedAt ?? signedInAt,
-          lastSignedIn: signedInAt,
-        }),
-      };
-    }),
+        return {
+          user: toPublicUser({
+            ...user,
+            approvalStatus: "approved",
+            approvedAt: user.approvedAt ?? signedInAt,
+            lastSignedIn: signedInAt,
+          }),
+        };
+      }),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
@@ -272,7 +279,7 @@ export const appRouter = router({
         if (!status) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: "추모관을 찾을 수 없습니다.",
+            message: "기념관을 찾을 수 없습니다.",
           });
         }
 
@@ -291,7 +298,7 @@ export const appRouter = router({
         if (access === null) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: "추모관을 찾을 수 없습니다.",
+            message: "기념관을 찾을 수 없습니다.",
           });
         }
 
@@ -317,14 +324,14 @@ export const appRouter = router({
         if (!memorial) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: "추모관을 찾을 수 없습니다.",
+            message: "기념관을 찾을 수 없습니다.",
           });
         }
 
         if (!canReadMemorial(memorial, input.accessToken)) {
           throw new TRPCError({
             code: "FORBIDDEN",
-            message: "비공개 추모관입니다.",
+            message: "비공개 기념관입니다.",
           });
         }
 
@@ -357,7 +364,7 @@ export const appRouter = router({
         if (input.visibility === "private" && !input.accessPassword?.trim()) {
           throw new TRPCError({
             code: "BAD_REQUEST",
-            message: "비공개 추모관은 입장 비밀번호가 필요합니다.",
+            message: "비공개 기념관은 입장 비밀번호가 필요합니다.",
           });
         }
 
@@ -428,13 +435,13 @@ export const appRouter = router({
         if (!memorial) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: "추모관을 찾을 수 없습니다.",
+            message: "기념관을 찾을 수 없습니다.",
           });
         }
         if (!canReadMemorial(memorial, input.accessToken)) {
           throw new TRPCError({
             code: "FORBIDDEN",
-            message: "비공개 추모관입니다.",
+            message: "비공개 기념관입니다.",
           });
         }
 
@@ -450,13 +457,13 @@ export const appRouter = router({
           if (!memorial) {
             throw new TRPCError({
               code: "NOT_FOUND",
-              message: "추모관을 찾을 수 없습니다.",
+              message: "기념관을 찾을 수 없습니다.",
             });
           }
           if (!canReadMemorial(memorial, input.accessToken)) {
             throw new TRPCError({
               code: "FORBIDDEN",
-              message: "비공개 추모관입니다.",
+              message: "비공개 기념관입니다.",
             });
           }
         }
@@ -466,7 +473,7 @@ export const appRouter = router({
           throw new TRPCError({
             code: "NOT_FOUND",
             message: input.memorialSlug
-              ? "추모관을 찾을 수 없습니다."
+              ? "기념관을 찾을 수 없습니다."
               : "편지를 남길 수 없습니다.",
           });
         }
@@ -483,7 +490,7 @@ export const appRouter = router({
         if (!status) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: "추모관을 찾을 수 없습니다.",
+            message: "기념관을 찾을 수 없습니다.",
           });
         }
 
@@ -528,7 +535,7 @@ export const appRouter = router({
         if (!subscribed) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: "추모관을 찾을 수 없습니다.",
+            message: "기념관을 찾을 수 없습니다.",
           });
         }
 

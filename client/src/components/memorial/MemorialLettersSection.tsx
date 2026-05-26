@@ -111,7 +111,7 @@ export default function MemorialLettersSection({
               <p className="text-xs leading-6" style={{ color: mutedText }}>
                 {message ||
                   (isPrivate
-                    ? "비공개 추모관에만 보관되며 전체 편지 목록에는 표시되지 않습니다."
+                    ? "비공개 기념관에만 보관되며 전체 편지 목록에는 표시되지 않습니다."
                     : "남겨진 편지는 하늘로 보내는 편지에 함께 모입니다.")}
               </p>
               <button

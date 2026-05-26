@@ -26,7 +26,9 @@ type MemorialDetailSimpleProps = {
   };
 };
 
-export default function MemorialDetailSimple({ person }: MemorialDetailSimpleProps) {
+export default function MemorialDetailSimple({
+  person,
+}: MemorialDetailSimpleProps) {
   return (
     <div className="min-h-screen bg-white text-[#121212]">
       <Navbar />
@@ -105,13 +107,15 @@ export default function MemorialDetailSimple({ person }: MemorialDetailSimplePro
                 삶과 신앙
               </h2>
             </div>
-            <p className="max-w-3xl text-base leading-9 text-[#121212]">{person.summary}</p>
+            <p className="max-w-3xl text-base leading-9 text-[#121212]">
+              {person.summary}
+            </p>
           </div>
         </section>
 
         <section className="border-b border-[#dbdad7]">
           <div className="container grid grid-cols-1 gap-px bg-[#dbdad7] md:grid-cols-3">
-            {person.stats.map((stat) => (
+            {person.stats.map(stat => (
               <div key={stat.label} className="bg-white p-6 md:p-8">
                 <p className="text-sm text-[#616161]">{stat.label}</p>
                 <p
@@ -139,7 +143,7 @@ export default function MemorialDetailSimple({ person }: MemorialDetailSimplePro
               </h2>
             </div>
             <div className="border-t border-[#dbdad7]">
-              {person.timeline.map((item) => (
+              {person.timeline.map(item => (
                 <article
                   key={`${item.year}-${item.title}`}
                   className="grid gap-5 border-b border-[#dbdad7] py-6 md:grid-cols-[120px_1fr]"
@@ -152,7 +156,9 @@ export default function MemorialDetailSimple({ person }: MemorialDetailSimplePro
                     >
                       {item.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-7 text-[#616161]">{item.desc}</p>
+                    <p className="mt-3 text-sm leading-7 text-[#616161]">
+                      {item.desc}
+                    </p>
                   </div>
                 </article>
               ))}
@@ -175,15 +181,17 @@ export default function MemorialDetailSimple({ person }: MemorialDetailSimplePro
                 </h2>
               </div>
               <button className="hidden h-11 border border-[#dbdad7] px-5 text-sm transition-colors hover:bg-[#f6f5f2] md:inline-flex md:items-center">
-                마음 남기기
+                편지 남기기
               </button>
             </div>
 
             <div className="grid grid-cols-1 gap-px bg-[#dbdad7] md:grid-cols-3">
-              {person.messages.map((message) => (
+              {person.messages.map(message => (
                 <article key={message.name} className="bg-white p-6">
                   <p className="text-sm text-[#121212]">{message.name}</p>
-                  <p className="mt-4 text-sm leading-7 text-[#616161]">{message.body}</p>
+                  <p className="mt-4 text-sm leading-7 text-[#616161]">
+                    {message.body}
+                  </p>
                 </article>
               ))}
             </div>

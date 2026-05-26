@@ -168,7 +168,7 @@ export default function Letters() {
 
               <div className="border-l border-[#e6ded1] pl-0 lg:pl-8">
                 <p className="text-base leading-8" style={{ color: mutedText }}>
-                  고인에게 하고 싶은 이야기를 적어 하늘로 보내세요. 추모관에
+                  성도에게 하고 싶은 이야기를 적어 하늘로 보내세요. 기념관에
                   남겨진 편지와 이곳에서 직접 남긴 편지가 함께 모입니다.
                 </p>
                 <button
@@ -177,7 +177,7 @@ export default function Letters() {
                   className="mt-7 inline-flex h-11 items-center justify-center gap-2 bg-[#1f1d1a] px-5 text-sm font-medium text-white transition-colors hover:bg-[#33302b]"
                 >
                   <PenLine className="h-4 w-4" strokeWidth={1.7} />
-                  추모글 등록하기
+                  편지 등록하기
                 </button>
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function Letters() {
                   <input
                     value={query}
                     onChange={event => updateQuery(event.target.value)}
-                    placeholder="고인, 작성자, 내용으로 찾기"
+                    placeholder="받는 분, 작성자, 내용으로 찾기"
                     className="h-10 min-w-0 flex-1 bg-transparent text-base text-[#121212] outline-none placeholder:text-[#9a9a9a]"
                   />
                 </label>
@@ -200,7 +200,7 @@ export default function Letters() {
               <div className="grid grid-cols-4 border border-[#dbdad7] sm:flex">
                 {[
                   ["all", "전체"],
-                  ["to", "고인"],
+                  ["to", "받는 분"],
                   ["content", "내용"],
                   ["author", "작성자"],
                 ].map(([value, label]) => (
@@ -276,7 +276,7 @@ export default function Letters() {
                 <div className="flex flex-col justify-between gap-3 border-t border-[#e6ded1] bg-[#fbfaf8] p-5 sm:flex-row sm:items-center">
                   <p className="text-xs leading-6" style={{ color: mutedText }}>
                     {message ||
-                      "이곳에서 남긴 편지도 추모관 편지와 함께 모입니다."}
+                      "이곳에서 남긴 편지도 기념관 편지와 함께 모입니다."}
                   </p>
                   <button
                     type="submit"
@@ -302,7 +302,7 @@ export default function Letters() {
               </p>
               <Link href="/memorial/search">
                 <button className="h-10 border border-[#dbdad7] px-4 text-sm text-[#121212] transition-colors hover:bg-[#f6f5f2]">
-                  추모관
+                  기념관 찾기
                 </button>
               </Link>
             </div>

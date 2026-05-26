@@ -221,7 +221,7 @@ function PrivateMemorialGate({
             </button>
             <Link href="/memorial/search">
               <span className="mt-3 block cursor-pointer text-center text-xs text-[#616161] underline-offset-4 hover:underline">
-                추모관 검색으로 돌아가기
+                기념관 검색으로 돌아가기
               </span>
             </Link>
           </form>
@@ -924,7 +924,7 @@ function MemorialLetters({
               <p className="text-xs leading-6" style={{ color: mutedText }}>
                 {message ||
                   (isPrivate
-                    ? "비공개 추모관에만 보관되며 전체 편지 목록에는 표시되지 않습니다."
+                    ? "비공개 기념관에만 보관되며 전체 편지 목록에는 표시되지 않습니다."
                     : "남겨진 편지는 하늘로 보내는 편지에 함께 모입니다.")}
               </p>
               <button
