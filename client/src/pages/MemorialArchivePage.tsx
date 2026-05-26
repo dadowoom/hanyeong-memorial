@@ -363,12 +363,13 @@ export default function MemorialArchivePage() {
                       기억으로 남은 삶
                     </h2>
                     <div
-                      className="mt-6 whitespace-pre-wrap break-words font-light leading-8"
+                      className="mt-6 max-h-[360px] overflow-y-auto whitespace-pre-wrap break-words pr-3 font-light leading-7 md:max-h-[460px]"
                       style={{
                         color: "oklch(0.4 0.04 50)",
                         fontSize: getNarrativeFontSize(
                           memorial.story,
-                          normalizeTextDisplaySize(memorial.storyDisplaySize)
+                          normalizeTextDisplaySize(memorial.storyDisplaySize),
+                          0.8
                         ),
                       }}
                     >

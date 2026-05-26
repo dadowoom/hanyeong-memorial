@@ -442,11 +442,11 @@ function MemorialContent({
               >
                 기억으로 남은 삶
               </h2>
-              <div className="mt-7 space-y-5">
+              <div className="mt-7 max-h-[360px] space-y-4 overflow-y-auto pr-3 md:max-h-[440px]">
                 {storyParagraphs.map((paragraph, index) => (
                   <p
                     key={`${paragraph.slice(0, 20)}-${index}`}
-                    className="text-sm leading-8 md:text-base"
+                    className="text-[11px] leading-[1.9] md:text-[13px]"
                     style={{ color: mutedText }}
                   >
                     {paragraph}
