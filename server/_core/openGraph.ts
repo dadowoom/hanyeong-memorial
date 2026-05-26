@@ -172,11 +172,7 @@ async function getMemorialMeta(req: Request): Promise<PageMeta | null> {
     memorial.birthDate || memorial.deathDate
       ? ` (${[memorial.birthDate, memorial.deathDate].filter(Boolean).join(" - ")})`
       : "";
-  const summary = memorial.summary || churchConfig.shortDescription;
-  const description = truncate(
-    `${memorial.name}${role}님의 ${churchConfig.serviceName}입니다. ${summary}`,
-    110
-  );
+  const description = `${memorial.name}${role}님의 ${churchConfig.serviceName}입니다.`;
 
   return {
     title: `${memorial.name}${role} | ${churchConfig.serviceTitle}`,
