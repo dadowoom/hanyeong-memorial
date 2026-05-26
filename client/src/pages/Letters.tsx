@@ -168,8 +168,8 @@ export default function Letters() {
 
               <div className="border-l border-[#e6ded1] pl-0 lg:pl-8">
                 <p className="text-base leading-8" style={{ color: mutedText }}>
-                  성도에게 하고 싶은 이야기를 적어 하늘로 보내세요. 기념관에
-                  남겨진 편지와 이곳에서 직접 남긴 편지가 함께 모입니다.
+                  하늘로 보내는 편지는 추모관 전환 이후 사용하는 공간입니다.
+                  기념관 댓글과 분리해, 고인에게 전하는 편지만 조용히 모읍니다.
                 </p>
                 <button
                   type="button"
@@ -276,7 +276,7 @@ export default function Letters() {
                 <div className="flex flex-col justify-between gap-3 border-t border-[#e6ded1] bg-[#fbfaf8] p-5 sm:flex-row sm:items-center">
                   <p className="text-xs leading-6" style={{ color: mutedText }}>
                     {message ||
-                      "이곳에서 남긴 편지도 기념관 편지와 함께 모입니다."}
+                      "이곳에서 남긴 편지는 기념관 댓글과 분리되어 보관됩니다."}
                   </p>
                   <button
                     type="submit"

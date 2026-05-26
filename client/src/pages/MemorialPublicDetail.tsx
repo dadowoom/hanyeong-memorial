@@ -10,9 +10,8 @@ import {
   CalendarDays,
   Church,
   LockKeyhole,
-  Mail,
+  MessageCircle,
   Phone,
-  Send,
   Images,
 } from "lucide-react";
 import { FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
@@ -319,11 +318,11 @@ function MemorialContent({
                   </span>
                 </Link>
                 <a
-                  href="#letters"
+                  href="#comments"
                   className="inline-flex h-11 items-center justify-center gap-2 border border-[#1f1d1a] bg-white px-5 text-sm font-medium text-[#1f1d1a] transition-colors hover:bg-[#faf9f7]"
                 >
-                  <Mail className="h-4 w-4" strokeWidth={1.7} />
-                  편지 남기기
+                  <MessageCircle className="h-4 w-4" strokeWidth={1.7} />
+                  댓글 남기기
                 </a>
                 <a
                   href="#life"
@@ -506,7 +505,7 @@ function MemorialContent({
         </section>
       )}
 
-      <MemorialLetters
+      <MemorialComments
         memorialSlug={memorial.slug}
         memorialName={memorial.name}
         accessToken={accessToken}
@@ -821,7 +820,7 @@ function GoldDust() {
   );
 }
 
-function MemorialLetters({
+function MemorialComments({
   memorialSlug,
   memorialName,
   accessToken,
@@ -841,31 +840,28 @@ function MemorialLetters({
     accessToken: accessToken || undefined,
   };
 
-  const lettersQuery = trpc.letter.byMemorial.useQuery(queryInput);
-  const createLetterMutation = trpc.letter.create.useMutation({
+  const commentsQuery = trpc.comment.byMemorial.useQuery(queryInput);
+  const createCommentMutation = trpc.comment.create.useMutation({
     onSuccess: async () => {
       setAuthor("");
       setContent("");
-      setMessage("편지가 남겨졌습니다.");
-      await Promise.all([
-        utils.letter.byMemorial.invalidate(queryInput),
-        utils.letter.recent.invalidate(),
-      ]);
+      setMessage("댓글이 남겨졌습니다.");
+      await utils.comment.byMemorial.invalidate(queryInput);
     },
   });
 
-  const submitLetter = (event: FormEvent<HTMLFormElement>) => {
+  const submitComment = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const trimmedAuthor = author.trim();
     const trimmedContent = content.trim();
 
     if (!trimmedAuthor || !trimmedContent) {
-      setMessage("이름과 편지 내용을 모두 입력해주세요.");
+      setMessage("이름과 댓글 내용을 모두 입력해주세요.");
       return;
     }
 
     setMessage("");
-    createLetterMutation.mutate({
+    createCommentMutation.mutate({
       memorialSlug,
       accessToken: accessToken || undefined,
       author: trimmedAuthor,
@@ -874,17 +870,17 @@ function MemorialLetters({
   };
 
   return (
-    <section id="letters" className="py-20 md:py-28">
+    <section id="comments" className="py-20 md:py-28">
       <div className="container">
         <SectionHeader
-          eyebrow="Letters"
-          title="하늘로 보내는 편지"
-          description={`${memorialName}님께 전하고 싶은 마음을 남겨주세요.`}
+          eyebrow="Comments"
+          title="댓글"
+          description={`${memorialName}님의 기념관에 기억과 응원의 마음을 짧게 남겨주세요.`}
         />
 
         <div className="mx-auto max-w-5xl">
           <form
-            onSubmit={submitLetter}
+            onSubmit={submitComment}
             className="border border-[#e6ded1] bg-white"
           >
             <div className="grid gap-px bg-[#e6ded1] md:grid-cols-[190px_1fr]">
@@ -908,12 +904,12 @@ function MemorialLetters({
                   className="text-xs font-medium uppercase tracking-[0.16em]"
                   style={{ color: warmGold }}
                 >
-                  To {memorialName}
+                  Comment
                 </span>
                 <textarea
                   value={content}
                   onChange={event => setContent(event.target.value)}
-                  placeholder="전하고 싶은 마음을 남겨주세요."
+                  placeholder="기억이나 응원의 마음을 댓글로 남겨주세요."
                   maxLength={2000}
                   rows={5}
                   className="mt-4 w-full resize-none bg-transparent text-sm leading-7 text-[#121212] outline-none placeholder:text-[#9a9a9a]"
@@ -924,32 +920,32 @@ function MemorialLetters({
               <p className="text-xs leading-6" style={{ color: mutedText }}>
                 {message ||
                   (isPrivate
-                    ? "비공개 기념관에만 보관되며 전체 편지 목록에는 표시되지 않습니다."
-                    : "남겨진 편지는 하늘로 보내는 편지에 함께 모입니다.")}
+                    ? "비공개 기념관에만 보관되며 해당 기념관 안에서만 표시됩니다."
+                    : "댓글은 이 기념관 안에서만 표시됩니다.")}
               </p>
               <button
                 type="submit"
-                disabled={createLetterMutation.isPending}
+                disabled={createCommentMutation.isPending}
                 className="inline-flex h-11 items-center justify-center gap-2 bg-[#1f1d1a] px-5 text-sm font-medium text-white transition-colors hover:bg-[#33302b] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {createLetterMutation.isPending ? "남기는 중" : "편지 남기기"}
-                <Send className="h-4 w-4" strokeWidth={1.7} />
+                {createCommentMutation.isPending ? "남기는 중" : "댓글 남기기"}
+                <MessageCircle className="h-4 w-4" strokeWidth={1.7} />
               </button>
             </div>
           </form>
 
           <div className="mt-8 border-t border-[#e6ded1]">
-            {lettersQuery.isLoading ? (
+            {commentsQuery.isLoading ? (
               <p
                 className="border-b border-[#e6ded1] py-7 text-sm"
                 style={{ color: mutedText }}
               >
-                편지를 불러오고 있습니다.
+                댓글을 불러오고 있습니다.
               </p>
-            ) : lettersQuery.data?.length ? (
-              lettersQuery.data.map(letter => (
+            ) : commentsQuery.data?.length ? (
+              commentsQuery.data.map(comment => (
                 <article
-                  key={letter.id}
+                  key={comment.id}
                   className="border-b border-[#e6ded1] py-7"
                 >
                   <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
@@ -957,17 +953,17 @@ function MemorialLetters({
                       className="text-sm font-medium"
                       style={{ color: warmText }}
                     >
-                      From {letter.author}
+                      {comment.author}
                     </p>
                     <p className="text-xs" style={{ color: mutedText }}>
-                      {formatDate(letter.createdAt)}
+                      {formatDate(comment.createdAt)}
                     </p>
                   </div>
                   <p
                     className="mt-4 whitespace-pre-line break-words text-sm leading-7"
                     style={{ color: mutedText, overflowWrap: "anywhere" }}
                   >
-                    {letter.content}
+                    {comment.content}
                   </p>
                 </article>
               ))
@@ -976,20 +972,9 @@ function MemorialLetters({
                 className="border-b border-[#e6ded1] py-7 text-sm"
                 style={{ color: mutedText }}
               >
-                아직 남겨진 편지가 없습니다.
+                아직 남겨진 댓글이 없습니다.
               </p>
             )}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link href="/letters">
-              <span
-                className="inline-flex h-11 items-center justify-center border border-[#e6ded1] bg-white px-5 text-sm font-medium transition-colors hover:bg-[#faf9f7]"
-                style={{ color: "#4f4638" }}
-              >
-                모든 편지 보기
-              </span>
-            </Link>
           </div>
         </div>
       </div>

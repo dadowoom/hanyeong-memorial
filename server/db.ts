@@ -1,6 +1,6 @@
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "crypto";
 import { churchConfig } from "@shared/church";
-import { and, asc, desc, eq, isNull, like, or } from "drizzle-orm";
+import { and, asc, desc, eq, isNull, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertMemorialBook,
@@ -805,10 +805,7 @@ export async function listRecentMemorialLetters(limit = 100) {
     .where(
       and(
         eq(memorialLetters.status, "published"),
-        or(
-          eq(memorials.visibility, "public"),
-          isNull(memorialLetters.memorialId)
-        )
+        isNull(memorialLetters.memorialId)
       )
     )
     .orderBy(desc(memorialLetters.createdAt), desc(memorialLetters.id))

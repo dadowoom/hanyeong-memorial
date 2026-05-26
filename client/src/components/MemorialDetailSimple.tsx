@@ -181,7 +181,7 @@ export default function MemorialDetailSimple({
                 </h2>
               </div>
               <button className="hidden h-11 border border-[#dbdad7] px-5 text-sm transition-colors hover:bg-[#f6f5f2] md:inline-flex md:items-center">
-                편지 남기기
+                댓글 남기기
               </button>
             </div>
 

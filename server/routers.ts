@@ -88,6 +88,13 @@ const letterCreateInput = z
     });
   });
 
+const commentCreateInput = z.object({
+  memorialSlug: z.string().trim().min(1).max(120),
+  accessToken: z.string().trim().max(128).optional(),
+  author: z.string().trim().min(1).max(80),
+  content: z.string().trim().min(1).max(2000),
+});
+
 const familyRoomVerifyInput = z.object({
   memorialSlug: z.string().trim().min(1).max(120),
   password: z.string().trim().min(1).max(100),
@@ -412,6 +419,62 @@ export const appRouter = router({
         const { id, ...data } = input;
         await updateMemorial(id, data);
         return { success: true };
+      }),
+  }),
+
+  comment: router({
+    byMemorial: publicProcedure
+      .input(
+        z.object({
+          memorialSlug: z.string().trim().min(1).max(120),
+          accessToken: z.string().trim().max(128).optional(),
+        })
+      )
+      .query(async ({ input }) => {
+        const memorial = await getPublicMemorialBySlug(input.memorialSlug);
+        if (!memorial) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "기념관을 찾을 수 없습니다.",
+          });
+        }
+        if (!canReadMemorial(memorial, input.accessToken)) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "비공개 기념관입니다.",
+          });
+        }
+
+        const comments = await listMemorialLetters(input.memorialSlug);
+        return comments.map(withLetterLinks);
+      }),
+
+    create: publicProcedure
+      .input(commentCreateInput)
+      .mutation(async ({ input }) => {
+        const memorial = await getPublicMemorialBySlug(input.memorialSlug);
+        if (!memorial) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "기념관을 찾을 수 없습니다.",
+          });
+        }
+        if (!canReadMemorial(memorial, input.accessToken)) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "비공개 기념관입니다.",
+          });
+        }
+
+        const created = await createMemorialLetter(input);
+        if (!created) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "댓글을 남길 수 없습니다.",
+          });
+        }
+
+        return withLetterLinks(created);
       }),
   }),
 

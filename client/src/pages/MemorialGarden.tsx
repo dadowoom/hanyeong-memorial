@@ -4,7 +4,7 @@ import { churchConfig, routes } from "@/config/church";
 import {
   ArrowRight,
   BookOpenText,
-  Mail,
+  MessageCircle,
   Plus,
   Search,
   TreePine,
@@ -26,9 +26,9 @@ const FEATURES = [
   },
   {
     label: "마음",
-    title: "하늘로 보내는 편지",
-    desc: "가족과 교우가 남기는 편지를 통해 기억이 조용히 이어지도록 돕습니다.",
-    icon: Mail,
+    title: "기념관 댓글",
+    desc: "가족과 교우가 기념관에 짧은 댓글을 남기며 기억과 응원을 조용히 이어갑니다.",
+    icon: MessageCircle,
   },
 ];
 
@@ -50,7 +50,7 @@ export default function MemorialGarden() {
               <p className="memorial-body mt-8 max-w-2xl text-base">
                 {churchConfig.churchName} 성도들의 삶과 믿음을 가족과 교회가
                 함께 돌아보는 온라인 신앙 기념 공간입니다. 사진첩, 영상, 책장,
-                연표, 편지 기능을 한영교회에 맞는 차분한 언어로 정리했습니다.
+                연표, 댓글 기능을 한영교회에 맞는 차분한 언어로 정리했습니다.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link href={routes.memorialSearch}>
