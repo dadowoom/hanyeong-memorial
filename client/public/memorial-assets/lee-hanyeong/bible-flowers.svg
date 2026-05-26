@@ -1,0 +1,13 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" fill="#fbfaf6"/>
+  <ellipse cx="592" cy="570" rx="438" ry="74" fill="#e9e1d3"/>
+  <path d="M256 224h330c50 0 90 40 90 90v238H346c-50 0-90-40-90-90V224Z" fill="#fffdf8" stroke="#d6ccba" stroke-width="3"/>
+  <path d="M676 224h268v238c0 50-40 90-90 90H676V224Z" fill="#f4efe6" stroke="#d6ccba" stroke-width="3"/>
+  <path d="M676 230v320" stroke="#b49a68" stroke-width="5"/>
+  <path d="M337 316h244M337 370h244M337 424h198M741 316h130M741 370h130M741 424h92" stroke="#c9bdab" stroke-width="10" stroke-linecap="round"/>
+  <path d="M953 269c-12 96-58 168-140 215" stroke="#53683d" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="959" cy="236" r="42" fill="#d8c59b"/>
+  <circle cx="906" cy="304" r="36" fill="#b49a68"/>
+  <circle cx="850" cy="390" r="32" fill="#e4d3aa"/>
+  <text x="600" y="665" text-anchor="middle" font-family="Georgia, 'Noto Serif KR', serif" font-size="34" fill="#0b1c30">말씀과 꽃처럼 남은 마음</text>
+</svg>

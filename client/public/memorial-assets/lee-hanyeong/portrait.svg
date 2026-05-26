@@ -1,0 +1,18 @@
+<svg width="960" height="1200" viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="1200" fill="#f7f4ed"/>
+  <rect x="54" y="54" width="852" height="1092" rx="28" fill="#fffdf8" stroke="#d8cfbf" stroke-width="2"/>
+  <circle cx="480" cy="318" r="128" fill="#e8d6bd"/>
+  <path d="M332 346c22-116 72-174 150-174 84 0 137 62 154 177-42-28-92-43-150-43-60 0-111 13-154 40Z" fill="#d0b18a"/>
+  <path d="M333 350c30 52 80 80 150 80 68 0 118-27 151-81v151c0 76-62 138-138 138h-26c-76 0-137-62-137-138V350Z" fill="#ecd8c0"/>
+  <path d="M390 342c-3 31 13 56 47 75" stroke="#866851" stroke-width="8" stroke-linecap="round"/>
+  <path d="M570 342c3 31-13 56-47 75" stroke="#866851" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="431" cy="441" r="8" fill="#3b302b"/>
+  <circle cx="531" cy="441" r="8" fill="#3b302b"/>
+  <path d="M449 508c22 18 45 18 68 0" stroke="#8c5b4c" stroke-width="7" stroke-linecap="round"/>
+  <path d="M278 917c28-176 102-264 222-264 122 0 196 88 223 264H278Z" fill="#0b1c30"/>
+  <path d="M383 674c38 56 78 84 120 84 40 0 78-28 114-84l32 40c-38 74-87 111-146 111-61 0-113-37-154-111l34-40Z" fill="#f8f4eb"/>
+  <path d="M480 680v250" stroke="#b49a68" stroke-width="5"/>
+  <path d="M431 785h98M480 735v160" stroke="#d8c59b" stroke-width="9" stroke-linecap="round"/>
+  <text x="480" y="1014" text-anchor="middle" font-family="Georgia, 'Noto Serif KR', serif" font-size="54" fill="#0b1c30">이한영 권사</text>
+  <text x="480" y="1074" text-anchor="middle" font-family="'Noto Sans KR', sans-serif" font-size="24" fill="#59616a">한영교회 · 신앙의 유산</text>
+</svg>

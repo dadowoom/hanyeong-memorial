@@ -1,0 +1,18 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" fill="#f8f6f1"/>
+  <path d="M176 578h848v80H176z" fill="#e5dccd"/>
+  <path d="M242 206h716v372H242z" fill="#fffdf8" stroke="#d7ccbb" stroke-width="2"/>
+  <path d="M600 150v188M524 238h152" stroke="#0b1c30" stroke-width="18" stroke-linecap="round"/>
+  <g fill="#b49a68">
+    <circle cx="360" cy="426" r="38"/><circle cx="480" cy="426" r="38"/><circle cx="600" cy="426" r="38"/><circle cx="720" cy="426" r="38"/><circle cx="840" cy="426" r="38"/>
+  </g>
+  <g fill="#0b1c30">
+    <path d="M302 548c12-66 31-100 58-100 28 0 48 34 60 100H302Z"/>
+    <path d="M422 548c12-66 31-100 58-100 28 0 48 34 60 100H422Z"/>
+    <path d="M542 548c12-66 31-100 58-100 28 0 48 34 60 100H542Z"/>
+    <path d="M662 548c12-66 31-100 58-100 28 0 48 34 60 100H662Z"/>
+    <path d="M782 548c12-66 31-100 58-100 28 0 48 34 60 100H782Z"/>
+  </g>
+  <path d="M324 382c184-58 368-58 552 0" stroke="#d8c59b" stroke-width="8" stroke-linecap="round"/>
+  <text x="600" y="696" text-anchor="middle" font-family="Georgia, 'Noto Serif KR', serif" font-size="34" fill="#0b1c30">찬양과 섬김으로 채운 예배</text>
+</svg>
