@@ -19,8 +19,8 @@ const SERVICES = homeCopy.services.map((service, index) => ({
 const STEPS = homeCopy.steps;
 const VALUES = homeCopy.values;
 
-const HERO_VIDEO_ID = "3HO-vSy2Ras";
-const HERO_VIDEO_START = 103;
+const HERO_VIDEO_ID = "haLv3Gtv91M";
+const HERO_VIDEO_START = 0;
 const HERO_VIDEO_SRC = `https://www.youtube-nocookie.com/embed/${HERO_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${HERO_VIDEO_ID}&playsinline=1&rel=0&modestbranding=1&start=${HERO_VIDEO_START}`;
 const HERO_VIDEO_POSTER = `https://img.youtube.com/vi/${HERO_VIDEO_ID}/maxresdefault.jpg`;
 
