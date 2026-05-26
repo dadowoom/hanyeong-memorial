@@ -43,14 +43,14 @@ export default function MemorialGarden() {
           <div className="absolute right-0 top-0 hidden h-full w-1/2 border-l border-white/70 bg-[radial-gradient(circle_at_40%_35%,rgba(255,255,255,0.78),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.46),rgba(201,201,205,0.18))] md:block" />
           <div className="container relative grid gap-10 py-16 md:grid-cols-[minmax(0,0.82fr)_minmax(300px,0.7fr)] md:items-center md:py-24">
             <div>
-              <p className="memorial-eyebrow mb-5">Memorial Garden</p>
+              <p className="memorial-eyebrow mb-5">Faith Memorial</p>
               <h1 className="memorial-serif max-w-3xl text-5xl leading-[1.12] md:text-7xl">
-                기억의 동산
+                신앙 기념관
               </h1>
               <p className="memorial-body mt-8 max-w-2xl text-base">
                 {churchConfig.churchName} 성도들의 삶과 믿음을 가족과 교회가
-                함께 돌아보는 온라인 기억 공간입니다. 실제 추모관 기능은 그대로
-                유지하면서, 한영교회에 맞는 차분한 언어로 정리했습니다.
+                함께 돌아보는 온라인 신앙 기념 공간입니다. 실제 추모관 기능은
+                그대로 유지하면서, 한영교회에 맞는 차분한 언어로 정리했습니다.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link href={routes.memorialSearch}>
@@ -96,7 +96,7 @@ export default function MemorialGarden() {
                   Functions
                 </p>
                 <h2 className="memorial-serif text-3xl text-white md:text-5xl">
-                  한영교회를 위한 기억 방식
+                  한영교회를 위한 신앙 기념 방식
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-7 text-white/68">

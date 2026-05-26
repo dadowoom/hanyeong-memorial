@@ -12,7 +12,7 @@ export const routes = {
 } as const;
 
 export const navItems = [
-  { label: "기억의 동산", href: routes.memorialGarden },
+  { label: "신앙 기념관", href: routes.memorialGarden },
   { label: "추모관", href: routes.memorialSearch },
   { label: "하늘로 보내는 편지", href: routes.letters },
   { label: "서비스", href: routes.services },
