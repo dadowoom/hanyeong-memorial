@@ -92,7 +92,7 @@ export default function MemorialGarden() {
                 <Link href={routes.memorialSearch}>
                   <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
-                    기념관 자세히 보기
+                    추모관
                   </button>
                 </Link>
                 <Link href={routes.memorialCreate}>
@@ -372,17 +372,17 @@ export default function MemorialGarden() {
               <div>
                 <p className="memorial-eyebrow mb-4">Next</p>
                 <h2 className="memorial-serif text-3xl md:text-5xl">
-                  등록된 기념관으로 이동
+                  등록된 추모관으로 이동
                 </h2>
                 <p className="memorial-body mt-5 max-w-xl text-sm">
-                  성함으로 기념관을 검색하거나, 로그인 후 새 기념관을 만들 수
+                  성함으로 추모관을 검색하거나, 로그인 후 새 기념관을 만들 수
                   있습니다.
                 </p>
               </div>
 
               <Link href={routes.memorialSearch}>
                 <button className="memorial-button-primary px-5">
-                  기념관 자세히 보기
+                  추모관
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </Link>

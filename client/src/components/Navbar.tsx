@@ -48,7 +48,7 @@ export default function Navbar() {
             <Link href={routes.memorialSearch}>
               <button className="memorial-button-light min-h-9 px-4 text-xs">
                 <Search className="h-3.5 w-3.5" />
-                기념관
+                추모관
               </button>
             </Link>
             {isAuthenticated ? (
@@ -102,14 +102,6 @@ export default function Navbar() {
                 {item.label}
               </a>
             ))}
-            <Link href={routes.memorialSearch}>
-              <span
-                onClick={closeMobile}
-                className="py-3 text-sm text-white/82"
-              >
-                기념관 찾기
-              </span>
-            </Link>
             <Link href={routes.memorialCreate}>
               <span
                 onClick={closeMobile}

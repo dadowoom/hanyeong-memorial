@@ -302,7 +302,7 @@ export default function Letters() {
               </p>
               <Link href="/memorial/search">
                 <button className="h-10 border border-[#dbdad7] px-4 text-sm text-[#121212] transition-colors hover:bg-[#f6f5f2]">
-                  기념관 찾기
+                  추모관
                 </button>
               </Link>
             </div>

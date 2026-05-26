@@ -52,7 +52,7 @@ export default function Home() {
                 <Link href={routes.memorialSearch}>
                   <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
-                    기념관 자세히 보기
+                    추모관
                   </button>
                 </Link>
                 <Link href={routes.memorialCreate}>

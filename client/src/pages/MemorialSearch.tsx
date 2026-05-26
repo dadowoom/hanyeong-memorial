@@ -24,9 +24,9 @@ export default function MemorialSearch() {
           <div className="container py-16 md:py-24">
             <div className="max-w-3xl">
               <p className="memorial-eyebrow mb-5">Memorials</p>
-              <h1 className="memorial-serif text-4xl md:text-6xl">기념관</h1>
+              <h1 className="memorial-serif text-4xl md:text-6xl">추모관</h1>
               <p className="memorial-body mt-6 max-w-xl text-sm">
-                성함을 입력하면 해당 기념관을 찾을 수 있습니다. 전체 명단은
+                성함을 입력하면 해당 추모관을 찾을 수 있습니다. 전체 명단은
                 공개하지 않습니다.
               </p>
             </div>
@@ -69,26 +69,26 @@ export default function MemorialSearch() {
                   찾고 싶은 분의 성함을 입력해주세요.
                 </p>
                 <p className="memorial-body mx-auto mt-5 max-w-md text-sm">
-                  가족과 지인이 필요한 순간에 조용히 찾아볼 수 있도록, 기념관은
+                  가족과 지인이 필요한 순간에 조용히 찾아볼 수 있도록, 추모관은
                   검색을 통해서만 확인합니다.
                 </p>
               </div>
             ) : memorialsQuery.isLoading ? (
               <div className="memorial-panel py-20 text-center">
                 <p className="text-sm text-[var(--memorial-ash)]">
-                  기념관을 검색하고 있습니다.
+                  추모관을 검색하고 있습니다.
                 </p>
               </div>
             ) : memorialsQuery.isError ? (
               <div className="memorial-panel py-20 text-center">
                 <p className="text-sm text-[var(--memorial-ash)]">
-                  기념관을 검색하지 못했습니다.
+                  추모관을 검색하지 못했습니다.
                 </p>
               </div>
             ) : results.length === 0 ? (
               <div className="memorial-panel py-20 text-center">
                 <p className="text-sm text-[var(--memorial-ash)]">
-                  일치하는 기념관이 없습니다.
+                  일치하는 추모관이 없습니다.
                 </p>
               </div>
             ) : (
@@ -134,7 +134,7 @@ export default function MemorialSearch() {
                           <button className="memorial-button-secondary group min-h-10 w-fit px-4 text-sm md:ml-auto">
                             {memorial.isPrivate
                               ? "비밀번호 입력"
-                              : "기념관 자세히 보기"}
+                              : "추모관 자세히 보기"}
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                           </button>
                         </Link>

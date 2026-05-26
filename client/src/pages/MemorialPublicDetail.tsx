@@ -220,7 +220,7 @@ function PrivateMemorialGate({
             </button>
             <Link href="/memorial/search">
               <span className="mt-3 block cursor-pointer text-center text-xs text-[#616161] underline-offset-4 hover:underline">
-                기념관 검색으로 돌아가기
+                추모관으로 돌아가기
               </span>
             </Link>
           </form>
@@ -260,7 +260,7 @@ function MemorialContent({
           <Link href="/memorial/search">
             <button className="mb-10 inline-flex h-10 items-center gap-2 border border-[#e6ded1] bg-white px-4 text-sm text-[#4f4638] transition-colors hover:bg-[#faf9f7]">
               <ArrowLeft className="h-4 w-4" strokeWidth={1.6} />
-              기념관 목록
+              추모관
             </button>
           </Link>
 
