@@ -6,7 +6,7 @@ import MemorialLettersSection from "@/components/memorial/MemorialLettersSection
 import MemorialVideoSection from "@/components/memorial/MemorialVideoSection";
 import Navbar from "@/components/Navbar";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { getMemorialAccessStorageKey } from "@/config/church";
+import { churchConfig, getMemorialAccessStorageKey } from "@/config/church";
 import { toImgUrl } from "@/lib/imageUrl";
 import {
   getNarrativeFontSize,
@@ -66,6 +66,7 @@ export default function MemorialArchivePage() {
   const [accessToken, setAccessToken] = useState(() =>
     readStoredAccessToken(slug)
   );
+  const [shareMessage, setShareMessage] = useState("");
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
   const utils = trpc.useUtils();
@@ -107,6 +108,38 @@ export default function MemorialArchivePage() {
       if (!memorial) return;
       return updateMemorial.mutateAsync({ id: memorial.id, [field]: value });
     };
+  };
+
+  const handleKakaoShare = async () => {
+    if (!memorial) return;
+
+    const shareUrl =
+      typeof window === "undefined"
+        ? `${churchConfig.domain}/memorial/${memorial.slug}/archive`
+        : new URL(`/memorial/${memorial.slug}/archive`, window.location.origin)
+            .href;
+    const title = `${memorial.name} ${memorial.role} | ${churchConfig.serviceTitle}`;
+    const text = `${memorial.name} ${memorial.role}님의 ${churchConfig.serviceName}입니다.`;
+
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share({ title, text, url: shareUrl });
+        setShareMessage("공유 창을 열었습니다.");
+        return;
+      }
+
+      if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+        setShareMessage("기념관 링크를 복사했습니다.");
+        return;
+      }
+
+      setShareMessage(shareUrl);
+    } catch (error) {
+      if ((error as Error).name !== "AbortError") {
+        setShareMessage("공유를 다시 시도해주세요.");
+      }
+    }
   };
 
   return (
@@ -225,7 +258,7 @@ export default function MemorialArchivePage() {
                       />
                     </div>
 
-                    <div className="mt-8 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="mt-8 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
                       <a
                         href="#gallery"
                         className="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap bg-[#1f1d1a] px-4 text-sm font-medium text-white transition-colors hover:bg-[#33302b]"
@@ -246,6 +279,15 @@ export default function MemorialArchivePage() {
                           가족관
                         </span>
                       </Link>
+                      <button
+                        type="button"
+                        onClick={handleKakaoShare}
+                        className="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap bg-[#fee500] px-4 text-sm font-semibold text-[#241f1f] transition-colors hover:bg-[#f7d900]"
+                        aria-label="카톡 공유하기"
+                      >
+                        <KakaoTalkIcon />
+                        카톡 공유
+                      </button>
                       <a
                         href="#book"
                         className="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap border border-[#e6ded1] bg-white px-4 text-sm font-medium text-[#4f4638] transition-colors hover:bg-[#faf9f7]"
@@ -254,6 +296,11 @@ export default function MemorialArchivePage() {
                         책장과 연표
                       </a>
                     </div>
+                    {shareMessage && (
+                      <p className="mt-3 text-xs" style={{ color: mutedText }}>
+                        {shareMessage}
+                      </p>
+                    )}
                   </div>
 
                   <div className="relative mx-auto w-full max-w-[390px] md:justify-self-end">
@@ -448,6 +495,18 @@ function ArchiveFact({
         {value || "-"}
       </p>
     </div>
+  );
+}
+
+function KakaoTalkIcon() {
+  return (
+    <span
+      aria-hidden="true"
+      className="relative inline-flex h-4 w-4 items-center justify-center"
+    >
+      <span className="h-3.5 w-4 rounded-[50%] bg-[#241f1f]" />
+      <span className="absolute bottom-0 left-1 h-1.5 w-1.5 rotate-[-28deg] bg-[#241f1f]" />
+    </span>
   );
 }
 
