@@ -14,11 +14,13 @@ export const routes = {
 export const navItems = [
   { label: "신앙 기념관", href: routes.memorialGarden },
   { label: "추모관", href: routes.memorialSearch },
+  { label: "하늘로 보내는 편지", href: routes.letters },
   { label: "서비스", href: routes.services },
 ] as const;
 
 export const serviceLinks = [
   { label: "추모관", href: routes.memorialSearch, type: "route" },
+  { label: "하늘로 보내는 편지", href: routes.letters, type: "route" },
   { label: "신앙기념관 만들기", href: routes.memorialCreate, type: "route" },
   { label: "서비스", href: routes.services, type: "hash" },
 ] as const;
@@ -37,8 +39,8 @@ export const homeCopy = {
     },
     {
       number: "03",
-      title: "댓글 남기기",
-      desc: "교회 공동체가 기념관 댓글로 기억과 응원의 마음을 남길 수 있습니다.",
+      title: "하늘로 보내는 편지",
+      desc: "추모관 전환 이후 가족과 교우가 고인을 향한 그리움과 감사의 마음을 편지로 남깁니다.",
     },
   ],
   steps: [

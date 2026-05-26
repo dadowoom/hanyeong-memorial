@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 
-const SERVICE_ICONS = [BookOpenText, Send, Flower2] as const;
+const SERVICE_ICONS = [BookOpenText, Flower2, Send] as const;
 const SERVICES = homeCopy.services.map((service, index) => ({
   ...service,
   icon: SERVICE_ICONS[index] ?? BookOpenText,
