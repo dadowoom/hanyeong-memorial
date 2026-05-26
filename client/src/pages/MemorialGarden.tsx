@@ -34,38 +34,33 @@ const FEATURES = [
 
 export default function MemorialGarden() {
   return (
-    <div className="min-h-screen bg-white text-[#121212]">
+    <div className="memorial-shell min-h-screen">
       <Navbar />
 
       <main className="pt-16">
-        <section className="relative overflow-hidden border-b border-[#dbdad7] bg-[#f6f5f2]">
-          <div className="absolute inset-0 bg-[linear-gradient(120deg,#ffffff_0%,#f7f5f0_52%,#ebe7dd_100%)]" />
-          <div className="absolute right-0 top-0 hidden h-full w-1/2 border-l border-white/70 bg-[radial-gradient(circle_at_40%_35%,rgba(255,255,255,0.78),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.4),rgba(219,218,215,0.2))] md:block" />
-          <div className="container relative grid gap-10 py-14 md:grid-cols-[minmax(0,0.82fr)_minmax(300px,0.7fr)] md:py-20 md:items-center">
+        <section className="relative overflow-hidden border-b memorial-section memorial-section-muted">
+          <div className="absolute inset-0 bg-[linear-gradient(120deg,#ffffff_0%,#f8f8f8_52%,#f4f4f4_100%)]" />
+          <div className="absolute right-0 top-0 hidden h-full w-1/2 border-l border-white/70 bg-[radial-gradient(circle_at_40%_35%,rgba(255,255,255,0.78),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.46),rgba(201,201,205,0.18))] md:block" />
+          <div className="container relative grid gap-10 py-16 md:grid-cols-[minmax(0,0.82fr)_minmax(300px,0.7fr)] md:items-center md:py-24">
             <div>
-              <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-[#616161]">
-                Memorial Garden
-              </p>
-              <h1
-                className="max-w-3xl text-5xl font-normal leading-[1.12] md:text-7xl"
-                style={{ fontFamily: "'Noto Serif KR', serif" }}
-              >
+              <p className="memorial-eyebrow mb-5">Memorial Garden</p>
+              <h1 className="memorial-serif max-w-3xl text-5xl leading-[1.12] md:text-7xl">
                 기억의 동산
               </h1>
-              <p className="mt-8 max-w-2xl text-base leading-8 text-[#4f4f4f]">
+              <p className="memorial-body mt-8 max-w-2xl text-base">
                 {churchConfig.churchName} 성도들의 삶과 믿음을 가족과 교회가
-                함께 돌아보는 온라인 기억 공간입니다. 실제 추모관 기능은
-                그대로 유지하면서, 한영교회에 맞는 차분한 언어로 정리했습니다.
+                함께 돌아보는 온라인 기억 공간입니다. 실제 추모관 기능은 그대로
+                유지하면서, 한영교회에 맞는 차분한 언어로 정리했습니다.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link href={routes.memorialSearch}>
-                  <button className="inline-flex h-12 items-center justify-center gap-2 bg-[#18181b] px-6 text-sm font-medium text-white transition-opacity hover:opacity-90">
+                  <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
                     추모관 찾기
                   </button>
                 </Link>
                 <Link href={routes.memorialCreate}>
-                  <button className="inline-flex h-12 items-center justify-center gap-2 border border-[#dbdad7] bg-white px-6 text-sm font-medium text-[#121212] transition-colors hover:bg-[#f6f5f2]">
+                  <button className="memorial-button-secondary">
                     <Plus className="h-4 w-4" />
                     추모관 만들기
                   </button>
@@ -73,18 +68,18 @@ export default function MemorialGarden() {
               </div>
             </div>
 
-            <div className="border border-[#dbdad7] bg-white/74 p-6 backdrop-blur md:p-8">
-              <TreePine className="h-8 w-8 text-[#18181b]" strokeWidth={1.5} />
-              <p
-                className="mt-8 text-2xl font-normal leading-10"
-                style={{ fontFamily: "'Noto Serif KR', serif" }}
-              >
+            <div className="memorial-panel bg-white/80 p-6 backdrop-blur md:p-8">
+              <TreePine
+                className="h-8 w-8 text-[var(--memorial-ink)]"
+                strokeWidth={1.5}
+              />
+              <p className="memorial-serif mt-8 text-2xl leading-10">
                 “한 사람의 믿음은 가족의 기억에 머물고,
                 <br />
                 교회의 길 위에 조용히 이어집니다.”
               </p>
-              <div className="mt-8 h-px bg-[#dbdad7]" />
-              <div className="mt-6 grid gap-px bg-[#dbdad7] sm:grid-cols-3">
+              <div className="mt-8 h-px bg-[var(--memorial-line)]" />
+              <div className="mt-6 grid gap-px bg-[var(--memorial-line)] sm:grid-cols-3">
                 <InfoTile label="공개" value="검색 가능" />
                 <InfoTile label="비공개" value="비밀번호" />
                 <InfoTile label="가족관" value="별도 보호" />
@@ -93,46 +88,40 @@ export default function MemorialGarden() {
           </div>
         </section>
 
-        <section className="border-b border-[#dbdad7] bg-white py-16 md:py-24">
+        <section className="border-b memorial-section bg-white py-16 md:py-24">
           <div className="container">
             <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
-                <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#616161]">
-                  Functions
-                </p>
-                <h2
-                  className="text-3xl font-normal md:text-5xl"
-                  style={{ fontFamily: "'Noto Serif KR', serif" }}
-                >
+                <p className="memorial-eyebrow mb-4">Functions</p>
+                <h2 className="memorial-serif text-3xl md:text-5xl">
                   한영교회를 위한 기억 방식
                 </h2>
               </div>
-              <p className="max-w-md text-sm leading-7 text-[#616161]">
+              <p className="memorial-body max-w-md text-sm">
                 기존 추모관의 핵심 기능은 유지하고, 교회명과 서비스 언어를
                 한영교회 기준으로 정리했습니다.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-px bg-[#dbdad7] md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-px bg-[var(--memorial-line)] md:grid-cols-3">
               {FEATURES.map(feature => {
                 const Icon = feature.icon;
                 return (
-                  <article key={feature.label} className="bg-[#faf9f6] p-6 md:p-8">
+                  <article
+                    key={feature.label}
+                    className="bg-[var(--memorial-cloud)] p-6 md:p-8"
+                  >
                     <div className="mb-12 flex items-start justify-between">
-                      <span className="text-xs uppercase tracking-[0.18em] text-[#616161]">
+                      <span className="text-xs text-[var(--memorial-ash)]">
                         {feature.label}
                       </span>
-                      <Icon className="h-5 w-5 text-[#18181b]" strokeWidth={1.5} />
+                      <Icon
+                        className="h-5 w-5 text-[var(--memorial-ink)]"
+                        strokeWidth={1.5}
+                      />
                     </div>
-                    <h3
-                      className="text-xl font-normal"
-                      style={{ fontFamily: "'Noto Serif KR', serif" }}
-                    >
-                      {feature.title}
-                    </h3>
-                    <p className="mt-4 text-sm leading-7 text-[#616161]">
-                      {feature.desc}
-                    </p>
+                    <h3 className="memorial-serif text-xl">{feature.title}</h3>
+                    <p className="memorial-body mt-4 text-sm">{feature.desc}</p>
                   </article>
                 );
               })}
@@ -142,25 +131,20 @@ export default function MemorialGarden() {
 
         <section className="bg-white py-16 md:py-24">
           <div className="container">
-            <div className="grid gap-8 border border-[#dbdad7] p-6 md:grid-cols-[1fr_auto] md:items-center md:p-10">
+            <div className="memorial-panel grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-10">
               <div>
-                <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#616161]">
-                  Next
-                </p>
-                <h2
-                  className="text-3xl font-normal md:text-5xl"
-                  style={{ fontFamily: "'Noto Serif KR', serif" }}
-                >
+                <p className="memorial-eyebrow mb-4">Next</p>
+                <h2 className="memorial-serif text-3xl md:text-5xl">
                   등록된 추모관으로 이동
                 </h2>
-                <p className="mt-5 max-w-xl text-sm leading-7 text-[#616161]">
+                <p className="memorial-body mt-5 max-w-xl text-sm">
                   고인의 성함으로 추모관을 검색하거나, 로그인 후 새 추모관을
                   만들 수 있습니다.
                 </p>
               </div>
 
               <Link href={routes.memorialSearch}>
-                <button className="inline-flex h-12 items-center justify-center gap-2 bg-[#18181b] px-5 text-sm font-medium text-white transition-opacity hover:opacity-90">
+                <button className="memorial-button-primary px-5">
                   추모관 보기
                   <ArrowRight className="h-4 w-4" />
                 </button>
@@ -178,13 +162,8 @@ export default function MemorialGarden() {
 function InfoTile({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-white p-4">
-      <p className="text-xs text-[#616161]">{label}</p>
-      <p
-        className="mt-3 text-lg font-normal"
-        style={{ fontFamily: "'Noto Serif KR', serif" }}
-      >
-        {value}
-      </p>
+      <p className="text-xs text-[var(--memorial-ash)]">{label}</p>
+      <p className="memorial-serif mt-3 text-lg">{value}</p>
     </div>
   );
 }

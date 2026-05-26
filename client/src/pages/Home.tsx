@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { churchConfig, homeCopy, routes } from "@/config/church";
 import {
   ArrowRight,
@@ -26,41 +26,38 @@ const HERO_VIDEO_POSTER = `https://img.youtube.com/vi/${HERO_VIDEO_ID}/maxresdef
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-[#121212]">
+    <div className="memorial-shell min-h-screen">
       <Navbar />
 
       <main className="pt-16">
-        <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden border-b border-[#dbdad7] bg-[#f6f5f2]">
+        <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden border-b memorial-section memorial-section-muted">
           <HeroVideoBackground />
           <div className="container relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-14 md:py-20">
             <div className="max-w-3xl">
-              <p className="mb-6 text-[11px] font-medium tracking-[0.28em] text-[#3f3f3f] uppercase">
+              <p className="memorial-eyebrow mb-6">
                 {churchConfig.serviceTagline}
               </p>
-              <h1
-                className="max-w-3xl text-5xl font-normal leading-[1.08] sm:text-6xl md:text-8xl"
-                style={{ fontFamily: "'Noto Serif KR', serif" }}
-              >
+              <h1 className="memorial-serif max-w-3xl text-5xl leading-[1.08] sm:text-6xl md:text-8xl">
                 {churchConfig.serviceName}
               </h1>
-              <p className="mt-8 max-w-2xl text-base leading-8 text-[#333333] md:text-lg">
+              <p className="mt-8 max-w-2xl text-base leading-8 text-[var(--memorial-ash)] md:text-lg">
                 <span className="block">
                   {churchConfig.serviceTitle} 「{churchConfig.serviceName}」은
                 </span>
                 <span className="block">
-                  믿음으로 살다 주님 품에 안긴 성도들의 삶과 신앙을
-                  기억하는 거룩한 공간입니다.
+                  믿음으로 살다 주님 품에 안긴 성도들의 삶과 신앙을 기억하는
+                  거룩한 공간입니다.
                 </span>
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link href={routes.memorialSearch}>
-                  <button className="inline-flex h-12 items-center justify-center gap-2 bg-[#18181b] px-6 text-sm font-medium text-white transition-opacity hover:opacity-90">
+                  <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
                     추모관
                   </button>
                 </Link>
                 <Link href={routes.memorialCreate}>
-                  <button className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[#dbdad7] bg-white px-6 text-sm font-medium text-[#121212] transition-colors hover:bg-[#f6f5f2]">
+                  <button className="memorial-button-secondary">
                     <Plus className="h-4 w-4" />
                     추모관 만들기
                   </button>
@@ -72,21 +69,16 @@ export default function Home() {
 
         <section
           id="memorials"
-          className="scroll-mt-16 border-b border-[#dbdad7] bg-white"
+          className="scroll-mt-16 border-b memorial-section bg-white"
         >
-          <div className="container py-12 md:py-16">
-            <div className="mx-auto max-w-6xl border-y border-[#dbdad7] py-10 md:py-12">
+          <div className="container py-16 md:py-24">
+            <div className="mx-auto max-w-6xl border-y memorial-section py-10 md:py-12">
               <div className="grid gap-7 md:grid-cols-[220px_minmax(0,1fr)] md:items-start">
                 <div className="flex items-center gap-5 md:block">
-                  <p className="text-[11px] font-medium tracking-[0.28em] text-[#616161] uppercase">
-                    Values
-                  </p>
-                  <div className="h-px flex-1 bg-[#616161] md:mt-8 md:w-16" />
+                  <p className="memorial-eyebrow">Values</p>
+                  <div className="h-px flex-1 bg-[var(--memorial-ash)] md:mt-8 md:w-16" />
                 </div>
-                <h2
-                  className="max-w-3xl text-xl font-normal leading-[1.75] md:text-2xl md:leading-[1.7]"
-                  style={{ fontFamily: "'Noto Serif KR', serif" }}
-                >
+                <h2 className="memorial-serif max-w-3xl text-xl leading-[1.75] md:text-2xl md:leading-[1.7]">
                   <span className="block">
                     「{churchConfig.serviceName}」은 고인의 삶과 믿음과 사랑을
                   </span>
@@ -99,22 +91,19 @@ export default function Home() {
                 </h2>
               </div>
 
-              <div className="mt-10 grid border-t border-[#dbdad7] md:grid-cols-3">
+              <div className="mt-10 grid border-t memorial-section md:grid-cols-3">
                 {VALUES.map(value => (
                   <article
                     key={value.number}
-                    className="border-b border-[#dbdad7] py-5 md:border-b-0 md:border-r md:px-7 md:last:border-r-0"
+                    className="border-b memorial-section py-6 md:border-b-0 md:border-r md:px-7 md:last:border-r-0"
                   >
-                    <p className="text-sm text-[#616161]">{value.number}</p>
-                    <h3
-                      className="mt-5 text-base font-normal"
-                      style={{ fontFamily: "'Noto Serif KR', serif" }}
-                    >
+                    <p className="text-sm text-[var(--memorial-slate)]">
+                      {value.number}
+                    </p>
+                    <h3 className="memorial-serif mt-5 text-base">
                       {value.title}
                     </h3>
-                    <p className="mt-4 text-sm leading-7 text-[#616161]">
-                      {value.desc}
-                    </p>
+                    <p className="memorial-body mt-4 text-sm">{value.desc}</p>
                   </article>
                 ))}
               </div>
@@ -124,49 +113,37 @@ export default function Home() {
 
         <section
           id="services"
-          className="border-b border-[#dbdad7] bg-[#f6f5f2] py-16 md:py-24"
+          className="border-b memorial-section memorial-section-muted py-16 md:py-24"
         >
           <div className="container">
             <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
-                <p className="mb-4 text-[11px] font-medium tracking-[0.28em] text-[#616161] uppercase">
-                  Services
-                </p>
-                <h2
-                  className="text-3xl font-normal tracking-[-0.02em] md:text-5xl"
-                  style={{ fontFamily: "'Noto Serif KR', serif" }}
-                >
+                <p className="memorial-eyebrow mb-4">Services</p>
+                <h2 className="memorial-serif text-3xl md:text-5xl">
                   세 가지 서비스
                 </h2>
               </div>
-              <p className="max-w-md text-sm leading-7 text-[#616161]">
+              <p className="memorial-body max-w-md text-sm">
                 등록부터 공유, 공동체의 추모까지 흐름을 단순하게 정리했습니다.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-px bg-[#dbdad7] md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-px bg-[var(--memorial-line)] md:grid-cols-3">
               {SERVICES.map(service => {
                 const Icon = service.icon;
                 return (
                   <article key={service.number} className="bg-white p-6 md:p-8">
                     <div className="mb-12 flex items-start justify-between">
-                      <span className="text-sm text-[#616161]">
+                      <span className="text-sm text-[var(--memorial-slate)]">
                         {service.number}
                       </span>
                       <Icon
-                        className="h-5 w-5 text-[#18181b]"
+                        className="h-5 w-5 text-[var(--memorial-ink)]"
                         strokeWidth={1.5}
                       />
                     </div>
-                    <h3
-                      className="text-xl font-normal"
-                      style={{ fontFamily: "'Noto Serif KR', serif" }}
-                    >
-                      {service.title}
-                    </h3>
-                    <p className="mt-4 text-sm leading-7 text-[#616161]">
-                      {service.desc}
-                    </p>
+                    <h3 className="memorial-serif text-xl">{service.title}</h3>
+                    <p className="memorial-body mt-4 text-sm">{service.desc}</p>
                   </article>
                 );
               })}
@@ -176,32 +153,29 @@ export default function Home() {
 
         <section
           id="process"
-          className="border-b border-[#dbdad7] bg-white py-16 md:py-24"
+          className="border-b memorial-section bg-white py-16 md:py-24"
         >
           <div className="container grid gap-10 md:grid-cols-[0.8fr_1.2fr]">
             <div>
-              <p className="mb-4 text-[11px] font-medium tracking-[0.28em] text-[#616161] uppercase">
-                Process
-              </p>
-              <h2
-                className="text-3xl font-normal tracking-[-0.02em] md:text-5xl"
-                style={{ fontFamily: "'Noto Serif KR', serif" }}
-              >
+              <p className="memorial-eyebrow mb-4">Process</p>
+              <h2 className="memorial-serif text-3xl md:text-5xl">
                 마음 남기기
                 <br />
                 절차
               </h2>
             </div>
-            <div className="border-t border-[#dbdad7]">
+            <div className="border-t memorial-section">
               {STEPS.map((step, index) => (
                 <div
                   key={step}
-                  className="grid gap-6 border-b border-[#dbdad7] py-6 md:grid-cols-[96px_1fr]"
+                  className="grid gap-6 border-b memorial-section py-6 md:grid-cols-[96px_1fr]"
                 >
-                  <span className="text-sm text-[#616161]">
+                  <span className="text-sm text-[var(--memorial-slate)]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <p className="text-base leading-8 text-[#121212]">{step}</p>
+                  <p className="text-base leading-8 text-[var(--memorial-ink)]">
+                    {step}
+                  </p>
                 </div>
               ))}
             </div>
@@ -210,24 +184,21 @@ export default function Home() {
 
         <section id="membership" className="bg-white py-16 md:py-24">
           <div className="container">
-            <div className="grid gap-10 border border-[#dbdad7] p-6 md:grid-cols-[1fr_auto] md:items-center md:p-10">
+            <div className="memorial-panel grid gap-10 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-10">
               <div>
-                <p className="mb-4 text-[11px] font-medium tracking-[0.28em] text-[#616161] uppercase">
+                <p className="memorial-eyebrow mb-4">
                   {churchConfig.churchName} 성도 전용
                 </p>
-                <h2
-                  className="text-3xl font-normal tracking-[-0.02em] md:text-5xl"
-                  style={{ fontFamily: "'Noto Serif KR', serif" }}
-                >
+                <h2 className="memorial-serif text-3xl md:text-5xl">
                   기억을 남길 준비가 되었나요
                 </h2>
-                <p className="mt-5 max-w-2xl text-sm leading-7 text-[#616161]">
-                  회원가입 후 고인을 등록하고, 온라인 추모관과 부고장을 만들
-                  수 있습니다. 방문록 작성은 누구나 참여할 수 있습니다.
+                <p className="memorial-body mt-5 max-w-2xl text-sm">
+                  회원가입 후 고인을 등록하고, 온라인 추모관과 부고장을 만들 수
+                  있습니다. 방문록 작성은 누구나 참여할 수 있습니다.
                 </p>
               </div>
               <Link href={routes.memorialCreate}>
-                <button className="inline-flex h-12 items-center justify-center gap-2 bg-[#18181b] px-6 text-sm font-medium text-white transition-opacity hover:opacity-90">
+                <button className="memorial-button-primary">
                   시작하기
                   <ArrowRight className="h-4 w-4" />
                 </button>
@@ -245,10 +216,10 @@ export default function Home() {
 function HeroVideoBackground() {
   return (
     <div
-      className="pointer-events-none absolute inset-0 overflow-hidden bg-[#f6f5f2]"
+      className="pointer-events-none absolute inset-0 overflow-hidden bg-[var(--memorial-cloud)]"
       aria-hidden="true"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,rgba(255,255,255,0.92),transparent_34%),linear-gradient(90deg,#ffffff_0%,#faf9f6_43%,#f4f1eb_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,rgba(255,255,255,0.92),transparent_34%),linear-gradient(90deg,#ffffff_0%,#f8f8f8_43%,#f4f4f4_100%)]" />
 
       <div
         className="absolute inset-y-0 right-0 hidden w-[56vw] overflow-hidden bg-cover bg-center md:block lg:w-[62vw]"
@@ -257,17 +228,17 @@ function HeroVideoBackground() {
         <iframe
           title={`${churchConfig.churchName} 배경 영상`}
           src={HERO_VIDEO_SRC}
-          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0 opacity-70 contrast-105 saturate-[0.85]"
+          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0 opacity-40 contrast-95 saturate-[0.72]"
           allow="autoplay; fullscreen; picture-in-picture"
           tabIndex={-1}
         />
-        <div className="absolute inset-0 bg-white/28" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#f6f5f2] via-white/44 to-white/8" />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/18 via-transparent to-[#f6f5f2]/58" />
+        <div className="absolute inset-0 bg-white/58" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--memorial-cloud)] via-white/62 to-white/18" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/24 via-transparent to-[var(--memorial-cloud)]/78" />
       </div>
 
       <div className="absolute inset-y-0 left-0 w-[56vw] bg-gradient-to-r from-white via-white/92 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_10%,rgba(211,185,120,0.14),transparent_28%),radial-gradient(circle_at_92%_86%,rgba(180,190,188,0.22),transparent_34%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_10%,rgba(255,255,255,0.34),transparent_28%),radial-gradient(circle_at_92%_86%,rgba(201,201,205,0.28),transparent_34%)]" />
     </div>
   );
 }

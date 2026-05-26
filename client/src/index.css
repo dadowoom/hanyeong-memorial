@@ -41,11 +41,19 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-canvas-white: #ffffff;
-  --color-ink-black: #121212;
-  --color-ash-gray: #dbdad7;
-  --color-deep-graphite: #18181b;
-  --color-cool-gray-mist: #e6e4e0;
-  --color-muted-stone: #616161;
+  --color-ink-black: #191c1f;
+  --color-ash-gray: #c9c9cd;
+  --color-deep-graphite: #191c1f;
+  --color-cool-gray-mist: #f4f4f4;
+  --color-muted-stone: #505a63;
+  --color-memorial-ink: #191c1f;
+  --color-memorial-black: #000000;
+  --color-memorial-cloud: #f4f4f4;
+  --color-memorial-white: #ffffff;
+  --color-memorial-slate: #8d969e;
+  --color-memorial-ash: #505a63;
+  --color-memorial-line: #c9c9cd;
+  --color-memorial-tint: #ebebf0;
   --color-success-green: #4caf50;
   /* Warm Chronicle custom colors */
   --color-gold: oklch(0.65 0.12 70);
@@ -67,39 +75,53 @@
 }
 
 :root {
-  --radius: 0rem;
+  --radius: 0.5rem;
   --background: #ffffff;
-  --foreground: #121212;
+  --foreground: #191c1f;
   --card: #ffffff;
-  --card-foreground: #121212;
+  --card-foreground: #191c1f;
   --popover: #ffffff;
-  --popover-foreground: #121212;
-  --primary: #18181b;
+  --popover-foreground: #191c1f;
+  --primary: #191c1f;
   --primary-foreground: #ffffff;
-  --secondary: #e6e4e0;
-  --secondary-foreground: #121212;
-  --muted: #e6e4e0;
-  --muted-foreground: #616161;
-  --accent: #e6e4e0;
-  --accent-foreground: #121212;
+  --secondary: #f4f4f4;
+  --secondary-foreground: #191c1f;
+  --muted: #f4f4f4;
+  --muted-foreground: #505a63;
+  --accent: #ebebf0;
+  --accent-foreground: #191c1f;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: #dbdad7;
-  --input: #dbdad7;
-  --ring: #616161;
-  --chart-1: #18181b;
-  --chart-2: #616161;
-  --chart-3: #dbdad7;
+  --border: #c9c9cd;
+  --input: #c9c9cd;
+  --ring: #505a63;
+  --chart-1: #191c1f;
+  --chart-2: #505a63;
+  --chart-3: #c9c9cd;
   --chart-4: #4caf50;
-  --chart-5: #e6e4e0;
+  --chart-5: #f4f4f4;
   --sidebar: #ffffff;
-  --sidebar-foreground: #121212;
-  --sidebar-accent: #e6e4e0;
-  --sidebar-accent-foreground: #121212;
-  --sidebar-border: #dbdad7;
-  --sidebar-ring: #616161;
-  --sidebar-primary: #18181b;
+  --sidebar-foreground: #191c1f;
+  --sidebar-accent: #f4f4f4;
+  --sidebar-accent-foreground: #191c1f;
+  --sidebar-border: #c9c9cd;
+  --sidebar-ring: #505a63;
+  --sidebar-primary: #191c1f;
   --sidebar-primary-foreground: #ffffff;
+  --memorial-ink: #191c1f;
+  --memorial-black: #000000;
+  --memorial-cloud: #f4f4f4;
+  --memorial-white: #ffffff;
+  --memorial-slate: #8d969e;
+  --memorial-ash: #505a63;
+  --memorial-line: #c9c9cd;
+  --memorial-tint: #ebebf0;
+  --memorial-page-max-width: 1200px;
+  --memorial-section-gap: 96px;
+  --memorial-card-padding: 24px;
+  --memorial-radius-panel: 8px;
+  --memorial-radius-input: 8px;
+  --memorial-radius-button: 9999px;
 }
 
 @layer base {
@@ -108,7 +130,14 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Noto Sans KR", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family:
+      "Noto Sans KR",
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
     overflow-x: hidden;
   }
   button:not(:disabled),
@@ -131,10 +160,10 @@
     background: #ffffff;
   }
   ::-webkit-scrollbar-thumb {
-    background: #dbdad7;
+    background: var(--memorial-line);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #616161;
+    background: var(--memorial-ash);
   }
 }
 
@@ -164,8 +193,114 @@
     .container {
       padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px;
+      max-width: var(--memorial-page-max-width);
     }
+  }
+
+  .memorial-shell {
+    background: var(--memorial-white);
+    color: var(--memorial-ink);
+  }
+
+  .memorial-section {
+    border-color: var(--memorial-line);
+  }
+
+  .memorial-section-muted {
+    background: var(--memorial-cloud);
+  }
+
+  .memorial-eyebrow {
+    color: var(--memorial-ash);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .memorial-serif {
+    font-family: "Noto Serif KR", serif;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .memorial-body {
+    color: var(--memorial-ash);
+    line-height: 1.75;
+  }
+
+  .memorial-button-primary,
+  .memorial-button-secondary {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--memorial-radius-button);
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      opacity 180ms ease;
+  }
+
+  .memorial-button-primary {
+    border: 1px solid var(--memorial-ink);
+    background: var(--memorial-ink);
+    color: var(--memorial-white);
+  }
+
+  .memorial-button-primary:hover {
+    background: var(--memorial-black);
+    border-color: var(--memorial-black);
+  }
+
+  .memorial-button-secondary {
+    border: 1px solid var(--memorial-line);
+    background: var(--memorial-white);
+    color: var(--memorial-ink);
+  }
+
+  .memorial-button-secondary:hover {
+    background: var(--memorial-cloud);
+  }
+
+  .memorial-nav-link {
+    border-radius: var(--memorial-radius-button);
+    color: var(--memorial-ash);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .memorial-nav-link:hover {
+    background: var(--memorial-cloud);
+    color: var(--memorial-ink);
+  }
+
+  .memorial-panel {
+    border: 1px solid var(--memorial-line);
+    border-radius: var(--memorial-radius-panel);
+    background: var(--memorial-white);
+  }
+
+  .memorial-input-panel {
+    border: 1px solid var(--memorial-line);
+    border-radius: var(--memorial-radius-input);
+    background: var(--memorial-white);
+  }
+
+  .memorial-mark {
+    border-radius: var(--memorial-radius-button);
+    background: var(--memorial-ink);
+    color: var(--memorial-white);
   }
 
   /* Warm gold text shadow */
@@ -174,13 +309,20 @@
   }
 
   .text-glow-strong {
-    text-shadow: 0 2px 8px rgba(160, 120, 40, 0.3),
-                 0 1px 3px rgba(160, 120, 40, 0.15);
+    text-shadow:
+      0 2px 8px rgba(160, 120, 40, 0.3),
+      0 1px 3px rgba(160, 120, 40, 0.15);
   }
 
   /* Gold gradient text */
   .gold-gradient-text {
-    background: linear-gradient(135deg, #8b6914 0%, #c9a84c 40%, #a88734 60%, #6b4f10 100%);
+    background: linear-gradient(
+      135deg,
+      #8b6914 0%,
+      #c9a84c 40%,
+      #a88734 60%,
+      #6b4f10 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -188,15 +330,21 @@
 
   /* Warm card style */
   .warm-card {
-    background: linear-gradient(135deg, rgba(255,250,240,0.95), rgba(245,235,220,0.9));
+    background: linear-gradient(
+      135deg,
+      rgba(255, 250, 240, 0.95),
+      rgba(245, 235, 220, 0.9)
+    );
     border: 1px solid rgba(201, 168, 76, 0.25);
-    box-shadow: 0 4px 20px rgba(160, 120, 40, 0.08),
-                0 1px 4px rgba(0,0,0,0.05);
+    box-shadow:
+      0 4px 20px rgba(160, 120, 40, 0.08),
+      0 1px 4px rgba(0, 0, 0, 0.05);
   }
 
   .warm-card:hover {
-    box-shadow: 0 8px 30px rgba(160, 120, 40, 0.15),
-                0 2px 8px rgba(0,0,0,0.08);
+    box-shadow:
+      0 8px 30px rgba(160, 120, 40, 0.15),
+      0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   /* Parchment/paper texture feel */
@@ -206,7 +354,13 @@
 
   /* Book page style */
   .book-page-bg {
-    background: linear-gradient(to right, #f0e6d3 0%, #faf6ef 5%, #faf6ef 95%, #f0e6d3 100%);
+    background: linear-gradient(
+      to right,
+      #f0e6d3 0%,
+      #faf6ef 5%,
+      #faf6ef 95%,
+      #f0e6d3 100%
+    );
     box-shadow: inset 0 0 30px rgba(160, 120, 40, 0.05);
   }
 
@@ -214,7 +368,12 @@
   .ornament-divider {
     position: relative;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(160, 120, 40, 0.4), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(160, 120, 40, 0.4),
+      transparent
+    );
   }
   .ornament-divider::before {
     content: "✦";
@@ -245,8 +404,9 @@ html {
   margin: 0 auto;
 }
 .stf__wrapper {
-  box-shadow: 0 10px 40px rgba(100, 70, 20, 0.15),
-              0 4px 12px rgba(0,0,0,0.08);
+  box-shadow:
+    0 10px 40px rgba(100, 70, 20, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
 }
 
@@ -260,29 +420,43 @@ html {
 }
 
 .royal-dark .text-glow {
-  text-shadow: 0 0 10px rgba(201, 168, 76, 0.5),
-               0 0 20px rgba(201, 168, 76, 0.3),
-               0 0 40px rgba(201, 168, 76, 0.15);
+  text-shadow:
+    0 0 10px rgba(201, 168, 76, 0.5),
+    0 0 20px rgba(201, 168, 76, 0.3),
+    0 0 40px rgba(201, 168, 76, 0.15);
 }
 .royal-dark .text-glow-strong {
-  text-shadow: 0 0 10px rgba(201, 168, 76, 0.7),
-               0 0 30px rgba(201, 168, 76, 0.5),
-               0 0 60px rgba(201, 168, 76, 0.3),
-               0 0 100px rgba(201, 168, 76, 0.15);
+  text-shadow:
+    0 0 10px rgba(201, 168, 76, 0.7),
+    0 0 30px rgba(201, 168, 76, 0.5),
+    0 0 60px rgba(201, 168, 76, 0.3),
+    0 0 100px rgba(201, 168, 76, 0.15);
 }
 .royal-dark .gold-gradient-text {
-  background: linear-gradient(135deg, #c9a84c 0%, #f5d77a 40%, #c9a84c 60%, #8b6914 100%);
+  background: linear-gradient(
+    135deg,
+    #c9a84c 0%,
+    #f5d77a 40%,
+    #c9a84c 60%,
+    #8b6914 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .royal-dark .gold-border-glow {
-  box-shadow: 0 0 15px rgba(201, 168, 76, 0.3),
-              inset 0 0 15px rgba(201, 168, 76, 0.1);
+  box-shadow:
+    0 0 15px rgba(201, 168, 76, 0.3),
+    inset 0 0 15px rgba(201, 168, 76, 0.1);
   border: 1px solid rgba(201, 168, 76, 0.4);
 }
 .royal-dark .ornament-divider {
-  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.5), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 168, 76, 0.5),
+    transparent
+  );
 }
 .royal-dark .ornament-divider::before {
   color: #c9a84c;
@@ -292,7 +466,6 @@ html {
   background: rgba(201, 168, 76, 0.3);
   color: #f5d77a;
 }
-
 
 /* ========== LIGHT TRAJECTORY EFFECT (별처럼 빛나는 효과) ========== */
 @keyframes lightTrajectory {
@@ -354,11 +527,21 @@ html {
 }
 
 /* Stagger effect for multiple cards */
-.timeline-card:nth-child(1)::before { animation-delay: 0.3s; }
-.timeline-card:nth-child(2)::before { animation-delay: 0.5s; }
-.timeline-card:nth-child(3)::before { animation-delay: 0.7s; }
-.timeline-card:nth-child(4)::before { animation-delay: 0.9s; }
-.timeline-card:nth-child(5)::before { animation-delay: 1.1s; }
+.timeline-card:nth-child(1)::before {
+  animation-delay: 0.3s;
+}
+.timeline-card:nth-child(2)::before {
+  animation-delay: 0.5s;
+}
+.timeline-card:nth-child(3)::before {
+  animation-delay: 0.7s;
+}
+.timeline-card:nth-child(4)::before {
+  animation-delay: 0.9s;
+}
+.timeline-card:nth-child(5)::before {
+  animation-delay: 1.1s;
+}
 
 /* ========== GRACE PARTICLES EFFECT (은혜의 입자) ========== */
 @keyframes graceParticleFloat {
@@ -387,8 +570,23 @@ html {
   z-index: 10;
 }
 
-.grace-particle-1 { animation-delay: 0s; --tx: 30px; }
-.grace-particle-2 { animation-delay: 0.5s; --tx: -40px; }
-.grace-particle-3 { animation-delay: 1s; --tx: 50px; }
-.grace-particle-4 { animation-delay: 1.5s; --tx: -30px; }
-.grace-particle-5 { animation-delay: 2s; --tx: 40px; }
+.grace-particle-1 {
+  animation-delay: 0s;
+  --tx: 30px;
+}
+.grace-particle-2 {
+  animation-delay: 0.5s;
+  --tx: -40px;
+}
+.grace-particle-3 {
+  animation-delay: 1s;
+  --tx: 50px;
+}
+.grace-particle-4 {
+  animation-delay: 1.5s;
+  --tx: -30px;
+}
+.grace-particle-5 {
+  animation-delay: 2s;
+  --tx: 40px;
+}
