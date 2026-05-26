@@ -196,11 +196,12 @@ export default function Home() {
                   {churchConfig.churchName} 성도 전용
                 </p>
                 <h2 className="memorial-serif text-3xl text-white md:text-5xl">
-                  신앙기념관을 만들 준비가 되었나요
+                  <span className="block">신앙의 유산을</span>
+                  <span className="block">남길 준비가 되어 있나요</span>
                 </h2>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68">
-                  회원가입 후 성도의 삶과 신앙을 등록하고, 온라인 신앙기념관을
-                  만들 수 있습니다. 소천 이후에는 별도 전환 흐름으로 추모관을 열
+                  성도의 삶과 믿음의 기록을 정리해 가족과 다음 세대가 이어받을
+                  신앙의 유산으로 남깁니다. 회원가입 후 온라인 신앙기념관을 만들
                   수 있습니다.
                 </p>
               </div>

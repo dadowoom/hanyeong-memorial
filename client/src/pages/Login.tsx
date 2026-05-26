@@ -144,18 +144,18 @@ export default function Login() {
               <h1 className="memorial-serif text-4xl leading-tight md:text-6xl">
                 회원가입 후 바로
                 <br />
-                기억을 남깁니다
+                신앙의 유산을 남깁니다
               </h1>
               <p className="memorial-body mt-6 max-w-lg text-sm">
-                기념관 만들기는 회원가입 또는 로그인 후 이용할 수 있습니다.
-                가입을 마치면 바로 기념관 생성 화면으로 이어집니다.
+                성도의 삶과 믿음의 기록을 신앙기념관으로 정리합니다. 가입을
+                마치면 바로 신앙기념관 만들기 화면으로 이어집니다.
               </p>
 
               <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-[var(--memorial-line)] bg-[var(--memorial-line)] sm:grid-cols-3">
                 {[
                   ["01", "회원가입"],
-                  ["02", "기념관 만들기"],
-                  ["03", "기념관 생성"],
+                  ["02", "신앙기념관 만들기"],
+                  ["03", "신앙의 유산 공유"],
                 ].map(([number, text]) => (
                   <div key={number} className="bg-white p-5">
                     <p className="text-xs text-[var(--memorial-slate)]">
