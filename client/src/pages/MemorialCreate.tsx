@@ -767,7 +767,7 @@ export default function MemorialCreate() {
                         <img
                           src={portraitPreview}
                           alt="대표 사진 미리보기"
-                          className="h-full w-full object-cover grayscale"
+                          className="h-full w-full object-cover"
                         />
                       ) : (
                         <>
@@ -810,7 +810,7 @@ export default function MemorialCreate() {
                             key={preview}
                             src={preview}
                             alt={`추억 사진 ${index + 1}`}
-                            className="aspect-square w-full bg-white object-cover grayscale"
+                            className="aspect-square w-full bg-white object-cover"
                           />
                         ))}
                       </div>
