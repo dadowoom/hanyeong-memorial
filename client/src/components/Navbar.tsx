@@ -1,7 +1,8 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import LogoMark from "@/components/LogoMark";
 import { churchConfig, navItems, routes } from "@/config/church";
 import { getLoginUrl } from "@/const";
-import { Menu, Plus, Search, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 
@@ -17,8 +18,8 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <Link href="/">
             <div className="flex cursor-pointer items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--memorial-brass-soft)] text-[var(--memorial-navy-deep)]">
-                <Plus className="h-4 w-4" strokeWidth={1.7} />
+              <span className="flex h-9 w-9 items-center justify-center text-[var(--memorial-navy-deep)]">
+                <LogoMark className="h-9 w-9 drop-shadow-[0_0_0.5px_rgba(255,255,255,0.9)]" />
               </span>
               <div className="leading-tight">
                 <span className="memorial-serif block text-sm text-white">

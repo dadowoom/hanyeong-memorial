@@ -1,5 +1,5 @@
+import LogoMark from "@/components/LogoMark";
 import { churchConfig, serviceLinks } from "@/config/church";
-import { Plus } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Footer() {
@@ -9,8 +9,8 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div>
             <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--memorial-brass-soft)] text-[var(--memorial-navy-deep)]">
-                <Plus className="h-4 w-4" strokeWidth={1.7} />
+              <span className="flex h-9 w-9 items-center justify-center text-[var(--memorial-navy-deep)]">
+                <LogoMark className="h-9 w-9" />
               </span>
               <div className="leading-tight">
                 <span className="memorial-serif block text-sm text-white">
