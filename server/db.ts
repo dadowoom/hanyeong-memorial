@@ -380,6 +380,40 @@ export async function getPublicMemorialBySlug(slug: string) {
   return memorial;
 }
 
+export async function getMemorialShareBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  const result = await db
+    .select({
+      slug: memorials.slug,
+      name: memorials.name,
+      role: memorials.role,
+      birthDate: memorials.birthDate,
+      deathDate: memorials.deathDate,
+      church: memorials.church,
+      summary: memorials.summary,
+      visibility: memorials.visibility,
+      status: memorials.status,
+      photoUrl: memorialGalleryPhotos.photoUrl,
+      photoCaption: memorialGalleryPhotos.caption,
+    })
+    .from(memorials)
+    .leftJoin(
+      memorialGalleryPhotos,
+      and(
+        eq(memorialGalleryPhotos.memorialId, memorials.id),
+        eq(memorialGalleryPhotos.isRepresentative, 1)
+      )
+    )
+    .where(eq(memorials.slug, slug))
+    .limit(1);
+
+  return result[0] ?? null;
+}
+
 export async function updateMemorial(
   id: number,
   data: Partial<InsertMemorial>
