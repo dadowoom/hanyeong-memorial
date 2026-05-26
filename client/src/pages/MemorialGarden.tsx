@@ -175,7 +175,7 @@ export default function MemorialGarden() {
                             <img
                               src={toImgUrl(memorial.photoUrl)}
                               alt={memorial.photoCaption || memorial.name}
-                              className="h-full w-full object-cover object-top grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
+                              className="h-full w-full object-contain object-center grayscale transition duration-500 group-hover:grayscale-0"
                             />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(145deg,#f7f5f0,#ebe7de)] text-[var(--memorial-ash)]">

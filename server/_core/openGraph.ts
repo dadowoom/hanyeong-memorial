@@ -174,7 +174,7 @@ async function getMemorialMeta(req: Request): Promise<PageMeta | null> {
       : "";
   const summary = memorial.summary || churchConfig.shortDescription;
   const description = truncate(
-    `${memorial.church} ${churchConfig.serviceName}. ${summary}`,
+    `${memorial.name}${role}님의 ${churchConfig.serviceName}입니다. ${summary}`,
     110
   );
 

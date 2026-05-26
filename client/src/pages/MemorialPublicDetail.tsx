@@ -245,6 +245,36 @@ function MemorialContent({
   );
   const serviceTime = memorial.serviceTime || "추후 안내";
   const memorialDayLabel = formatMemorialDay(memorial.memorialDay);
+  const [shareMessage, setShareMessage] = useState("");
+
+  const handleKakaoShare = async () => {
+    const shareUrl =
+      typeof window === "undefined"
+        ? `${churchConfig.domain}/memorial/${memorial.slug}`
+        : new URL(`/memorial/${memorial.slug}`, window.location.origin).href;
+    const title = `${memorial.name} ${memorial.role} | ${churchConfig.serviceTitle}`;
+    const text = `${memorial.name} ${memorial.role}님의 ${churchConfig.serviceName}입니다.`;
+
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share({ title, text, url: shareUrl });
+        setShareMessage("공유 창을 열었습니다.");
+        return;
+      }
+
+      if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+        setShareMessage("기념관 링크를 복사했습니다.");
+        return;
+      }
+
+      setShareMessage(shareUrl);
+    } catch (error) {
+      if ((error as Error).name !== "AbortError") {
+        setShareMessage("공유를 다시 시도해주세요.");
+      }
+    }
+  };
 
   return (
     <>
@@ -324,6 +354,15 @@ function MemorialContent({
                   <MessageCircle className="h-4 w-4" strokeWidth={1.7} />
                   댓글 남기기
                 </a>
+                <button
+                  type="button"
+                  onClick={handleKakaoShare}
+                  className="inline-flex h-11 items-center justify-center gap-2 bg-[#fee500] px-5 text-sm font-semibold text-[#241f1f] transition-colors hover:bg-[#f7d900]"
+                  aria-label="카톡 공유하기"
+                >
+                  <KakaoTalkIcon />
+                  카톡 공유하기
+                </button>
                 <a
                   href="#life"
                   className="inline-flex h-11 items-center justify-center gap-2 border border-[#e6ded1] bg-white px-5 text-sm font-medium text-[#4f4638] transition-colors hover:bg-[#faf9f7]"
@@ -338,6 +377,11 @@ function MemorialContent({
                   </span>
                 </Link>
               </div>
+              {shareMessage && (
+                <p className="mt-3 text-xs" style={{ color: mutedText }}>
+                  {shareMessage}
+                </p>
+              )}
             </div>
 
             <MemorialPortrait
@@ -524,6 +568,18 @@ function CenteredState({ children }: { children: ReactNode }) {
         </p>
       </div>
     </section>
+  );
+}
+
+function KakaoTalkIcon() {
+  return (
+    <span
+      aria-hidden="true"
+      className="relative inline-flex h-4 w-4 items-center justify-center"
+    >
+      <span className="h-3.5 w-4 rounded-[50%] bg-[#241f1f]" />
+      <span className="absolute bottom-0 left-1 h-1.5 w-1.5 rotate-[-28deg] bg-[#241f1f]" />
+    </span>
   );
 }
 
