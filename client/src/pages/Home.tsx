@@ -238,9 +238,9 @@ function HeroVideoBackground() {
           allow="autoplay; fullscreen; picture-in-picture"
           tabIndex={-1}
         />
-        <div className="absolute inset-0 bg-[var(--memorial-ink)]/72" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--memorial-cloud)] via-white/68 to-[var(--memorial-ink)]/30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--memorial-ink)]/18 via-transparent to-[var(--memorial-ink)]/76" />
+        <div className="absolute inset-0 bg-[var(--memorial-navy)]/66" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--memorial-cloud)] via-white/68 to-[var(--memorial-navy-soft)]/38" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--memorial-navy-deep)]/16 via-transparent to-[var(--memorial-navy-deep)]/72" />
       </div>
 
       <div className="absolute inset-y-0 left-0 w-[56vw] bg-gradient-to-r from-white via-white/92 to-transparent" />
