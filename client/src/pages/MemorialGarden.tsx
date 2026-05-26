@@ -6,6 +6,8 @@ import { trpc } from "@/lib/trpc";
 import {
   ArrowRight,
   BookOpenText,
+  ChevronLeft,
+  ChevronRight,
   MessageCircle,
   Plus,
   Search,
@@ -36,8 +38,11 @@ const FEATURES = [
   },
 ];
 
+const PEOPLE_PAGE_SIZE = 12;
+
 export default function MemorialGarden() {
   const [personQuery, setPersonQuery] = useState("");
+  const [personPage, setPersonPage] = useState(1);
   const memorialsQuery = trpc.memorial.list.useQuery();
   const memorials = memorialsQuery.data ?? [];
   const filteredMemorials = useMemo(() => {
@@ -50,6 +55,19 @@ export default function MemorialGarden() {
         .some(value => value.toLowerCase().includes(keyword))
     );
   }, [memorials, personQuery]);
+  const totalPeoplePages = Math.max(
+    1,
+    Math.ceil(filteredMemorials.length / PEOPLE_PAGE_SIZE)
+  );
+  const currentPeoplePage = Math.min(personPage, totalPeoplePages);
+  const visibleMemorials = useMemo(() => {
+    const start = (currentPeoplePage - 1) * PEOPLE_PAGE_SIZE;
+    return filteredMemorials.slice(start, start + PEOPLE_PAGE_SIZE);
+  }, [currentPeoplePage, filteredMemorials]);
+  const peoplePageNumbers = useMemo(
+    () => Array.from({ length: totalPeoplePages }, (_, index) => index + 1),
+    [totalPeoplePages]
+  );
 
   return (
     <div className="memorial-shell min-h-screen">
@@ -129,13 +147,16 @@ export default function MemorialGarden() {
                 />
                 <input
                   value={personQuery}
-                  onChange={event => setPersonQuery(event.target.value)}
+                  onChange={event => {
+                    setPersonQuery(event.target.value);
+                    setPersonPage(1);
+                  }}
                   placeholder="이름, 직분, 교회로 검색"
                   className="h-full min-w-0 flex-1 bg-transparent text-sm text-[var(--memorial-ink)] outline-none placeholder:text-[var(--memorial-slate)]"
                 />
               </label>
               <p className="text-sm text-[var(--memorial-ash)] md:text-right">
-                등록 인물 {filteredMemorials.length}명
+                등록 인물 {filteredMemorials.length}명 · 12명씩 보기
               </p>
             </div>
 
@@ -144,46 +165,94 @@ export default function MemorialGarden() {
                 등록된 인물을 불러오고 있습니다.
               </div>
             ) : filteredMemorials.length > 0 ? (
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {filteredMemorials.map(memorial => (
-                  <Link key={memorial.id} href={`${memorial.href}/archive`}>
-                    <article className="group cursor-pointer border border-[var(--memorial-line)] bg-white">
-                      <div className="aspect-[4/3] overflow-hidden bg-[#f4f2ee]">
-                        {memorial.photoUrl ? (
-                          <img
-                            src={toImgUrl(memorial.photoUrl)}
-                            alt={memorial.photoCaption || memorial.name}
-                            className="h-full w-full object-cover object-top grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(145deg,#f7f5f0,#ebe7de)] text-[var(--memorial-ash)]">
-                            <UserRound
-                              className="h-12 w-12"
-                              strokeWidth={1.2}
+              <>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {visibleMemorials.map(memorial => (
+                    <Link key={memorial.id} href={`${memorial.href}/archive`}>
+                      <article className="group cursor-pointer border border-[var(--memorial-line)] bg-white">
+                        <div className="aspect-[4/3] overflow-hidden bg-[#f4f2ee]">
+                          {memorial.photoUrl ? (
+                            <img
+                              src={toImgUrl(memorial.photoUrl)}
+                              alt={memorial.photoCaption || memorial.name}
+                              className="h-full w-full object-cover object-top grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
                             />
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-4">
-                        <p className="truncate text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--memorial-brass)]">
-                          {memorial.church}
-                        </p>
-                        <div className="mt-3 flex items-end justify-between gap-4">
-                          <div className="min-w-0">
-                            <h3 className="memorial-serif truncate text-xl text-[var(--memorial-ink)]">
-                              {memorial.name}
-                            </h3>
-                            <p className="mt-1 truncate text-sm text-[var(--memorial-ash)]">
-                              {memorial.role}
-                            </p>
-                          </div>
-                          <ArrowRight className="h-4 w-4 shrink-0 text-[var(--memorial-ink)] transition-transform group-hover:translate-x-1" />
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(145deg,#f7f5f0,#ebe7de)] text-[var(--memorial-ash)]">
+                              <UserRound
+                                className="h-12 w-12"
+                                strokeWidth={1.2}
+                              />
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    </article>
-                  </Link>
-                ))}
-              </div>
+                        <div className="p-4">
+                          <p className="truncate text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--memorial-brass)]">
+                            {memorial.church}
+                          </p>
+                          <div className="mt-3 flex items-end justify-between gap-4">
+                            <div className="min-w-0">
+                              <h3 className="memorial-serif truncate text-xl text-[var(--memorial-ink)]">
+                                {memorial.name}
+                              </h3>
+                              <p className="mt-1 truncate text-sm text-[var(--memorial-ash)]">
+                                {memorial.role}
+                              </p>
+                            </div>
+                            <ArrowRight className="h-4 w-4 shrink-0 text-[var(--memorial-ink)] transition-transform group-hover:translate-x-1" />
+                          </div>
+                        </div>
+                      </article>
+                    </Link>
+                  ))}
+                </div>
+
+                {totalPeoplePages > 1 && (
+                  <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setPersonPage(page => Math.max(1, page - 1))
+                      }
+                      disabled={currentPeoplePage === 1}
+                      className="flex h-10 w-10 items-center justify-center border border-[var(--memorial-line)] bg-white text-[var(--memorial-ink)] transition-colors hover:bg-[var(--memorial-cloud)] disabled:cursor-not-allowed disabled:opacity-40"
+                      aria-label="이전 페이지"
+                    >
+                      <ChevronLeft className="h-4 w-4" strokeWidth={1.7} />
+                    </button>
+                    {peoplePageNumbers.map(page => (
+                      <button
+                        key={page}
+                        type="button"
+                        onClick={() => setPersonPage(page)}
+                        className={`h-10 min-w-10 border px-3 text-sm font-medium transition-colors ${
+                          currentPeoplePage === page
+                            ? "border-[var(--memorial-ink)] bg-[var(--memorial-ink)] text-white"
+                            : "border-[var(--memorial-line)] bg-white text-[var(--memorial-ink)] hover:bg-[var(--memorial-cloud)]"
+                        }`}
+                        aria-current={
+                          currentPeoplePage === page ? "page" : undefined
+                        }
+                      >
+                        {page}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setPersonPage(page =>
+                          Math.min(totalPeoplePages, page + 1)
+                        )
+                      }
+                      disabled={currentPeoplePage === totalPeoplePages}
+                      className="flex h-10 w-10 items-center justify-center border border-[var(--memorial-line)] bg-white text-[var(--memorial-ink)] transition-colors hover:bg-[var(--memorial-cloud)] disabled:cursor-not-allowed disabled:opacity-40"
+                      aria-label="다음 페이지"
+                    >
+                      <ChevronRight className="h-4 w-4" strokeWidth={1.7} />
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="border border-[var(--memorial-line)] bg-[#fbfaf8] px-6 py-12 text-center">
                 <p className="text-sm text-[var(--memorial-ash)]">
