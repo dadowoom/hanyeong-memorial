@@ -44,8 +44,11 @@ export default function Home() {
               <p className="mt-8 max-w-2xl text-base leading-8 text-[var(--memorial-ash)] md:text-lg">
                 <span className="block">한영교회 신앙기념관은</span>
                 <span className="block">
-                  믿음으로 살다 주님 품에 안긴 성도들의 삶과 신앙을 기억하는
-                  거룩한 공간입니다.
+                  성도들의 삶 속에 담긴 믿음의 발자취를 소중히 기억하고,
+                </span>
+                <span className="block">
+                  그 신앙의 유산을 오늘과 다음 세대가 함께 이어가도록 돕는
+                  공간입니다.
                 </span>
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
