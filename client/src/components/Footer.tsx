@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div>
             <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[var(--memorial-ink)]">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--memorial-brass-soft)] text-[var(--memorial-navy-deep)]">
                 <Plus className="h-4 w-4" strokeWidth={1.7} />
               </span>
               <div className="leading-tight">

@@ -17,7 +17,7 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <Link href="/">
             <div className="flex cursor-pointer items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[var(--memorial-navy)]">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--memorial-brass-soft)] text-[var(--memorial-navy-deep)]">
                 <Plus className="h-4 w-4" strokeWidth={1.7} />
               </span>
               <div className="leading-tight">
