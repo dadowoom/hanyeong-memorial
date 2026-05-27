@@ -215,7 +215,9 @@ export default function MemorialArchivePage() {
                       />
                     </p>
                     <p className="mt-2 text-sm" style={{ color: mutedText }}>
-                      {memorial.church} 가족 기록관
+                      {isMemorialHall
+                        ? `${memorial.church} 신앙 기록관`
+                        : `${memorial.church} 신앙기념관`}
                     </p>
 
                     <div
@@ -368,9 +370,13 @@ export default function MemorialArchivePage() {
             <section className="py-20 md:py-28">
               <div className="container">
                 <SectionHeader
-                  eyebrow="Faith Story"
-                  title="신앙의 이야기"
-                  description="가족이 남긴 기억과 신앙의 고백을 조용히 담았습니다."
+                  eyebrow={isMemorialHall ? "Faith Story" : "Faith Journey"}
+                  title={isMemorialHall ? "신앙의 이야기" : "이어가는 신앙 여정"}
+                  description={
+                    isMemorialHall
+                      ? "가족과 교회가 기억하는 믿음의 발자취를 담았습니다."
+                      : "가족과 교회가 오늘의 감사와 섬김을 함께 기록합니다."
+                  }
                 />
 
                 <div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-[0.85fr_1.15fr] md:items-center">
@@ -414,7 +420,7 @@ export default function MemorialArchivePage() {
                       className="text-2xl font-light"
                       style={{ ...serifStyle, color: warmText }}
                     >
-                      기억으로 남은 삶
+                      {isMemorialHall ? "기억으로 남은 삶" : "지금 이어가는 신앙"}
                     </h2>
                     <div
                       className="mt-6 max-h-[360px] overflow-y-auto whitespace-pre-wrap break-words pr-3 font-light leading-7 md:max-h-[460px]"

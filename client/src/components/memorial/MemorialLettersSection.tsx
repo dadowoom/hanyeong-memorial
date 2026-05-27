@@ -102,7 +102,7 @@ export default function MemorialLettersSection({
                   className="text-xs font-medium uppercase tracking-[0.16em]"
                   style={{ color: warmGold }}
                 >
-                  Comment
+                  {isMemorial ? "Letter" : "Message"}
                 </span>
                 <textarea
                   value={content}
@@ -148,7 +148,9 @@ export default function MemorialLettersSection({
                 className="border-b border-[#e6ded1] py-7 text-sm"
                 style={{ color: mutedText }}
               >
-                {isMemorial ? "편지를 불러오고 있습니다." : "응원글을 불러오고 있습니다."}
+                {isMemorial
+                  ? "편지를 불러오고 있습니다."
+                  : "응원글을 불러오고 있습니다."}
               </p>
             ) : commentsQuery.data?.length ? (
               commentsQuery.data.map(comment => (
@@ -180,7 +182,9 @@ export default function MemorialLettersSection({
                 className="border-b border-[#e6ded1] py-7 text-sm"
                 style={{ color: mutedText }}
               >
-                {isMemorial ? "아직 남겨진 편지가 없습니다." : "아직 남겨진 응원글이 없습니다."}
+                {isMemorial
+                  ? "아직 남겨진 편지가 없습니다."
+                  : "아직 남겨진 응원글이 없습니다."}
               </p>
             )}
           </div>
