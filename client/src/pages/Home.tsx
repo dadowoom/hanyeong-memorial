@@ -36,7 +36,7 @@ export default function Home() {
               <p className="memorial-eyebrow mb-6">
                 한영교회 온라인 신앙기념 서비스
               </p>
-              <h1 className="memorial-serif max-w-3xl text-[3.25rem] leading-[1.04] sm:text-6xl md:text-8xl md:leading-[1.08]">
+              <h1 className="memorial-serif max-w-3xl text-[2.75rem] leading-[1.04] sm:text-[3.2rem] md:text-[5.1rem] md:leading-[1.08]">
                 <span className="block">한영교회</span>
                 <span className="block">신앙기념관</span>
               </h1>
