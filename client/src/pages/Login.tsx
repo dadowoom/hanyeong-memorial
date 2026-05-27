@@ -35,7 +35,7 @@ function getInitialMode(): Mode {
   const mode = params.get("mode");
   const redirect = params.get("redirect");
 
-  if (mode === "signup" || redirect === routes.memorialCreate) {
+  if (mode === "signup" || redirect?.startsWith(routes.memorialCreate)) {
     return "signup";
   }
 
@@ -63,7 +63,28 @@ export default function Login() {
   const loginMutation = trpc.auth.login.useMutation();
   const signupMutation = trpc.auth.signup.useMutation();
   const redirectPath = useMemo(getRedirectPath, []);
-  const isCreateRedirect = redirectPath === routes.memorialCreate;
+  const isCreateRedirect = redirectPath.startsWith(routes.memorialCreate);
+  const heroCopy = isCreateRedirect
+    ? {
+        eyebrow: "START FAITH MEMORIAL",
+        title: "가입하고 바로\n신앙기념관을 만듭니다",
+        body: "한영교회 신앙기념관은 살아계신 성도의 신앙 여정과 섬김을 가족과 교회가 함께 기록하는 공간입니다.",
+        steps: [
+          ["01", "회원가입"],
+          ["02", "기본 정보 입력"],
+          ["03", "사진과 기록 공유"],
+        ],
+      }
+    : {
+        eyebrow: "HANYEONG ACCOUNT",
+        title: "한영교회\n신앙기념관 계정",
+        body: "로그인하면 신앙기념관 생성과 가족관, 사진첩, 영상, 책장, 연표 기록을 이어서 관리할 수 있습니다.",
+        steps: [
+          ["01", "로그인"],
+          ["02", "기념관 관리"],
+          ["03", "공동체와 공유"],
+        ],
+      };
 
   useEffect(() => {
     if (meQuery.data) {
@@ -140,23 +161,20 @@ export default function Login() {
         <section className="border-b memorial-section">
           <div className="container grid gap-10 py-16 md:py-24 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.72fr)] lg:items-start">
             <div>
-              <p className="memorial-eyebrow mb-5">HANYEONG ACCOUNT</p>
+              <p className="memorial-eyebrow mb-5">{heroCopy.eyebrow}</p>
               <h1 className="memorial-serif text-4xl leading-tight md:text-6xl">
-                회원가입 후 바로
-                <br />
-                신앙의 유산을 남깁니다
+                {heroCopy.title.split("\n").map(line => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
               </h1>
               <p className="memorial-body mt-6 max-w-lg text-sm">
-                성도의 삶과 믿음의 기록을 신앙기념관으로 정리합니다. 가입을
-                마치면 바로 신앙기념관 만들기 화면으로 이어집니다.
+                {heroCopy.body}
               </p>
 
               <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-[var(--memorial-line)] bg-[var(--memorial-line)] sm:grid-cols-3">
-                {[
-                  ["01", "회원가입"],
-                  ["02", "신앙기념관 만들기"],
-                  ["03", "신앙의 유산 공유"],
-                ].map(([number, text]) => (
+                {heroCopy.steps.map(([number, text]) => (
                   <div key={number} className="bg-white p-5">
                     <p className="text-xs text-[var(--memorial-slate)]">
                       {number}
@@ -192,8 +210,7 @@ export default function Login() {
                 <form onSubmit={submitLogin} className="mt-8 space-y-6">
                   {isCreateRedirect && (
                     <div className="memorial-panel bg-[var(--memorial-cloud)] p-4 text-sm leading-6 text-[var(--memorial-ash)]">
-                      이미 계정이 있다면 로그인 후 기념관 만들기를 이어갈 수
-                      있습니다.
+                      로그인하면 신앙기념관 만들기 화면으로 바로 돌아갑니다.
                     </div>
                   )}
                   <Field label="이메일">
@@ -227,7 +244,7 @@ export default function Login() {
 
                   <SubmitButton
                     pending={loginMutation.isPending}
-                    label="로그인"
+                    label={isCreateRedirect ? "로그인하고 만들기 계속" : "로그인"}
                     pendingLabel="확인 중"
                   />
                 </form>
@@ -235,8 +252,8 @@ export default function Login() {
                 <form onSubmit={submitSignup} className="mt-8 space-y-6">
                   {isCreateRedirect && (
                     <div className="memorial-panel bg-[var(--memorial-cloud)] p-4 text-sm leading-6 text-[var(--memorial-ash)]">
-                      처음 이용하시는 경우 회원가입을 마치면 바로 기념관 만들기
-                      화면으로 이동합니다.
+                      처음 이용하시는 경우 회원가입 후 자동으로 신앙기념관
+                      만들기 화면으로 이동합니다.
                     </div>
                   )}
                   <Field label="성함">
@@ -332,11 +349,28 @@ export default function Login() {
 
                   <SubmitButton
                     pending={signupMutation.isPending}
-                    label="회원가입하고 시작하기"
+                    label={
+                      isCreateRedirect
+                        ? "가입하고 기념관 만들기"
+                        : "회원가입하고 시작하기"
+                    }
                     pendingLabel="가입 중"
                   />
                 </form>
               )}
+
+              <button
+                type="button"
+                onClick={() => {
+                  setMode(mode === "login" ? "signup" : "login");
+                  setMessage("");
+                }}
+                className="mt-6 text-left text-xs text-[var(--memorial-ash)] transition-colors hover:text-[var(--memorial-ink)]"
+              >
+                {mode === "login"
+                  ? "처음 이용하시나요? 회원가입으로 시작하기"
+                  : "이미 계정이 있나요? 로그인하기"}
+              </button>
 
               {message && (
                 <div className="memorial-panel mt-6 p-4 text-sm leading-6 text-[var(--memorial-ash)]">
