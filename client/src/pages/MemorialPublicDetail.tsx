@@ -15,7 +15,7 @@ import {
   Images,
 } from "lucide-react";
 import { FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
-import { Link, useRoute } from "wouter";
+import { Link, useLocation, useRoute } from "wouter";
 
 const serifStyle = { fontFamily: "'Noto Serif KR', serif" } as const;
 const warmGold = "#62666c";
@@ -70,6 +70,7 @@ const readStoredAccessToken = (slug: string) => {
 
 export default function MemorialPublicDetail() {
   const [, params] = useRoute<{ slug: string }>("/memorial/:slug");
+  const [, setLocation] = useLocation();
   const slug = params?.slug ?? "";
   const [accessToken, setAccessToken] = useState(() =>
     readStoredAccessToken(slug)
@@ -89,6 +90,7 @@ export default function MemorialPublicDetail() {
 
   const memorial = memorialQuery.data as MemorialRecord | undefined;
   const isLocked = memorialQuery.error?.data?.code === "FORBIDDEN";
+  const isFaithMemorial = Boolean(memorial && !memorial.deathDate.trim());
   const photosQuery = trpc.gallery.listByMemorial.useQuery(
     { memorialId: memorial?.id ?? 0 },
     { enabled: Boolean(memorial?.id) }
@@ -97,6 +99,11 @@ export default function MemorialPublicDetail() {
   const portraitPhoto =
     photos.find(photo => photo.isRepresentative === 1)?.photoUrl ??
     photos[0]?.photoUrl;
+
+  useEffect(() => {
+    if (!isFaithMemorial || !memorial) return;
+    setLocation(`/memorial/${memorial.slug}/archive`);
+  }, [isFaithMemorial, memorial, setLocation]);
 
   return (
     <div
@@ -119,6 +126,8 @@ export default function MemorialPublicDetail() {
           />
         ) : memorialQuery.isError || !memorial ? (
           <CenteredState>기념관을 찾을 수 없습니다.</CenteredState>
+        ) : isFaithMemorial ? (
+          <CenteredState>신앙기념관으로 이동하고 있습니다.</CenteredState>
         ) : (
           <MemorialContent
             memorial={memorial}
@@ -145,6 +154,7 @@ function PrivateMemorialGate({
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const verifyAccess = trpc.memorial.verifyAccess.useMutation();
+  const isMemorialHall = Boolean(status?.deathDate?.trim());
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -168,7 +178,7 @@ function PrivateMemorialGate({
             <div className="mb-8 flex items-center gap-3">
               <span className="h-px w-8 bg-[#18181b]" />
               <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-[#616161]">
-                Private Memorial
+                {isMemorialHall ? "Private Memorial" : "Private Faith Memorial"}
               </p>
             </div>
 
@@ -181,8 +191,10 @@ function PrivateMemorialGate({
             {status && (
               <>
                 <p className="mt-4 text-sm leading-7 text-[#616161]">
-                  {status.birthDate} - {status.deathDate} · {status.church} ·{" "}
-                  {status.role}
+                  {isMemorialHall
+                    ? `${status.birthDate} - ${status.deathDate}`
+                    : status.birthDate}{" "}
+                  · {status.church} · {status.role}
                 </p>
                 <p className="mt-8 max-w-xl text-base leading-8 text-[#333333]">
                   {status.summary}
@@ -218,9 +230,15 @@ function PrivateMemorialGate({
             >
               {verifyAccess.isPending ? "확인 중" : "입장하기"}
             </button>
-            <Link href="/memorial/search">
+            <Link
+              href={
+                isMemorialHall
+                  ? "/memorial/search"
+                  : "/memorial-garden#faith-memorials"
+              }
+            >
               <span className="mt-3 block cursor-pointer text-center text-xs text-[#616161] underline-offset-4 hover:underline">
-                추모관으로 돌아가기
+                {isMemorialHall ? "추모관으로 돌아가기" : "목록으로 돌아가기"}
               </span>
             </Link>
           </form>

@@ -133,7 +133,7 @@ export default function Home() {
                     {recentMemorials.map((memorial, index) => (
                       <Link
                         key={memorial.id}
-                        href={`${memorial.href}/archive`}
+                        href={memorial.href}
                       >
                         <article className="group grid cursor-pointer grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-4 px-5 py-5 transition-colors hover:bg-white/8">
                           <span className="text-sm text-white/42">

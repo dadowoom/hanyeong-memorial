@@ -508,7 +508,9 @@ export async function getMemorialAccessStatus(slug: string) {
     isPrivate: memorial.visibility === "private",
     requiresPassword:
       memorial.visibility === "private" && Boolean(memorial.accessPasswordHash),
-    href: `/memorial/${memorial.slug}`,
+    href: memorial.deathDate?.trim()
+      ? `/memorial/${memorial.slug}`
+      : `/memorial/${memorial.slug}/archive`,
   };
 }
 

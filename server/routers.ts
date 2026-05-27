@@ -70,6 +70,14 @@ const memorialCreateInput = z.object({
     .default([]),
 });
 
+const getMemorialHref = (memorial: {
+  slug: string;
+  deathDate?: string | null;
+}) =>
+  memorial.deathDate?.trim()
+    ? `/memorial/${memorial.slug}`
+    : `/memorial/${memorial.slug}/archive`;
+
 const letterCreateInput = z
   .object({
     memorialSlug: z.string().trim().min(1).max(120).optional(),
@@ -263,7 +271,7 @@ export const appRouter = router({
 
       return memorials.map(memorial => ({
         ...memorial,
-        href: `/memorial/${memorial.slug}`,
+        href: getMemorialHref(memorial),
       }));
     }),
 
@@ -275,7 +283,7 @@ export const appRouter = router({
         return memorials.map(memorial => ({
           ...memorial,
           isPrivate: memorial.visibility === "private",
-          href: `/memorial/${memorial.slug}`,
+          href: getMemorialHref(memorial),
         }));
       }),
 
@@ -361,7 +369,7 @@ export const appRouter = router({
         return {
           ...safeMemorial,
           timeline,
-          href: `/memorial/${safeMemorial.slug}`,
+          href: getMemorialHref(safeMemorial),
         };
       }),
 
@@ -409,7 +417,7 @@ export const appRouter = router({
           id: created.id,
           slug: created.slug,
           status: created.status,
-          href: `/memorial/${created.slug}`,
+          href: getMemorialHref(created),
         };
       }),
 

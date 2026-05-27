@@ -171,7 +171,7 @@ export default function MemorialGarden() {
               <>
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {visibleMemorials.map(memorial => (
-                    <Link key={memorial.id} href={`${memorial.href}/archive`}>
+                    <Link key={memorial.id} href={memorial.href}>
                       <article className="group cursor-pointer border border-[var(--memorial-line)] bg-white">
                         <div className="aspect-[4/3] overflow-hidden bg-[#f4f2ee]">
                           {memorial.photoUrl ? (

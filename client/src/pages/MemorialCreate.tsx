@@ -28,7 +28,6 @@ type MemorialForm = {
   name: string;
   role: string;
   birthDate: string;
-  deathDate: string;
   church: string;
   familyContact: string;
   familyPhone: string;
@@ -37,8 +36,6 @@ type MemorialForm = {
   verseRef: string;
   summary: string;
   story: string;
-  serviceTime: string;
-  memorialDay: string;
   visibility: Visibility;
   accessPassword: string;
 };
@@ -56,7 +53,6 @@ const initialForm: MemorialForm = {
   name: "",
   role: "",
   birthDate: "",
-  deathDate: "",
   church: churchConfig.churchName,
   familyContact: "",
   familyPhone: "",
@@ -65,8 +61,6 @@ const initialForm: MemorialForm = {
   verseRef: "",
   summary: "",
   story: "",
-  serviceTime: "",
-  memorialDay: "",
   visibility: "public",
   accessPassword: "",
 };
@@ -76,7 +70,7 @@ const requiredFields: Array<{ key: keyof MemorialForm; label: string }> = [
   { key: "role", label: "직분" },
   { key: "birthDate", label: "출생일" },
   { key: "summary", label: "한 줄 소개" },
-  { key: "story", label: "삶의 기록" },
+  { key: "story", label: "신앙 기록" },
 ];
 
 const visibilityOptions: Array<{
@@ -165,8 +159,19 @@ export default function MemorialCreate() {
       };
 
       if (parsed.form) {
-        const { managerMemo: _managerMemo, ...savedForm } = parsed.form as
-          | (Partial<MemorialForm> & { managerMemo?: string })
+        const {
+          managerMemo: _managerMemo,
+          deathDate: _deathDate,
+          serviceTime: _serviceTime,
+          memorialDay: _memorialDay,
+          ...savedForm
+        } = parsed.form as
+          | (Partial<MemorialForm> & {
+              deathDate?: string;
+              managerMemo?: string;
+              memorialDay?: string;
+              serviceTime?: string;
+            })
           | Record<string, never>;
 
         setForm({ ...initialForm, ...savedForm });
@@ -465,7 +470,7 @@ export default function MemorialCreate() {
                     href="#timeline"
                     className="block transition-colors hover:text-[#121212]"
                   >
-                    생애 기록
+                    신앙 기록
                   </a>
                   <a
                     href="#photos"
@@ -484,7 +489,7 @@ export default function MemorialCreate() {
                 <div className="mt-8 border-t border-[#dbdad7] pt-5">
                   <p className="text-xs text-[#616161]">예상 주소</p>
                   <p className="mt-2 break-all text-sm text-[#121212]">
-                    /memorial/{slugPreview}
+                    /memorial/{slugPreview}/archive
                   </p>
                 </div>
               </div>
@@ -505,7 +510,7 @@ export default function MemorialCreate() {
                       onChange={event =>
                         updateField("name", event.target.value)
                       }
-                      placeholder="김영수"
+                      placeholder="이한영"
                       aria-invalid={Boolean(errors.name)}
                     />
                   </Field>
@@ -601,7 +606,7 @@ export default function MemorialCreate() {
                         onChange={event =>
                           updateField("verse", event.target.value)
                         }
-                        placeholder="내가 선한 싸움을 싸우고 나의 달려갈 길을 마치고..."
+                        placeholder="여호와는 나의 목자시니 내게 부족함이 없으리로다"
                       />
                     </Field>
 
@@ -612,7 +617,7 @@ export default function MemorialCreate() {
                         onChange={event =>
                           updateField("verseRef", event.target.value)
                         }
-                        placeholder="딤후 4:7"
+                        placeholder="시 23:1"
                       />
                     </Field>
                   </div>
@@ -624,46 +629,22 @@ export default function MemorialCreate() {
                       onChange={event =>
                         updateField("summary", event.target.value)
                       }
-                      placeholder="믿음과 사랑으로 가족과 교회를 섬긴 분"
+                      placeholder="예배와 섬김으로 신앙의 길을 이어가는 분"
                       aria-invalid={Boolean(errors.summary)}
                     />
                   </Field>
 
-                  <Field label="삶의 기록" error={errors.story} required>
+                  <Field label="신앙 기록" error={errors.story} required>
                     <textarea
                       className={textAreaClass}
                       value={form.story}
                       onChange={event =>
                         updateField("story", event.target.value)
                       }
-                      placeholder="성도의 삶, 신앙, 가족에게 남긴 기억을 간결하게 적어 주세요."
+                      placeholder="성도의 삶과 신앙, 가족과 교회가 함께 기록하고 싶은 이야기를 적어 주세요."
                       aria-invalid={Boolean(errors.story)}
                     />
                   </Field>
-
-                  <div className="grid gap-6 md:grid-cols-2">
-                    <Field label="예배 일시">
-                      <input
-                        type="datetime-local"
-                        className={inputClass}
-                        value={form.serviceTime}
-                        onChange={event =>
-                          updateField("serviceTime", event.target.value)
-                        }
-                      />
-                    </Field>
-
-                    <Field label="추도일">
-                      <input
-                        type="date"
-                        className={inputClass}
-                        value={form.memorialDay}
-                        onChange={event =>
-                          updateField("memorialDay", event.target.value)
-                        }
-                      />
-                    </Field>
-                  </div>
                 </div>
               </section>
 
@@ -671,7 +652,7 @@ export default function MemorialCreate() {
                 id="timeline"
                 className="scroll-mt-24 border border-[#dbdad7] p-5 md:p-8"
               >
-                <SectionHeader number="03" title="생애 기록" />
+                <SectionHeader number="03" title="신앙 기록" />
 
                 <div className="space-y-6">
                   {timeline.map((item, index) => (
@@ -777,7 +758,7 @@ export default function MemorialCreate() {
                   </div>
 
                   <div>
-                    <label className={labelClass}>추억 사진</label>
+                    <label className={labelClass}>신앙 기록 사진</label>
                     <label className="flex min-h-36 w-full flex-col items-center justify-center gap-3 border border-dashed border-[#dbdad7] text-center text-sm text-[#616161] transition-colors hover:border-[#18181b] hover:text-[#121212]">
                       <ImagePlus className="h-6 w-6" strokeWidth={1.5} />
                       최대 6장 선택
@@ -796,7 +777,7 @@ export default function MemorialCreate() {
                           <img
                             key={preview}
                             src={preview}
-                            alt={`추억 사진 ${index + 1}`}
+                            alt={`신앙 기록 사진 ${index + 1}`}
                             className="aspect-square w-full bg-white object-cover"
                           />
                         ))}
@@ -929,7 +910,8 @@ export default function MemorialCreate() {
                         <SummaryItem
                           label="주소"
                           value={
-                            createdMemorial?.href || `/memorial/${slugPreview}`
+                            createdMemorial?.href ||
+                            `/memorial/${slugPreview}/archive`
                           }
                         />
                         <SummaryItem
