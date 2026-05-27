@@ -58,7 +58,7 @@ export default function Home() {
                 세대가 함께 이어가도록 돕는 공간입니다.
               </p>
               <div className="memorial-action-row mt-9 md:mt-10">
-                <Link href={routes.memorialSearch}>
+                <Link href={`${routes.memorialGarden}#faith-memorials`}>
                   <button className="memorial-button-primary">
                     <Search className="h-4 w-4" />
                     신앙기념관 검색

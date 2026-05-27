@@ -124,7 +124,10 @@ export default function MemorialGarden() {
           </div>
         </section>
 
-        <section className="border-b border-[var(--memorial-line)] bg-white py-16 md:py-24">
+        <section
+          id="faith-memorials"
+          className="scroll-mt-20 border-b border-[var(--memorial-line)] bg-white py-16 md:py-24"
+        >
           <div className="container">
             <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div>
