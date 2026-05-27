@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { churchConfig, homeCopy, routes } from "@/config/church";
+import { trpc } from "@/lib/trpc";
 import {
   ArrowRight,
   BookOpenText,
@@ -23,18 +24,11 @@ const HERO_VIDEO_ID = "haLv3Gtv91M";
 const HERO_VIDEO_START = 0;
 const HERO_VIDEO_SRC = `https://www.youtube-nocookie.com/embed/${HERO_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${HERO_VIDEO_ID}&playsinline=1&rel=0&modestbranding=1&start=${HERO_VIDEO_START}`;
 const HERO_VIDEO_POSTER = `https://img.youtube.com/vi/${HERO_VIDEO_ID}/maxresdefault.jpg`;
-const FEATURED_MEMORIAL = {
-  name: "이한영",
-  role: "성도",
-  church: churchConfig.churchName,
-  years: "신앙 기록",
-  href: "/memorial/lee-hanyeong/archive",
-  image: "/memorial-assets/lee-hanyeong/portrait.png",
-  summary:
-    "오늘의 예배와 섬김을 가족과 교회가 함께 기록하는 신앙기념관입니다.",
-};
 
 export default function Home() {
+  const memorialsQuery = trpc.memorial.list.useQuery();
+  const recentMemorials = (memorialsQuery.data ?? []).slice(0, 3);
+
   return (
     <div className="memorial-shell min-h-screen">
       <Navbar />
@@ -123,48 +117,52 @@ export default function Home() {
             <div className="grid gap-8 border-y border-white/18 py-10 md:grid-cols-[minmax(0,0.82fr)_minmax(320px,0.58fr)] md:items-center md:py-12">
               <div>
                 <p className="mb-4 text-xs font-semibold uppercase text-white/62">
-                  Featured Memorial
+                  Recent Memorials
                 </p>
                 <h2 className="memorial-serif text-[1.75rem] leading-tight text-white md:text-5xl">
                   최근 등록 신앙기념관
                 </h2>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68">
-                  {FEATURED_MEMORIAL.name} {FEATURED_MEMORIAL.role}님의 삶과
-                  믿음의 기록이 사진첩, 영상, 책장, 연표와 함께 정리되었습니다.
+                  새로 등록된 신앙기념관을 이름 중심으로 확인하고 바로 이동할 수
+                  있습니다.
                 </p>
               </div>
 
-              <Link href={FEATURED_MEMORIAL.href}>
-                <article className="group grid cursor-pointer overflow-hidden border border-white/18 bg-white text-[var(--memorial-ink)] sm:grid-cols-[132px_minmax(0,1fr)]">
-                  <div className="aspect-[4/3] bg-[#f4f2ee] sm:aspect-auto sm:min-h-44">
-                    <img
-                      src={FEATURED_MEMORIAL.image}
-                      alt={`${FEATURED_MEMORIAL.name} ${FEATURED_MEMORIAL.role}`}
-                      className="h-full w-full object-cover object-center"
-                    />
+              <div className="border border-white/18 bg-[var(--memorial-graphite)]">
+                {memorialsQuery.isLoading ? (
+                  <p className="px-5 py-7 text-sm text-white/62">
+                    최근 등록 신앙기념관을 불러오고 있습니다.
+                  </p>
+                ) : recentMemorials.length > 0 ? (
+                  <div className="divide-y divide-white/14">
+                    {recentMemorials.map((memorial, index) => (
+                      <Link
+                        key={memorial.id}
+                        href={`${memorial.href}/archive`}
+                      >
+                        <article className="group grid cursor-pointer grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-4 px-5 py-5 transition-colors hover:bg-white/8">
+                          <span className="text-sm text-white/42">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <div className="min-w-0">
+                            <h3 className="memorial-serif truncate text-xl text-white">
+                              {memorial.name} {memorial.role}
+                            </h3>
+                            <p className="mt-1 truncate text-xs text-white/54">
+                              {memorial.church}
+                            </p>
+                          </div>
+                          <ArrowRight className="h-4 w-4 text-white/72 transition-transform group-hover:translate-x-1" />
+                        </article>
+                      </Link>
+                    ))}
                   </div>
-                  <div className="flex min-w-0 flex-col justify-between p-5">
-                    <div>
-                      <p className="truncate text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--memorial-brass)]">
-                        {FEATURED_MEMORIAL.church}
-                      </p>
-                      <h3 className="memorial-serif mt-3 text-2xl">
-                        {FEATURED_MEMORIAL.name} {FEATURED_MEMORIAL.role}
-                      </h3>
-                      <p className="mt-1 text-sm text-[var(--memorial-ash)]">
-                        {FEATURED_MEMORIAL.years}
-                      </p>
-                      <p className="mt-4 text-sm leading-6 text-[var(--memorial-ash)]">
-                        {FEATURED_MEMORIAL.summary}
-                      </p>
-                    </div>
-                    <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[var(--memorial-ink)]">
-                      기념관 보기
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </div>
-                  </div>
-                </article>
-              </Link>
+                ) : (
+                  <p className="px-5 py-7 text-sm text-white/62">
+                    아직 등록된 신앙기념관이 없습니다.
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
