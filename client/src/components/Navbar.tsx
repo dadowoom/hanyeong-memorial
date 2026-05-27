@@ -106,7 +106,7 @@ export default function Navbar() {
             <Link href={routes.memorialCreate}>
               <span
                 onClick={closeMobile}
-                className="rounded-full border border-white/12 px-4 py-3 text-sm font-medium text-white/86 transition-colors hover:bg-white/10 hover:text-white"
+                className="block w-full rounded-full border border-white/12 px-4 py-3 text-sm font-medium text-white/86 transition-colors hover:bg-white/10 hover:text-white"
               >
                 신앙기념관 만들기
               </span>
