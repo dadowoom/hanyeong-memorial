@@ -113,6 +113,13 @@
       "when": 1779541200000,
       "tag": "0015_enrich_bae_jeonga_memorial",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "5",
+      "when": 1779545400000,
+      "tag": "0016_split_faith_and_memorial_content",
+      "breakpoints": true
     }
   ]
 }

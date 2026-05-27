@@ -31,9 +31,9 @@ const FEATURES = [
     icon: Search,
   },
   {
-    label: "마음",
-    title: "기념관 댓글",
-    desc: "가족과 교우가 기념관에 짧은 댓글을 남기며 기억과 응원을 조용히 이어갑니다.",
+    label: "동행",
+    title: "응원과 기록",
+    desc: "가족과 교우가 살아 있는 신앙의 이야기를 함께 정리하고 응원의 마음을 남깁니다.",
     icon: MessageCircle,
   },
 ];
@@ -86,7 +86,7 @@ export default function MemorialGarden() {
               <p className="memorial-body mt-7 max-w-2xl text-[15px] leading-7 md:mt-8 md:text-base">
                 {churchConfig.churchName} 성도들의 삶과 믿음을 가족과 교회가
                 함께 돌아보는 온라인 신앙 기념 공간입니다. 사진첩, 영상, 책장,
-                연표, 댓글 기능을 한영교회에 맞는 차분한 언어로 정리했습니다.
+                연표, 응원글 기능을 한영교회에 맞는 차분한 언어로 정리했습니다.
               </p>
               <div className="memorial-action-row mt-9 md:mt-10">
                 <Link href={routes.memorialSearch}>
@@ -137,8 +137,8 @@ export default function MemorialGarden() {
                 </h2>
               </div>
               <p className="memorial-body max-w-md text-sm">
-                등록된 성도의 사진과 이름, 직분을 한눈에 확인하고 각 기념관으로
-                바로 이동할 수 있습니다.
+                현재 한영교회와 함께 신앙의 길을 걷는 성도의 사진과 이름,
+                직분을 한눈에 확인하고 각 기념관으로 바로 이동할 수 있습니다.
               </p>
             </div>
 
@@ -159,7 +159,7 @@ export default function MemorialGarden() {
                 />
               </label>
               <p className="text-sm text-[var(--memorial-ash)] md:text-right">
-                등록 인물 {filteredMemorials.length}명 · 12명씩 보기
+                등록 인물 {filteredMemorials.length}명 · 신앙기록 12명씩 보기
               </p>
             </div>
 
@@ -200,6 +200,9 @@ export default function MemorialGarden() {
                               </h3>
                               <p className="mt-1 truncate text-sm text-[var(--memorial-ash)]">
                                 {memorial.role}
+                              </p>
+                              <p className="mt-1 truncate text-xs text-[var(--memorial-slate)]">
+                                출생 {memorial.birthDate || "기록 예정"}
                               </p>
                             </div>
                             <ArrowRight className="h-4 w-4 shrink-0 text-[var(--memorial-ink)] transition-transform group-hover:translate-x-1" />

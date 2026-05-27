@@ -24,14 +24,14 @@ const HERO_VIDEO_START = 0;
 const HERO_VIDEO_SRC = `https://www.youtube-nocookie.com/embed/${HERO_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${HERO_VIDEO_ID}&playsinline=1&rel=0&modestbranding=1&start=${HERO_VIDEO_START}`;
 const HERO_VIDEO_POSTER = `https://img.youtube.com/vi/${HERO_VIDEO_ID}/maxresdefault.jpg`;
 const FEATURED_MEMORIAL = {
-  name: "배정아",
-  role: "권사",
+  name: "이한영",
+  role: "성도",
   church: churchConfig.churchName,
-  years: "1944 - 2026",
-  href: "/memorial/bae-jeonga-kwonsa/archive",
-  image: "/memorial-assets/hanyeong-faces/bae-jeonga.jpg",
+  years: "신앙 기록",
+  href: "/memorial/lee-hanyeong/archive",
+  image: "/memorial-assets/lee-hanyeong/portrait.png",
   summary:
-    "새벽 예배와 중보기도의 자리를 지키며 가족과 한영교회를 섬긴 권사님입니다.",
+    "오늘의 예배와 섬김을 가족과 교회가 함께 기록하는 신앙기념관입니다.",
 };
 
 export default function Home() {
@@ -179,7 +179,7 @@ export default function Home() {
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-7 text-white/68">
-                등록부터 공유, 공동체 댓글까지 신앙기념관 운영 흐름을 단순하게
+                등록부터 공유, 공동체 응원글까지 신앙기념관 운영 흐름을 단순하게
                 정리했습니다.
               </p>
             </div>

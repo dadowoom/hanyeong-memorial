@@ -43,7 +43,7 @@ const memorialCreateInput = z.object({
   name: z.string().trim().min(1).max(120),
   role: z.string().trim().min(1).max(80),
   birthDate: z.string().trim().min(1).max(20),
-  deathDate: z.string().trim().min(1).max(20),
+  deathDate: z.string().trim().max(20).optional().default(""),
   church: z.string().trim().max(160).default(DEFAULT_CHURCH_NAME),
   familyContact: z.string().trim().max(120).optional(),
   familyPhone: z.string().trim().max(80).optional(),
@@ -470,7 +470,7 @@ export const appRouter = router({
         if (!created) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: "댓글을 남길 수 없습니다.",
+            message: "글을 남길 수 없습니다.",
           });
         }
 

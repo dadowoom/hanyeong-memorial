@@ -1,6 +1,6 @@
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "crypto";
 import { churchConfig } from "@shared/church";
-import { and, asc, desc, eq, isNull, like } from "drizzle-orm";
+import { and, asc, desc, eq, isNull, like, ne, or } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertMemorialBook,
@@ -310,7 +310,7 @@ export async function listPublicMemorials() {
         eq(memorialGalleryPhotos.isRepresentative, 1)
       )
     )
-    .where(eq(memorials.visibility, "public"))
+    .where(and(eq(memorials.visibility, "public"), eq(memorials.deathDate, "")))
     .orderBy(desc(memorials.createdAt))
     .limit(100);
 }
@@ -336,7 +336,13 @@ export async function searchPublicMemorials(keyword: string) {
       visibility: memorials.visibility,
     })
     .from(memorials)
-    .where(like(memorials.name, `%${normalizedKeyword}%`))
+    .where(
+      and(
+        eq(memorials.visibility, "public"),
+        like(memorials.name, `%${normalizedKeyword}%`),
+        ne(memorials.deathDate, "")
+      )
+    )
     .orderBy(desc(memorials.createdAt))
     .limit(12);
 }
@@ -848,7 +854,10 @@ export async function listRecentMemorialLetters(limit = 100) {
     .where(
       and(
         eq(memorialLetters.status, "published"),
-        isNull(memorialLetters.memorialId)
+        or(
+          isNull(memorialLetters.memorialId),
+          and(eq(memorials.visibility, "public"), ne(memorials.deathDate, ""))
+        )
       )
     )
     .orderBy(desc(memorialLetters.createdAt), desc(memorialLetters.id))

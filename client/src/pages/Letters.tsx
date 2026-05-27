@@ -172,7 +172,7 @@ export default function Letters() {
                   style={{ color: mutedText }}
                 >
                   하늘로 보내는 편지는 추모관 전환 이후 사용하는 공간입니다.
-                  기념관 댓글과 분리해, 고인에게 전하는 편지만 조용히 모읍니다.
+                  추모관에 남겨진 글과 직접 작성한 편지를 함께 모읍니다.
                 </p>
                 <button
                   type="button"
@@ -279,7 +279,7 @@ export default function Letters() {
                 <div className="flex flex-col justify-between gap-3 border-t border-[#e6ded1] bg-[#fbfaf8] p-5 sm:flex-row sm:items-center">
                   <p className="text-xs leading-6" style={{ color: mutedText }}>
                     {message ||
-                      "이곳에서 남긴 편지는 기념관 댓글과 분리되어 보관됩니다."}
+                      "이곳에서 남긴 편지와 추모관의 편지가 함께 표시됩니다."}
                   </p>
                   <button
                     type="submit"

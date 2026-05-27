@@ -75,7 +75,6 @@ const requiredFields: Array<{ key: keyof MemorialForm; label: string }> = [
   { key: "name", label: "성함" },
   { key: "role", label: "직분" },
   { key: "birthDate", label: "출생일" },
-  { key: "deathDate", label: "소천일" },
   { key: "summary", label: "한 줄 소개" },
   { key: "story", label: "삶의 기록" },
 ];
@@ -378,16 +377,16 @@ export default function MemorialCreate() {
                 className="text-4xl font-normal leading-tight md:text-6xl"
                 style={{ fontFamily: "'Noto Serif KR', serif" }}
               >
-                아름다운 기억을
+                살아 있는 신앙을
                 <br />
-                만드세요
+                기록하세요
               </h1>
               <p className="mt-6 max-w-md text-sm leading-7 text-[#616161]">
                 <span className="block">
-                  사랑하는 분의 삶과 믿음을 조용히 담아
+                  성도의 삶과 믿음을 지금의 언어로 담아
                 </span>
                 <span className="block">
-                  가족과 교회가 오래 기억할 수 있는 기록을 남겨보세요.
+                  가족과 교회가 함께 이어갈 신앙기록을 남겨보세요.
                 </span>
               </p>
             </div>
@@ -538,18 +537,6 @@ export default function MemorialCreate() {
                         updateField("birthDate", event.target.value)
                       }
                       aria-invalid={Boolean(errors.birthDate)}
-                    />
-                  </Field>
-
-                  <Field label="소천일" error={errors.deathDate} required>
-                    <input
-                      type="date"
-                      className={inputClass}
-                      value={form.deathDate}
-                      onChange={event =>
-                        updateField("deathDate", event.target.value)
-                      }
-                      aria-invalid={Boolean(errors.deathDate)}
                     />
                   </Field>
 

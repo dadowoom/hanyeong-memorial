@@ -80,6 +80,7 @@ export default function MemorialArchivePage() {
   }, [slug]);
 
   const memorial = memorialQuery.data as ArchiveMemorial | undefined;
+  const isMemorialHall = Boolean(memorial?.deathDate?.trim());
   const photosQuery = trpc.gallery.listByMemorial.useQuery(
     { memorialId: memorial?.id ?? 0 },
     { enabled: Boolean(memorial?.id) }
@@ -165,10 +166,16 @@ export default function MemorialArchivePage() {
               <GoldDust />
 
               <div className="container relative z-10 py-12 md:py-20">
-                <Link href={`/memorial/${memorial.slug}`}>
+                <Link
+                  href={
+                    isMemorialHall
+                      ? `/memorial/${memorial.slug}`
+                      : "/memorial-garden#faith-memorials"
+                  }
+                >
                   <button className="mb-10 inline-flex h-10 items-center gap-2 border border-[#e6ded1] bg-white px-4 text-sm text-[#4f4638] transition-colors hover:bg-[#faf9f7]">
                     <ArrowLeft className="h-4 w-4" strokeWidth={1.6} />
-                    기념관으로 돌아가기
+                    {isMemorialHall ? "추모관으로 돌아가기" : "목록으로 돌아가기"}
                   </button>
                 </Link>
 
@@ -248,8 +255,8 @@ export default function MemorialArchivePage() {
                       />
                       <ArchiveFact
                         icon={<CalendarDays className="h-4 w-4" />}
-                        label="소천"
-                        value={memorial.deathDate}
+                        label={isMemorialHall ? "소천" : "직분"}
+                        value={isMemorialHall ? memorial.deathDate : memorial.role}
                       />
                       <ArchiveFact
                         icon={<Church className="h-4 w-4" />}
@@ -460,6 +467,7 @@ export default function MemorialArchivePage() {
               memorialName={memorial.name}
               accessToken={accessToken || undefined}
               isPrivate={memorial.visibility === "private"}
+              variant={isMemorialHall ? "memorial" : "faith"}
             />
           </>
         )}

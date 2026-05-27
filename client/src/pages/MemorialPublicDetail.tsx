@@ -352,7 +352,7 @@ function MemorialContent({
                   className="inline-flex h-11 items-center justify-center gap-2 border border-[#18181b] bg-white px-5 text-sm font-medium text-[#18181b] transition-colors hover:bg-[#f4f4f5]"
                 >
                   <MessageCircle className="h-4 w-4" strokeWidth={1.7} />
-                  추모의 글 남기기
+                  편지 남기기
                 </a>
                 <button
                   type="button"
@@ -901,7 +901,7 @@ function MemorialComments({
     onSuccess: async () => {
       setAuthor("");
       setContent("");
-      setMessage("댓글이 남겨졌습니다.");
+      setMessage("편지가 남겨졌습니다.");
       await utils.comment.byMemorial.invalidate(queryInput);
     },
   });
@@ -912,7 +912,7 @@ function MemorialComments({
     const trimmedContent = content.trim();
 
     if (!trimmedAuthor || !trimmedContent) {
-      setMessage("이름과 댓글 내용을 모두 입력해주세요.");
+      setMessage("이름과 편지 내용을 모두 입력해주세요.");
       return;
     }
 
@@ -929,9 +929,9 @@ function MemorialComments({
     <section id="comments" className="py-20 md:py-28">
       <div className="container">
         <SectionHeader
-          eyebrow="Comments"
-          title="추모의 글"
-          description={`${memorialName}님의 추모관에 기억과 위로의 마음을 짧게 남겨주세요.`}
+          eyebrow="Letters"
+          title="하늘로 보내는 편지"
+          description={`${memorialName}님의 추모관에 남긴 편지는 하늘로 보내는 편지에도 함께 모입니다.`}
         />
 
         <div className="mx-auto max-w-5xl">
@@ -965,7 +965,7 @@ function MemorialComments({
                 <textarea
                   value={content}
                   onChange={event => setContent(event.target.value)}
-                  placeholder="기억이나 위로의 마음을 남겨주세요."
+                  placeholder="하늘로 전하고 싶은 마음을 남겨주세요."
                   maxLength={2000}
                   rows={5}
                   className="mt-4 w-full resize-none bg-transparent text-sm leading-7 text-[#121212] outline-none placeholder:text-[#9a9a9a]"
@@ -977,14 +977,14 @@ function MemorialComments({
                 {message ||
                   (isPrivate
                     ? "비공개 기념관에만 보관되며 해당 기념관 안에서만 표시됩니다."
-                    : "추모의 글은 이 추모관 안에서만 표시됩니다.")}
+                    : "이 편지는 추모관과 하늘로 보내는 편지에 함께 표시됩니다.")}
               </p>
               <button
                 type="submit"
                 disabled={createCommentMutation.isPending}
                 className="inline-flex h-11 items-center justify-center gap-2 bg-[#18181b] px-5 text-sm font-medium text-white transition-colors hover:bg-[#2f3033] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {createCommentMutation.isPending ? "남기는 중" : "추모의 글 남기기"}
+                {createCommentMutation.isPending ? "남기는 중" : "편지 남기기"}
                 <MessageCircle className="h-4 w-4" strokeWidth={1.7} />
               </button>
             </div>
@@ -996,7 +996,7 @@ function MemorialComments({
                 className="border-b border-[#d7d7db] py-7 text-sm"
                 style={{ color: mutedText }}
               >
-                추모의 글을 불러오고 있습니다.
+                편지를 불러오고 있습니다.
               </p>
             ) : commentsQuery.data?.length ? (
               commentsQuery.data.map(comment => (
@@ -1028,7 +1028,7 @@ function MemorialComments({
                 className="border-b border-[#d7d7db] py-7 text-sm"
                 style={{ color: mutedText }}
               >
-                아직 남겨진 추모의 글이 없습니다.
+                아직 남겨진 편지가 없습니다.
               </p>
             )}
           </div>
