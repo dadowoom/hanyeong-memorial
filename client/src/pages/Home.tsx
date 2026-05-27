@@ -20,11 +20,6 @@ const SERVICES = homeCopy.services.map((service, index) => ({
 const STEPS = homeCopy.steps;
 const VALUES = homeCopy.values;
 
-const HERO_VIDEO_ID = "haLv3Gtv91M";
-const HERO_VIDEO_START = 0;
-const HERO_VIDEO_SRC = `https://www.youtube-nocookie.com/embed/${HERO_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${HERO_VIDEO_ID}&playsinline=1&rel=0&modestbranding=1&start=${HERO_VIDEO_START}`;
-const HERO_VIDEO_POSTER = `https://img.youtube.com/vi/${HERO_VIDEO_ID}/maxresdefault.jpg`;
-
 export default function Home() {
   const memorialsQuery = trpc.memorial.list.useQuery();
   const recentMemorials = (memorialsQuery.data ?? []).slice(0, 3);
@@ -35,7 +30,7 @@ export default function Home() {
 
       <main className="pt-16">
         <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden border-b memorial-section memorial-section-muted">
-          <HeroVideoBackground />
+          <HeroBackground />
           <div className="container relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-12 md:py-20">
             <div className="max-w-3xl">
               <p className="memorial-eyebrow mb-6">
@@ -273,7 +268,7 @@ export default function Home() {
   );
 }
 
-function HeroVideoBackground() {
+function HeroBackground() {
   return (
     <div
       className="pointer-events-none absolute inset-0 overflow-hidden bg-[var(--memorial-cloud)]"
@@ -281,24 +276,16 @@ function HeroVideoBackground() {
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,rgba(255,255,255,0.92),transparent_34%),linear-gradient(90deg,#ffffff_0%,#f8f8f8_43%,#f4f4f4_100%)]" />
 
-      <div
-        className="absolute inset-y-0 right-0 hidden w-[56vw] overflow-hidden bg-cover bg-center md:block lg:w-[62vw]"
-        style={{ backgroundImage: `url(${HERO_VIDEO_POSTER})` }}
-      >
-        <iframe
-          title={`${churchConfig.churchName} 배경 영상`}
-          src={HERO_VIDEO_SRC}
-          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0 opacity-[0.64] brightness-[1.03] contrast-125 saturate-[0.9]"
-          allow="autoplay; fullscreen; picture-in-picture"
-          tabIndex={-1}
-        />
-        <div className="absolute inset-0 bg-[var(--memorial-navy)]/46" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--memorial-cloud)] via-white/52 to-[var(--memorial-navy-soft)]/24" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--memorial-navy-deep)]/10 via-transparent to-[var(--memorial-navy-deep)]/54" />
+      <div className="absolute inset-y-0 right-0 hidden w-[46vw] border-l border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.72),rgba(234,232,226,0.88)),radial-gradient(circle_at_34%_30%,rgba(255,255,255,0.86),transparent_34%)] md:block" />
+      <div className="absolute right-[7vw] top-1/2 hidden aspect-[3/4] w-[22vw] max-w-[320px] -translate-y-1/2 border border-[var(--memorial-line)] bg-white/50 shadow-[0_22px_70px_rgba(26,32,44,0.08)] md:block">
+        <div className="absolute inset-5 border border-[var(--memorial-line)]" />
+        <div className="absolute left-1/2 top-14 h-16 w-px -translate-x-1/2 bg-[var(--memorial-brass)]/50" />
+        <div className="absolute left-1/2 top-14 h-px w-16 -translate-x-1/2 bg-[var(--memorial-brass)]/50" />
+        <div className="absolute bottom-8 left-8 right-8 h-px bg-[var(--memorial-line)]" />
       </div>
 
       <div className="absolute inset-y-0 left-0 w-[56vw] bg-gradient-to-r from-white via-white/88 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_10%,rgba(255,255,255,0.22),transparent_28%),radial-gradient(circle_at_92%_86%,rgba(201,201,205,0.18),transparent_34%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_10%,rgba(255,255,255,0.38),transparent_28%),radial-gradient(circle_at_92%_86%,rgba(201,201,205,0.18),transparent_34%)]" />
     </div>
   );
 }
