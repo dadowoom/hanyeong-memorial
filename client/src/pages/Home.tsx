@@ -271,21 +271,18 @@ export default function Home() {
 function HeroBackground() {
   return (
     <div
-      className="pointer-events-none absolute inset-0 overflow-hidden bg-[var(--memorial-cloud)]"
+      className="pointer-events-none absolute inset-0 overflow-hidden bg-[#fbfaf6]"
       aria-hidden="true"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,rgba(255,255,255,0.92),transparent_34%),linear-gradient(90deg,#ffffff_0%,#f8f8f8_43%,#f4f4f4_100%)]" />
-
-      <div className="absolute inset-y-0 right-0 hidden w-[46vw] border-l border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.72),rgba(234,232,226,0.88)),radial-gradient(circle_at_34%_30%,rgba(255,255,255,0.86),transparent_34%)] md:block" />
-      <div className="absolute right-[7vw] top-1/2 hidden aspect-[3/4] w-[22vw] max-w-[320px] -translate-y-1/2 border border-[var(--memorial-line)] bg-white/50 shadow-[0_22px_70px_rgba(26,32,44,0.08)] md:block">
-        <div className="absolute inset-5 border border-[var(--memorial-line)]" />
-        <div className="absolute left-1/2 top-14 h-16 w-px -translate-x-1/2 bg-[var(--memorial-brass)]/50" />
-        <div className="absolute left-1/2 top-14 h-px w-16 -translate-x-1/2 bg-[var(--memorial-brass)]/50" />
-        <div className="absolute bottom-8 left-8 right-8 h-px bg-[var(--memorial-line)]" />
-      </div>
-
-      <div className="absolute inset-y-0 left-0 w-[56vw] bg-gradient-to-r from-white via-white/88 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_10%,rgba(255,255,255,0.38),transparent_28%),radial-gradient(circle_at_92%_86%,rgba(201,201,205,0.18),transparent_34%)]" />
+      <img
+        src="/memorial-assets/home-hero-hanyeong-faith.jpg"
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
+        loading="eager"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,#ffffff_0%,rgba(255,255,255,0.98)_33%,rgba(255,255,255,0.82)_55%,rgba(255,255,255,0.18)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0)_28%,rgba(255,255,255,0.72)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent" />
     </div>
   );
 }
