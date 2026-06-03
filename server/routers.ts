@@ -1,10 +1,13 @@
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { DEFAULT_CHURCH_NAME } from "@shared/church";
 import { TRPCError } from "@trpc/server";
+import { nanoid } from "nanoid";
 import { z } from "zod";
 import type { User } from "../drizzle/schema";
 import {
+  createMemorialAccessToken,
   createMemorial,
+  createMemorialGalleryPhoto,
   createMemorialLetter,
   createLocalUser,
   createMemorialReminderSubscription,
@@ -34,10 +37,19 @@ import {
   publicProcedure,
   router,
 } from "./_core/trpc";
+import { decodeImageDataUrl } from "./_core/imageUpload";
 import { bookRouter } from "./routers/book";
 import { galleryRouter } from "./routers/gallery";
 import { uploadRouter } from "./routers/upload";
 import { videoRouter } from "./routers/video";
+import { storagePut } from "./storage";
+
+const createTimeGalleryPhotoInput = z.object({
+  dataUrl: z.string().max(8_000_000),
+  fileName: z.string().trim().max(255).optional(),
+  caption: z.string().trim().max(500).optional(),
+  year: z.string().trim().max(20).optional(),
+});
 
 const memorialCreateInput = z.object({
   name: z.string().trim().min(1).max(120),
@@ -58,6 +70,8 @@ const memorialCreateInput = z.object({
   visibility: z.enum(["public", "private"]).default("public"),
   accessPassword: z.string().trim().max(80).optional(),
   managerMemo: z.string().trim().max(2000).optional(),
+  representativePhoto: createTimeGalleryPhotoInput.optional(),
+  galleryPhotos: z.array(createTimeGalleryPhotoInput).max(6).default([]),
   timeline: z
     .array(
       z.object({
@@ -77,6 +91,41 @@ const getMemorialHref = (memorial: {
   memorial.deathDate?.trim()
     ? `/memorial/${memorial.slug}`
     : `/memorial/${memorial.slug}/archive`;
+
+type DecodedCreateTimeGalleryPhoto = z.infer<
+  typeof createTimeGalleryPhotoInput
+> &
+  ReturnType<typeof decodeImageDataUrl>;
+
+function decodeCreateTimeGalleryPhoto(
+  photo: z.infer<typeof createTimeGalleryPhotoInput>
+): DecodedCreateTimeGalleryPhoto {
+  return { ...photo, ...decodeImageDataUrl(photo.dataUrl) };
+}
+
+async function saveCreateTimeGalleryPhoto(input: {
+  memorialId: number;
+  photo: DecodedCreateTimeGalleryPhoto;
+  sortOrder: number;
+  isRepresentative: 0 | 1;
+}) {
+  const key = `gallery/${input.memorialId}/${nanoid()}.${input.photo.ext}`;
+  const { url, key: storedKey } = await storagePut(
+    key,
+    input.photo.buffer,
+    input.photo.mimeType
+  );
+
+  await createMemorialGalleryPhoto({
+    memorialId: input.memorialId,
+    photoUrl: url,
+    photoKey: storedKey,
+    caption: input.photo.caption || null,
+    year: input.photo.year || null,
+    sortOrder: input.sortOrder,
+    isRepresentative: input.isRepresentative,
+  });
+}
 
 const letterCreateInput = z
   .object({
@@ -386,6 +435,16 @@ export const appRouter = router({
         const timeline = input.timeline.filter(
           item => item.year || item.title || item.description
         );
+        const representativePhoto = input.representativePhoto
+          ? decodeCreateTimeGalleryPhoto(input.representativePhoto)
+          : null;
+        const galleryPhotos = input.galleryPhotos.map(
+          decodeCreateTimeGalleryPhoto
+        );
+        const accessPasswordHash =
+          input.visibility === "private" && input.accessPassword
+            ? hashMemorialAccessPassword(input.accessPassword)
+            : null;
 
         const created = await createMemorial({
           name: input.name,
@@ -404,20 +463,48 @@ export const appRouter = router({
           serviceTime: input.serviceTime || null,
           memorialDay: input.memorialDay || null,
           visibility: input.visibility,
-          accessPasswordHash:
-            input.visibility === "private" && input.accessPassword
-              ? hashMemorialAccessPassword(input.accessPassword)
-              : null,
+          accessPasswordHash,
           status: "published",
           timelineJson: JSON.stringify(timeline),
           managerMemo: input.managerMemo || null,
         });
+
+        let photoUploadFailed = false;
+        const savePhoto = async (
+          photo: DecodedCreateTimeGalleryPhoto,
+          sortOrder: number,
+          isRepresentative: 0 | 1
+        ) => {
+          try {
+            await saveCreateTimeGalleryPhoto({
+              memorialId: created.id,
+              photo,
+              sortOrder,
+              isRepresentative,
+            });
+          } catch (error) {
+            photoUploadFailed = true;
+            console.error("[Memorial Create] Failed to save photo", error);
+          }
+        };
+
+        if (representativePhoto) {
+          await savePhoto(representativePhoto, 0, 1);
+        }
+
+        for (let index = 0; index < galleryPhotos.length; index += 1) {
+          await savePhoto(galleryPhotos[index], index + 1, 0);
+        }
 
         return {
           id: created.id,
           slug: created.slug,
           status: created.status,
           href: getMemorialHref(created),
+          accessToken: accessPasswordHash
+            ? createMemorialAccessToken(created.slug, accessPasswordHash)
+            : null,
+          photoUploadFailed,
         };
       }),
 

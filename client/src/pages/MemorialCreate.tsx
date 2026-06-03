@@ -1,7 +1,12 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { churchConfig, memorialCreateDraftKey } from "@/config/church";
+import {
+  churchConfig,
+  getMemorialAccessStorageKey,
+  memorialCreateDraftKey,
+} from "@/config/church";
+import { compressImageFile } from "@/lib/imageCompression";
 import { trpc } from "@/lib/trpc";
 import {
   ArrowRight,
@@ -13,7 +18,7 @@ import {
   Upload,
 } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 type TimelineItem = {
   id: string;
@@ -45,6 +50,8 @@ type CreatedMemorial = {
   slug: string;
   status: string;
   href: string;
+  accessToken?: string | null;
+  photoUploadFailed?: boolean;
 };
 
 const draftKey = memorialCreateDraftKey;
@@ -98,13 +105,13 @@ const textAreaClass =
   "min-h-36 w-full resize-y border border-[#dbdad7] bg-transparent p-4 text-sm leading-7 text-[#121212] outline-none transition-colors placeholder:text-[#9a9a9a] focus:border-[#18181b]";
 const labelClass = "mb-2 block text-xs font-medium text-[#616161]";
 const errorClass = "mt-2 text-xs text-[#9f2a2a]";
+const createImageMaxBytes = 3 * 1024 * 1024;
+const createImageMaxDimension = 1800;
 
-const readFileAsDataUrl = (file: File) =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+const compressCreateImage = (file: File) =>
+  compressImageFile(file, {
+    maxBytes: createImageMaxBytes,
+    maxDimension: createImageMaxDimension,
   });
 
 const makeId = () => {
@@ -131,6 +138,7 @@ export default function MemorialCreate() {
   const { user, loading } = useAuth({
     redirectOnUnauthenticated: true,
   });
+  const [, setLocation] = useLocation();
   const [form, setForm] = useState<MemorialForm>(initialForm);
   const [timeline, setTimeline] = useState<TimelineItem[]>([
     makeTimelineItem(),
@@ -259,20 +267,47 @@ export default function MemorialCreate() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    setPortraitName(file.name);
-    setPortraitPreview(await readFileAsDataUrl(file));
-    setSubmitted(false);
-    setCreatedMemorial(null);
+    try {
+      const compressed = await compressCreateImage(file);
+      setPortraitName(compressed.fileName);
+      setPortraitPreview(compressed.dataUrl);
+      setNotice(
+        compressed.compressed
+          ? "대표 사진을 등록에 맞게 압축했습니다."
+          : ""
+      );
+      setSubmitted(false);
+      setCreatedMemorial(null);
+    } catch (error) {
+      setNotice(
+        error instanceof Error
+          ? error.message
+          : "대표 사진을 준비하지 못했습니다."
+      );
+    }
   };
 
   const handleGalleryChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []).slice(0, 6);
     if (files.length === 0) return;
 
-    const previews = await Promise.all(files.map(readFileAsDataUrl));
-    setGalleryPreviews(previews);
-    setSubmitted(false);
-    setCreatedMemorial(null);
+    try {
+      const compressed = await Promise.all(files.map(compressCreateImage));
+      setGalleryPreviews(compressed.map(photo => photo.dataUrl));
+      setNotice(
+        compressed.some(photo => photo.compressed)
+          ? "사진첩 이미지를 등록에 맞게 압축했습니다."
+          : ""
+      );
+      setSubmitted(false);
+      setCreatedMemorial(null);
+    } catch (error) {
+      setNotice(
+        error instanceof Error
+          ? error.message
+          : "사진첩 이미지를 준비하지 못했습니다."
+      );
+    }
   };
 
   const saveDraft = () => {
@@ -318,6 +353,16 @@ export default function MemorialCreate() {
       const created = await createMemorialMutation.mutateAsync({
         ...form,
         slug: slugPreview,
+        representativePhoto: portraitPreview
+          ? {
+              dataUrl: portraitPreview,
+              fileName: portraitName || "representative-photo",
+            }
+          : undefined,
+        galleryPhotos: galleryPreviews.map((dataUrl, index) => ({
+          dataUrl,
+          fileName: `gallery-photo-${index + 1}`,
+        })),
         timeline: timeline.map(({ year, title, description }) => ({
           year,
           title,
@@ -327,8 +372,21 @@ export default function MemorialCreate() {
 
       localStorage.removeItem(draftKey);
       setCreatedMemorial(created);
-      setNotice("기념관이 생성되었습니다. 바로 확인할 수 있습니다.");
       setSubmitted(true);
+      if (created.accessToken && typeof window !== "undefined") {
+        sessionStorage.setItem(
+          getMemorialAccessStorageKey(created.slug),
+          created.accessToken
+        );
+      }
+      if (created.photoUploadFailed) {
+        setNotice(
+          "기념관은 생성되었지만 일부 사진 저장에 실패했습니다. 기념관 주소에서 내용을 먼저 확인해 주세요."
+        );
+        return;
+      }
+      setNotice("기념관이 생성되었습니다. 바로 확인할 수 있습니다.");
+      setLocation(created.href);
     } catch (error) {
       console.error("[Memorial Create] Failed to save", error);
       setNotice("저장 중 문제가 생겼습니다. 잠시 뒤 다시 시도해 주세요.");
