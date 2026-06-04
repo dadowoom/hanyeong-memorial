@@ -1,7 +1,10 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import {
+  canReadMemorial,
   createMemorialVideo,
   deleteMemorialVideo,
+  getMemorialAccessById,
   listMemorialVideos,
   updateMemorialVideo,
 } from "../db";
@@ -9,8 +12,30 @@ import { adminProcedure, publicProcedure, router } from "../_core/trpc";
 
 export const videoRouter = router({
   listByMemorial: publicProcedure
-    .input(z.object({ memorialId: z.number() }))
+    .input(
+      z.object({
+        memorialId: z.number(),
+        accessToken: z.string().trim().max(128).optional(),
+      })
+    )
     .query(async ({ ctx, input }) => {
+      if (ctx.user?.role !== "admin") {
+        const memorial = await getMemorialAccessById(input.memorialId);
+        if (!memorial) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "기념관을 찾을 수 없습니다.",
+          });
+        }
+
+        if (!canReadMemorial(memorial, input.accessToken)) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "비공개 기념관입니다.",
+          });
+        }
+      }
+
       const videos = await listMemorialVideos(input.memorialId);
       if (ctx.user?.role === "admin") return videos;
       return videos.filter(video => video.isVisible !== 0);

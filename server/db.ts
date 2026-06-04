@@ -471,6 +471,47 @@ export function canReadMemorial(
   );
 }
 
+export async function getMemorialAccessById(memorialId: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  const result = await db
+    .select({
+      id: memorials.id,
+      slug: memorials.slug,
+      visibility: memorials.visibility,
+      accessPasswordHash: memorials.accessPasswordHash,
+    })
+    .from(memorials)
+    .where(eq(memorials.id, memorialId))
+    .limit(1);
+
+  return result[0] ?? null;
+}
+
+export async function getMemorialAccessByBookId(bookId: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  const result = await db
+    .select({
+      id: memorials.id,
+      slug: memorials.slug,
+      visibility: memorials.visibility,
+      accessPasswordHash: memorials.accessPasswordHash,
+    })
+    .from(memorialBooks)
+    .innerJoin(memorials, eq(memorialBooks.memorialId, memorials.id))
+    .where(eq(memorialBooks.id, bookId))
+    .limit(1);
+
+  return result[0] ?? null;
+}
+
 export async function getMemorialAccessStatus(slug: string) {
   const db = await getDb();
   if (!db) {

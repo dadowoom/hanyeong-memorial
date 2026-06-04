@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { nanoid } from "nanoid";
+import { TRPCError } from "@trpc/server";
 import {
+  canReadMemorial,
   createMemorialGalleryPhoto,
   deleteMemorialGalleryPhoto,
+  getMemorialAccessById,
   listMemorialGalleryPhotos,
   setRepresentativeMemorialPhoto,
   updateMemorialGalleryPhoto,
@@ -13,8 +16,34 @@ import { storagePut } from "../storage";
 
 export const galleryRouter = router({
   listByMemorial: publicProcedure
-    .input(z.object({ memorialId: z.number() }))
-    .query(({ input }) => listMemorialGalleryPhotos(input.memorialId)),
+    .input(
+      z.object({
+        memorialId: z.number(),
+        accessToken: z.string().trim().max(128).optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (ctx.user?.role === "admin") {
+        return listMemorialGalleryPhotos(input.memorialId);
+      }
+
+      const memorial = await getMemorialAccessById(input.memorialId);
+      if (!memorial) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "기념관을 찾을 수 없습니다.",
+        });
+      }
+
+      if (!canReadMemorial(memorial, input.accessToken)) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "비공개 기념관입니다.",
+        });
+      }
+
+      return listMemorialGalleryPhotos(input.memorialId);
+    }),
 
   upload: adminProcedure
     .input(

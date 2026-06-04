@@ -1,10 +1,13 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import {
+  canReadMemorial,
   createMemorialBook,
   createMemorialBookPage,
   deleteMemorialBook,
   deleteMemorialBookPage,
+  getMemorialAccessByBookId,
+  getMemorialAccessById,
   getMemorialBookById,
   listMemorialBookPages,
   listMemorialBooks,
@@ -17,8 +20,30 @@ const nullableText = z.string().trim().nullable().optional();
 
 export const bookRouter = router({
   listByMemorial: publicProcedure
-    .input(z.object({ memorialId: z.number() }))
-    .query(async ({ input }) => {
+    .input(
+      z.object({
+        memorialId: z.number(),
+        accessToken: z.string().trim().max(128).optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (ctx.user?.role !== "admin") {
+        const memorial = await getMemorialAccessById(input.memorialId);
+        if (!memorial) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "기념관을 찾을 수 없습니다.",
+          });
+        }
+
+        if (!canReadMemorial(memorial, input.accessToken)) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "비공개 기념관입니다.",
+          });
+        }
+      }
+
       const books = await listMemorialBooks(input.memorialId);
       return Promise.all(
         books.map(async book => ({
@@ -29,8 +54,30 @@ export const bookRouter = router({
     }),
 
   getById: publicProcedure
-    .input(z.object({ id: z.number() }))
-    .query(async ({ input }) => {
+    .input(
+      z.object({
+        id: z.number(),
+        accessToken: z.string().trim().max(128).optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (ctx.user?.role !== "admin") {
+        const memorial = await getMemorialAccessByBookId(input.id);
+        if (!memorial) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "책을 찾을 수 없습니다.",
+          });
+        }
+
+        if (!canReadMemorial(memorial, input.accessToken)) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "비공개 기념관입니다.",
+          });
+        }
+      }
+
       const book = await getMemorialBookById(input.id);
       if (!book) {
         throw new TRPCError({

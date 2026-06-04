@@ -29,6 +29,7 @@ type GalleryPhoto = {
 type MemorialGallerySectionProps = {
   memorialId: number;
   isAdmin: boolean;
+  accessToken?: string;
 };
 
 const memorialPhotoFilter = "contrast(1.02) brightness(1.01) saturate(1.04)";
@@ -36,6 +37,7 @@ const memorialPhotoFilter = "contrast(1.02) brightness(1.01) saturate(1.04)";
 export default function MemorialGallerySection({
   memorialId,
   isAdmin,
+  accessToken,
 }: MemorialGallerySectionProps) {
   const utils = trpc.useUtils();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -44,26 +46,30 @@ export default function MemorialGallerySection({
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const photosQuery = trpc.gallery.listByMemorial.useQuery({ memorialId });
+  const galleryQueryInput = {
+    memorialId,
+    accessToken: accessToken || undefined,
+  };
+  const photosQuery = trpc.gallery.listByMemorial.useQuery(galleryQueryInput);
   const photos = (photosQuery.data ?? []) as GalleryPhoto[];
   const canEdit = isAdmin && memorialId > 0;
 
   const uploadPhoto = trpc.gallery.upload.useMutation();
   const updatePhoto = trpc.gallery.update.useMutation({
-    onSuccess: () => utils.gallery.listByMemorial.invalidate({ memorialId }),
+    onSuccess: () => utils.gallery.listByMemorial.invalidate(galleryQueryInput),
     onError: error => toast.error(error.message),
   });
   const deletePhoto = trpc.gallery.delete.useMutation({
     onSuccess: () => {
       toast.success("사진이 삭제되었습니다.");
-      utils.gallery.listByMemorial.invalidate({ memorialId });
+      utils.gallery.listByMemorial.invalidate(galleryQueryInput);
     },
     onError: error => toast.error(error.message),
   });
   const setRepresentative = trpc.gallery.setRepresentative.useMutation({
     onSuccess: () => {
       toast.success("대표사진으로 지정했습니다.");
-      utils.gallery.listByMemorial.invalidate({ memorialId });
+      utils.gallery.listByMemorial.invalidate(galleryQueryInput);
     },
     onError: error => toast.error(error.message),
   });
@@ -98,7 +104,7 @@ export default function MemorialGallerySection({
         setProgress(Math.round(((index + 1) / imageFiles.length) * 100));
       }
 
-      await utils.gallery.listByMemorial.invalidate({ memorialId });
+      await utils.gallery.listByMemorial.invalidate(galleryQueryInput);
       if (successCount > 0) {
         toast.success(`${successCount}장의 사진이 업로드되었습니다.`);
       }
@@ -124,7 +130,7 @@ export default function MemorialGallerySection({
         updatePhoto.mutateAsync({ id: photo.id, sortOrder })
       )
     );
-    await utils.gallery.listByMemorial.invalidate({ memorialId });
+    await utils.gallery.listByMemorial.invalidate(galleryQueryInput);
     toast.success("사진 순서가 변경되었습니다.");
   };
 

@@ -91,8 +91,12 @@ export default function MemorialPublicDetail() {
   const memorial = memorialQuery.data as MemorialRecord | undefined;
   const isLocked = memorialQuery.error?.data?.code === "FORBIDDEN";
   const isFaithMemorial = Boolean(memorial && !memorial.deathDate.trim());
+  const galleryQueryInput = {
+    memorialId: memorial?.id ?? 0,
+    accessToken: accessToken || undefined,
+  };
   const photosQuery = trpc.gallery.listByMemorial.useQuery(
-    { memorialId: memorial?.id ?? 0 },
+    galleryQueryInput,
     { enabled: Boolean(memorial?.id) }
   );
   const photos = (photosQuery.data ?? []) as MemorialPhoto[];
