@@ -23,6 +23,7 @@ GitHub 저장소 `dadowoom/hanyeong-memorial` 기준으로 작업한다.
 - 이한영 권사 대표사진은 새 한국인 권사 프로필 사진으로 교체됨
 - 기념관 내부 사진첩/책장/영상 커버/대표사진은 전부 컬러
 - 카톡 공유 버튼이 기념관 상세와 아카이브 화면에 있음
+- 카카오 JavaScript SDK 공유 연동은 `VITE_KAKAO_JAVASCRIPT_KEY`가 설정되면 활성화되고, 키가 없거나 SDK가 실패하면 모바일 기본 공유/링크 복사로 대체됨
 - 공유 미리보기 OG는 인물 사진과 `OOO 직분님의 신앙기념관입니다.` 문구를 사용
 
 ## 새 컴퓨터에서 시작하기
@@ -84,6 +85,7 @@ curl -sS -o /dev/null -w "KIM:%{http_code}\n" http://127.0.0.1:3060/memorial/kim
 - 책장/연표: `client/src/components/memorial/MemorialBookSection.tsx`
 - 영상: `client/src/components/memorial/MemorialVideoSection.tsx`
 - 공유 미리보기 OG: `server/_core/openGraph.ts`
+- 카카오 공유 helper: `client/src/lib/shareMemorial.ts`
 - 이한영 권사 사진: `client/public/memorial-assets/lee-hanyeong/portrait.png`
 - 한국인 가상 인물 사진: `client/public/memorial-assets/hanyeong-faces/`
 
@@ -99,6 +101,7 @@ curl -sS -o /dev/null -w "KIM:%{http_code}\n" http://127.0.0.1:3060/memorial/kim
 - 신앙기념관 사진은 컬러
 - 추모관을 별도 화면으로 확장할 경우에만 흑백 톤 적용
 - 공개 인물 목록은 한 페이지당 12명
+- 카카오톡 공유를 실제로 사용하려면 카카오 디벨로퍼스에서 JavaScript SDK 도메인과 제품 링크 웹 도메인에 운영 도메인(`http://115.68.224.123:3060`)을 등록하고, 서버 빌드 환경에 `VITE_KAKAO_JAVASCRIPT_KEY`를 설정한 뒤 다시 빌드한다
 
 ## 확인할 것
 

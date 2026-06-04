@@ -9,6 +9,10 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { churchConfig, getMemorialAccessStorageKey } from "@/config/church";
 import { toImgUrl } from "@/lib/imageUrl";
 import {
+  getMemorialShareMessage,
+  shareMemorialLink,
+} from "@/lib/shareMemorial";
+import {
   getNarrativeFontSize,
   normalizeTextDisplaySize,
 } from "@/lib/textDisplay";
@@ -126,24 +130,10 @@ export default function MemorialArchivePage() {
     const title = `${memorial.name} ${memorial.role} | ${churchConfig.serviceTitle}`;
     const text = `${memorial.name} ${memorial.role}님의 ${churchConfig.serviceName}입니다.`;
 
-    try {
-      if (typeof navigator !== "undefined" && navigator.share) {
-        await navigator.share({ title, text, url: shareUrl });
-        setShareMessage("공유 창을 열었습니다.");
-        return;
-      }
-
-      if (typeof navigator !== "undefined" && navigator.clipboard) {
-        await navigator.clipboard.writeText(shareUrl);
-        setShareMessage("기념관 링크를 복사했습니다.");
-        return;
-      }
-
-      setShareMessage(shareUrl);
-    } catch (error) {
-      if ((error as Error).name !== "AbortError") {
-        setShareMessage("공유를 다시 시도해주세요.");
-      }
+    const result = await shareMemorialLink({ title, text, url: shareUrl });
+    const message = getMemorialShareMessage(result, shareUrl);
+    if (message) {
+      setShareMessage(message);
     }
   };
 
