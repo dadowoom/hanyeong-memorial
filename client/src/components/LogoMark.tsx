@@ -5,7 +5,7 @@ type LogoMarkProps = {
 
 export default function LogoMark({
   className = "h-9 w-9",
-  title = "한영교회 신앙기념관",
+  title = "한영교회 역사관",
 }: LogoMarkProps) {
   return (
     <svg

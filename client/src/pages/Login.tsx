@@ -68,7 +68,7 @@ export default function Login() {
     ? {
         eyebrow: "START FAITH MEMORIAL",
         title: "가입하고 바로\n신앙기념관을 만듭니다",
-        body: "한영교회 신앙기념관은 살아계신 성도의 신앙 여정과 섬김을 가족과 교회가 함께 기록하는 공간입니다.",
+        body: "한영교회 역사관은 살아계신 성도의 신앙 여정과 섬김을 가족과 교회가 함께 기록하는 공간입니다.",
         steps: [
           ["01", "회원가입"],
           ["02", "기본 정보 입력"],
@@ -77,7 +77,7 @@ export default function Login() {
       }
     : {
         eyebrow: "HANYEONG ACCOUNT",
-        title: "한영교회\n신앙기념관 계정",
+        title: "한영교회\n역사관 계정",
         body: "로그인하면 신앙기념관 생성과 가족관, 사진첩, 영상, 책장, 연표 기록을 이어서 관리할 수 있습니다.",
         steps: [
           ["01", "로그인"],

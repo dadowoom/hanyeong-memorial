@@ -38,10 +38,10 @@ export default function Home() {
               </p>
               <h1 className="memorial-serif max-w-3xl text-[2.75rem] leading-[1.04] sm:text-[3.2rem] md:text-[5.1rem] md:leading-[1.08]">
                 <span className="block">한영교회</span>
-                <span className="block">신앙기념관</span>
+                <span className="block">역사관</span>
               </h1>
               <p className="mt-7 max-w-2xl text-[15px] leading-7 text-[var(--memorial-ash)] md:mt-8 md:text-lg md:leading-8">
-                한영교회 신앙기념관은 <br className="hidden md:block" />
+                한영교회 역사관은 <br className="hidden md:block" />
                 성도들의 삶 속에 담긴 믿음의 발자취를 소중히 기억하고,{" "}
                 <br className="hidden md:block" />그 신앙의 유산을 오늘과 다음
                 세대가 함께 이어가도록 돕는 공간입니다.

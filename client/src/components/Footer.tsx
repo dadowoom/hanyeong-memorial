@@ -14,7 +14,7 @@ export default function Footer() {
               </span>
               <div className="leading-tight">
                 <span className="memorial-serif block text-sm text-white">
-                  {churchConfig.serviceName}
+                  {churchConfig.brandName}
                 </span>
                 <span className="block text-[10px] text-white/52">
                   {churchConfig.serviceSubtitle}
@@ -65,7 +65,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col justify-between gap-3 border-t border-white/14 pt-6 text-xs md:flex-row">
           <p>© 2026 {churchConfig.churchName}. All rights reserved.</p>
-          <p>{churchConfig.serviceName} - 온라인 신앙기념관</p>
+          <p>{churchConfig.brandName} - 온라인 신앙기념관</p>
         </div>
       </div>
     </footer>

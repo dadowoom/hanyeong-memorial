@@ -23,7 +23,7 @@ export default function Navbar() {
               </span>
               <div className="leading-tight">
                 <span className="memorial-serif block text-sm text-white">
-                  {churchConfig.serviceName}
+                  {churchConfig.brandName}
                 </span>
                 <span className="block text-[10px] text-white/58">
                   {churchConfig.serviceSubtitle}
