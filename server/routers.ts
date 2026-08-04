@@ -40,6 +40,7 @@ import {
 import { decodeImageDataUrl } from "./_core/imageUpload";
 import { bookRouter } from "./routers/book";
 import { galleryRouter } from "./routers/gallery";
+import { historyRouter } from "./routers/history";
 import { uploadRouter } from "./routers/upload";
 import { videoRouter } from "./routers/video";
 import { storagePut } from "./storage";
@@ -702,6 +703,7 @@ export const appRouter = router({
   }),
 
   gallery: galleryRouter,
+  history: historyRouter,
   video: videoRouter,
   book: bookRouter,
   upload: uploadRouter,

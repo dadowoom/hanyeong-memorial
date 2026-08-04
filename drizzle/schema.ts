@@ -1,4 +1,5 @@
 import {
+  boolean,
   index,
   int,
   mysqlEnum,
@@ -273,3 +274,56 @@ export type MemorialReminderSubscription =
   typeof memorialReminderSubscriptions.$inferSelect;
 export type InsertMemorialReminderSubscription =
   typeof memorialReminderSubscriptions.$inferInsert;
+
+export const historyDecades = mysqlTable(
+  "history_decades",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    title: varchar("title", { length: 64 }).notNull(),
+    startYear: int("start_year").notNull(),
+    endYear: int("end_year").notNull(),
+    sortOrder: int("sort_order").default(0).notNull(),
+    isVisible: boolean("is_visible").default(true).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [
+    index("history_decades_visible_sort_idx").on(
+      table.isVisible,
+      table.sortOrder,
+      table.startYear
+    ),
+  ]
+);
+
+export type HistoryDecade = typeof historyDecades.$inferSelect;
+export type InsertHistoryDecade = typeof historyDecades.$inferInsert;
+
+export const historyItems = mysqlTable(
+  "history_items",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    decadeId: int("decade_id")
+      .notNull()
+      .references(() => historyDecades.id, { onDelete: "cascade" }),
+    year: int("year").notNull(),
+    month: int("month").notNull(),
+    content: text("content").notNull(),
+    sortOrder: int("sort_order").default(0).notNull(),
+    isVisible: boolean("is_visible").default(true).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [
+    index("history_items_decade_visible_sort_idx").on(
+      table.decadeId,
+      table.isVisible,
+      table.sortOrder,
+      table.year,
+      table.month
+    ),
+  ]
+);
+
+export type HistoryItem = typeof historyItems.$inferSelect;
+export type InsertHistoryItem = typeof historyItems.$inferInsert;

@@ -4,6 +4,7 @@ export { churchConfig };
 
 export const routes = {
   home: "/",
+  history: "/history",
   memorialGarden: "/memorial-garden",
   memorialSearch: "/memorial/search",
   memorialCreate: "/memorial/create",
@@ -12,6 +13,7 @@ export const routes = {
 } as const;
 
 export const navItems = [
+  { label: "교회 연혁", href: routes.history },
   { label: "신앙 기념관", href: routes.memorialGarden },
   { label: "추모관", href: routes.memorialSearch },
   { label: "하늘로 보내는 편지", href: routes.letters },
@@ -19,6 +21,7 @@ export const navItems = [
 ] as const;
 
 export const serviceLinks = [
+  { label: "교회 연혁", href: routes.history, type: "route" },
   { label: "추모관", href: routes.memorialSearch, type: "route" },
   { label: "하늘로 보내는 편지", href: routes.letters, type: "route" },
   { label: "신앙기념관 만들기", href: routes.memorialCreate, type: "route" },

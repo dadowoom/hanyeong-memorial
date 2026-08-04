@@ -127,6 +127,13 @@
       "when": 1779546300000,
       "tag": "0017_refine_faith_memorial_language",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1785890000000,
+      "tag": "0018_add_church_history",
+      "breakpoints": true
     }
   ]
 }

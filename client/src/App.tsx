@@ -6,6 +6,7 @@ import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import ChurchHistory from "./pages/ChurchHistory";
 import MemorialDemo from "./pages/MemorialDemo";
 import MemorialCreate from "./pages/MemorialCreate";
 import HomeWarm from "./pages/HomeWarm";
@@ -23,6 +24,8 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/history"} component={ChurchHistory} />
+      <Route path={"/church-history"} component={ChurchHistory} />
       <Route path={"/login"} component={Login} />
       <Route path={"/memorial/demo"} component={MemorialDemo} />
       <Route path={"/memorial/create"} component={MemorialCreate} />
