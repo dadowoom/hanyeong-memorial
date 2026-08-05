@@ -39,6 +39,7 @@ import {
 } from "./_core/trpc";
 import { decodeImageDataUrl } from "./_core/imageUpload";
 import { bookRouter } from "./routers/book";
+import { adminRouter } from "./routers/admin";
 import { galleryRouter } from "./routers/gallery";
 import { historyRouter } from "./routers/history";
 import { uploadRouter } from "./routers/upload";
@@ -226,6 +227,7 @@ const toPublicUser = (user: User) => ({
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
+  admin: adminRouter,
   auth: router({
     me: publicProcedure.query(opts =>
       opts.ctx.user ? toPublicUser(opts.ctx.user) : null
@@ -279,11 +281,16 @@ export const appRouter = router({
           });
         }
 
+        if (user.approvalStatus !== "approved") {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "현재 이용이 제한된 계정입니다. 관리자에게 문의해주세요.",
+          });
+        }
+
         const signedInAt = new Date();
         await upsertUser({
           openId: user.openId,
-          approvalStatus: "approved",
-          approvedAt: user.approvedAt ?? signedInAt,
           lastSignedIn: signedInAt,
         });
 
@@ -300,8 +307,6 @@ export const appRouter = router({
         return {
           user: toPublicUser({
             ...user,
-            approvalStatus: "approved",
-            approvedAt: user.approvedAt ?? signedInAt,
             lastSignedIn: signedInAt,
           }),
         };
@@ -384,7 +389,7 @@ export const appRouter = router({
           accessToken: z.string().trim().max(128).optional(),
         })
       )
-      .query(async ({ input }) => {
+      .query(async ({ ctx, input }) => {
         const memorial = await getPublicMemorialBySlug(input.slug);
         if (!memorial) {
           throw new TRPCError({
@@ -393,7 +398,10 @@ export const appRouter = router({
           });
         }
 
-        if (!canReadMemorial(memorial, input.accessToken)) {
+        if (
+          ctx.user?.role !== "admin" &&
+          !canReadMemorial(memorial, input.accessToken)
+        ) {
           throw new TRPCError({
             code: "FORBIDDEN",
             message: "비공개 기념관입니다.",
@@ -526,7 +534,7 @@ export const appRouter = router({
           accessToken: z.string().trim().max(128).optional(),
         })
       )
-      .query(async ({ input }) => {
+      .query(async ({ ctx, input }) => {
         const memorial = await getPublicMemorialBySlug(input.memorialSlug);
         if (!memorial) {
           throw new TRPCError({
@@ -534,7 +542,10 @@ export const appRouter = router({
             message: "기념관을 찾을 수 없습니다.",
           });
         }
-        if (!canReadMemorial(memorial, input.accessToken)) {
+        if (
+          ctx.user?.role !== "admin" &&
+          !canReadMemorial(memorial, input.accessToken)
+        ) {
           throw new TRPCError({
             code: "FORBIDDEN",
             message: "비공개 기념관입니다.",
@@ -589,7 +600,7 @@ export const appRouter = router({
           accessToken: z.string().trim().max(128).optional(),
         })
       )
-      .query(async ({ input }) => {
+      .query(async ({ ctx, input }) => {
         const memorial = await getPublicMemorialBySlug(input.memorialSlug);
         if (!memorial) {
           throw new TRPCError({
@@ -597,7 +608,10 @@ export const appRouter = router({
             message: "기념관을 찾을 수 없습니다.",
           });
         }
-        if (!canReadMemorial(memorial, input.accessToken)) {
+        if (
+          ctx.user?.role !== "admin" &&
+          !canReadMemorial(memorial, input.accessToken)
+        ) {
           throw new TRPCError({
             code: "FORBIDDEN",
             message: "비공개 기념관입니다.",

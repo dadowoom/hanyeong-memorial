@@ -292,10 +292,12 @@ class SDKServer {
       throw ForbiddenError("User not found");
     }
 
+    if (user.approvalStatus !== "approved") {
+      throw ForbiddenError("User access is not approved");
+    }
+
     await db.upsertUser({
       openId: user.openId,
-      approvalStatus: "approved",
-      approvedAt: user.approvedAt ?? signedInAt,
       lastSignedIn: signedInAt,
     });
 

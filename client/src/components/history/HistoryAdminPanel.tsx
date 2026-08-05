@@ -97,15 +97,18 @@ const inputClass =
   "h-11 w-full border border-[var(--memorial-line)] bg-white px-3 text-sm outline-none transition-colors focus:border-[var(--memorial-navy)]";
 
 export default function HistoryAdminPanel({
-  open,
-  onOpenChange,
+  open = false,
+  onOpenChange = () => undefined,
+  mode = "dialog",
 }: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  mode?: "dialog" | "page";
 }) {
+  const active = mode === "page" || open;
   const utils = trpc.useUtils();
   const historyQuery = trpc.history.adminList.useQuery(undefined, {
-    enabled: open,
+    enabled: active,
   });
   const [selectedDecadeId, setSelectedDecadeId] = useState<number | null>(null);
   const [decadeDraft, setDecadeDraft] = useState<DecadeDraft | null>(null);
@@ -131,11 +134,11 @@ export default function HistoryAdminPanel({
   const itemGroups = groupHistoryItemsByYear(selectedItems);
 
   useEffect(() => {
-    if (!open) return;
+    if (!active) return;
     if (!decades.some(decade => decade.id === selectedDecadeId)) {
       setSelectedDecadeId(decades[0]?.id ?? null);
     }
-  }, [decades, open, selectedDecadeId]);
+  }, [active, decades, selectedDecadeId]);
 
   const refresh = async () => {
     await Promise.all([
@@ -307,6 +310,245 @@ export default function HistoryAdminPanel({
     });
   };
 
+  const workspace = (
+    <div
+      className={`grid md:grid-cols-[260px_minmax(0,1fr)] ${
+        mode === "dialog"
+          ? "max-h-[calc(92vh-92px)] overflow-y-auto"
+          : "min-h-[560px]"
+      }`}
+    >
+      <aside className="border-b memorial-section bg-[var(--memorial-cloud)] p-4 md:border-b-0 md:border-r md:p-5">
+        <button
+          type="button"
+          onClick={() => setDecadeDraft(emptyDecadeDraft)}
+          className="memorial-button-primary w-full"
+        >
+          <Plus className="h-4 w-4" />
+          연대 추가
+        </button>
+
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDecadeDragEnd}
+        >
+          <SortableContext
+            items={decades.map(decade => decade.id)}
+            strategy={rectSortingStrategy}
+          >
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 md:flex-col md:overflow-visible">
+              {decades.map(decade => (
+                <SortableDecade
+                  key={decade.id}
+                  decade={decade}
+                  selected={decade.id === selectedDecadeId}
+                  onSelect={() => {
+                    setSelectedDecadeId(decade.id);
+                    setDecadeDraft(null);
+                    setItemDraft(null);
+                  }}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
+      </aside>
+
+      <section className="min-w-0 p-5 md:p-7">
+        {historyQuery.isLoading ? (
+          <ManagerMessage>연혁 정보를 불러오고 있습니다.</ManagerMessage>
+        ) : decadeDraft ? (
+          <DecadeForm
+            draft={decadeDraft}
+            setDraft={setDecadeDraft}
+            onSubmit={submitDecade}
+            busy={busy}
+          />
+        ) : selectedDecade ? (
+          <>
+            <div className="flex flex-col justify-between gap-4 border-b memorial-section pb-5 sm:flex-row sm:items-start">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="memorial-serif text-2xl">
+                    {selectedDecade.title}
+                  </h3>
+                  {selectedDecade.isVisible ? (
+                    <Eye
+                      className="h-4 w-4 text-emerald-700"
+                      aria-label="공개"
+                    />
+                  ) : (
+                    <EyeOff
+                      className="h-4 w-4 text-[var(--memorial-slate)]"
+                      aria-label="숨김"
+                    />
+                  )}
+                </div>
+                <p className="mt-2 text-xs text-[var(--memorial-slate)]">
+                  {selectedDecade.startYear} - {selectedDecade.endYear}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <IconButton
+                  label="연대 수정"
+                  onClick={() =>
+                    setDecadeDraft({
+                      id: selectedDecade.id,
+                      title: selectedDecade.title,
+                      startYear: String(selectedDecade.startYear),
+                      endYear: String(selectedDecade.endYear),
+                      isVisible: selectedDecade.isVisible,
+                    })
+                  }
+                >
+                  <Pencil className="h-4 w-4" />
+                </IconButton>
+                <IconButton
+                  label={
+                    selectedDecade.isVisible ? "연대 숨기기" : "연대 공개하기"
+                  }
+                  onClick={() =>
+                    updateDecade.mutate({
+                      id: selectedDecade.id,
+                      title: selectedDecade.title,
+                      startYear: selectedDecade.startYear,
+                      endYear: selectedDecade.endYear,
+                      sortOrder: selectedDecade.sortOrder,
+                      isVisible: !selectedDecade.isVisible,
+                    })
+                  }
+                >
+                  {selectedDecade.isVisible ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </IconButton>
+                <IconButton
+                  label="연대 삭제"
+                  tone="danger"
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        `${selectedDecade.title}와 포함된 모든 기록을 삭제할까요?`
+                      )
+                    ) {
+                      deleteDecade.mutate({ id: selectedDecade.id });
+                    }
+                  }}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </IconButton>
+              </div>
+            </div>
+
+            <div className="mt-6 flex items-center justify-between gap-4">
+              <h4 className="text-sm font-semibold text-[var(--memorial-ink)]">
+                연혁 기록 {selectedItems.length}건
+              </h4>
+              <button
+                type="button"
+                onClick={() => setItemDraft(emptyItemDraft)}
+                className="memorial-button-secondary min-h-9 px-4 text-xs"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                기록 추가
+              </button>
+            </div>
+
+            {itemDraft && (
+              <div className="mt-5 border-y memorial-section bg-[var(--memorial-cloud)] px-4 py-5">
+                <ItemForm
+                  draft={itemDraft}
+                  setDraft={setItemDraft}
+                  onSubmit={submitItem}
+                  busy={busy}
+                />
+              </div>
+            )}
+
+            {itemGroups.length === 0 ? (
+              <ManagerMessage>등록된 연혁 기록이 없습니다.</ManagerMessage>
+            ) : (
+              <div className="mt-6 space-y-7">
+                {itemGroups.map(group => (
+                  <div key={group.year}>
+                    <p className="mb-2 text-xs font-semibold text-[var(--memorial-slate)]">
+                      {group.year}
+                    </p>
+                    <DndContext
+                      sensors={sensors}
+                      collisionDetection={closestCenter}
+                      onDragEnd={event => handleItemDragEnd(event, group.items)}
+                    >
+                      <SortableContext
+                        items={group.items.map(item => item.id)}
+                        strategy={verticalListSortingStrategy}
+                      >
+                        <div className="divide-y memorial-section border-y memorial-section">
+                          {group.items.map(item => (
+                            <SortableHistoryItem
+                              key={item.id}
+                              item={item}
+                              onEdit={() =>
+                                setItemDraft({
+                                  id: item.id,
+                                  year: String(item.year),
+                                  month: String(item.month),
+                                  content: item.content,
+                                  isVisible: item.isVisible,
+                                })
+                              }
+                              onToggle={() =>
+                                updateItem.mutate({
+                                  id: item.id,
+                                  decadeId: item.decadeId,
+                                  year: item.year,
+                                  month: item.month,
+                                  content: item.content,
+                                  sortOrder: item.sortOrder,
+                                  isVisible: !item.isVisible,
+                                })
+                              }
+                              onDelete={() => {
+                                if (
+                                  window.confirm("이 연혁 기록을 삭제할까요?")
+                                ) {
+                                  deleteItem.mutate({ id: item.id });
+                                }
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </SortableContext>
+                    </DndContext>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <ManagerMessage>연대를 먼저 추가해주세요.</ManagerMessage>
+        )}
+      </section>
+    </div>
+  );
+
+  if (mode === "page") {
+    return (
+      <section className="overflow-hidden border memorial-section bg-white">
+        <div className="border-b memorial-section px-5 py-5 md:px-7">
+          <h2 className="memorial-serif text-2xl">교회 연혁 관리</h2>
+          <p className="mt-2 text-sm text-[var(--memorial-slate)]">
+            연대를 만든 뒤 기록을 추가하고 공개 여부와 순서를 관리합니다.
+          </p>
+        </div>
+        {workspace}
+      </section>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[92vh] max-w-[calc(100%-1rem)] gap-0 overflow-hidden p-0 sm:max-w-6xl">
@@ -318,229 +560,7 @@ export default function HistoryAdminPanel({
             연대와 교회 연혁 기록을 관리합니다.
           </DialogDescription>
         </DialogHeader>
-
-        <div className="grid max-h-[calc(92vh-92px)] overflow-y-auto md:grid-cols-[260px_minmax(0,1fr)]">
-          <aside className="border-b memorial-section bg-[var(--memorial-cloud)] p-4 md:border-b-0 md:border-r md:p-5">
-            <button
-              type="button"
-              onClick={() => setDecadeDraft(emptyDecadeDraft)}
-              className="memorial-button-primary w-full"
-            >
-              <Plus className="h-4 w-4" />
-              연대 추가
-            </button>
-
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={handleDecadeDragEnd}
-            >
-              <SortableContext
-                items={decades.map(decade => decade.id)}
-                strategy={rectSortingStrategy}
-              >
-                <div className="mt-4 flex gap-2 overflow-x-auto pb-1 md:flex-col md:overflow-visible">
-                  {decades.map(decade => (
-                    <SortableDecade
-                      key={decade.id}
-                      decade={decade}
-                      selected={decade.id === selectedDecadeId}
-                      onSelect={() => {
-                        setSelectedDecadeId(decade.id);
-                        setDecadeDraft(null);
-                        setItemDraft(null);
-                      }}
-                    />
-                  ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-          </aside>
-
-          <section className="min-w-0 p-5 md:p-7">
-            {historyQuery.isLoading ? (
-              <ManagerMessage>연혁 정보를 불러오고 있습니다.</ManagerMessage>
-            ) : decadeDraft ? (
-              <DecadeForm
-                draft={decadeDraft}
-                setDraft={setDecadeDraft}
-                onSubmit={submitDecade}
-                busy={busy}
-              />
-            ) : selectedDecade ? (
-              <>
-                <div className="flex flex-col justify-between gap-4 border-b memorial-section pb-5 sm:flex-row sm:items-start">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="memorial-serif text-2xl">
-                        {selectedDecade.title}
-                      </h3>
-                      {selectedDecade.isVisible ? (
-                        <Eye
-                          className="h-4 w-4 text-emerald-700"
-                          aria-label="공개"
-                        />
-                      ) : (
-                        <EyeOff
-                          className="h-4 w-4 text-[var(--memorial-slate)]"
-                          aria-label="숨김"
-                        />
-                      )}
-                    </div>
-                    <p className="mt-2 text-xs text-[var(--memorial-slate)]">
-                      {selectedDecade.startYear} - {selectedDecade.endYear}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <IconButton
-                      label="연대 수정"
-                      onClick={() =>
-                        setDecadeDraft({
-                          id: selectedDecade.id,
-                          title: selectedDecade.title,
-                          startYear: String(selectedDecade.startYear),
-                          endYear: String(selectedDecade.endYear),
-                          isVisible: selectedDecade.isVisible,
-                        })
-                      }
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </IconButton>
-                    <IconButton
-                      label={
-                        selectedDecade.isVisible
-                          ? "연대 숨기기"
-                          : "연대 공개하기"
-                      }
-                      onClick={() =>
-                        updateDecade.mutate({
-                          id: selectedDecade.id,
-                          title: selectedDecade.title,
-                          startYear: selectedDecade.startYear,
-                          endYear: selectedDecade.endYear,
-                          sortOrder: selectedDecade.sortOrder,
-                          isVisible: !selectedDecade.isVisible,
-                        })
-                      }
-                    >
-                      {selectedDecade.isVisible ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </IconButton>
-                    <IconButton
-                      label="연대 삭제"
-                      tone="danger"
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            `${selectedDecade.title}와 포함된 모든 기록을 삭제할까요?`
-                          )
-                        ) {
-                          deleteDecade.mutate({ id: selectedDecade.id });
-                        }
-                      }}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </IconButton>
-                  </div>
-                </div>
-
-                <div className="mt-6 flex items-center justify-between gap-4">
-                  <h4 className="text-sm font-semibold text-[var(--memorial-ink)]">
-                    연혁 기록 {selectedItems.length}건
-                  </h4>
-                  <button
-                    type="button"
-                    onClick={() => setItemDraft(emptyItemDraft)}
-                    className="memorial-button-secondary min-h-9 px-4 text-xs"
-                  >
-                    <Plus className="h-3.5 w-3.5" />
-                    기록 추가
-                  </button>
-                </div>
-
-                {itemDraft && (
-                  <div className="mt-5 border-y memorial-section bg-[var(--memorial-cloud)] px-4 py-5">
-                    <ItemForm
-                      draft={itemDraft}
-                      setDraft={setItemDraft}
-                      onSubmit={submitItem}
-                      busy={busy}
-                    />
-                  </div>
-                )}
-
-                {itemGroups.length === 0 ? (
-                  <ManagerMessage>등록된 연혁 기록이 없습니다.</ManagerMessage>
-                ) : (
-                  <div className="mt-6 space-y-7">
-                    {itemGroups.map(group => (
-                      <div key={group.year}>
-                        <p className="mb-2 text-xs font-semibold text-[var(--memorial-slate)]">
-                          {group.year}
-                        </p>
-                        <DndContext
-                          sensors={sensors}
-                          collisionDetection={closestCenter}
-                          onDragEnd={event =>
-                            handleItemDragEnd(event, group.items)
-                          }
-                        >
-                          <SortableContext
-                            items={group.items.map(item => item.id)}
-                            strategy={verticalListSortingStrategy}
-                          >
-                            <div className="divide-y memorial-section border-y memorial-section">
-                              {group.items.map(item => (
-                                <SortableHistoryItem
-                                  key={item.id}
-                                  item={item}
-                                  onEdit={() =>
-                                    setItemDraft({
-                                      id: item.id,
-                                      year: String(item.year),
-                                      month: String(item.month),
-                                      content: item.content,
-                                      isVisible: item.isVisible,
-                                    })
-                                  }
-                                  onToggle={() =>
-                                    updateItem.mutate({
-                                      id: item.id,
-                                      decadeId: item.decadeId,
-                                      year: item.year,
-                                      month: item.month,
-                                      content: item.content,
-                                      sortOrder: item.sortOrder,
-                                      isVisible: !item.isVisible,
-                                    })
-                                  }
-                                  onDelete={() => {
-                                    if (
-                                      window.confirm(
-                                        "이 연혁 기록을 삭제할까요?"
-                                      )
-                                    ) {
-                                      deleteItem.mutate({ id: item.id });
-                                    }
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          </SortableContext>
-                        </DndContext>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            ) : (
-              <ManagerMessage>연대를 먼저 추가해주세요.</ManagerMessage>
-            )}
-          </section>
-        </div>
+        {workspace}
       </DialogContent>
     </Dialog>
   );

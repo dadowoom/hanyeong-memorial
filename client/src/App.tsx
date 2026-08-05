@@ -18,6 +18,11 @@ import MemorialPublicDetail from "./pages/MemorialPublicDetail";
 import MemorialGarden from "./pages/MemorialGarden";
 import MemorialArchivePage from "./pages/MemorialArchivePage";
 import MemorialFamilyPage from "./pages/MemorialFamilyPage";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminHistory from "./pages/admin/AdminHistory";
+import AdminLetters from "./pages/admin/AdminLetters";
+import AdminMemorials from "./pages/admin/AdminMemorials";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -27,6 +32,11 @@ function Router() {
       <Route path={"/history"} component={ChurchHistory} />
       <Route path={"/church-history"} component={ChurchHistory} />
       <Route path={"/login"} component={Login} />
+      <Route path={"/admin"} component={AdminDashboard} />
+      <Route path={"/admin/users"} component={AdminUsers} />
+      <Route path={"/admin/memorials"} component={AdminMemorials} />
+      <Route path={"/admin/letters"} component={AdminLetters} />
+      <Route path={"/admin/history"} component={AdminHistory} />
       <Route path={"/memorial/demo"} component={MemorialDemo} />
       <Route path={"/memorial/create"} component={MemorialCreate} />
       <Route path={"/memorial/warm"} component={HomeWarm} />

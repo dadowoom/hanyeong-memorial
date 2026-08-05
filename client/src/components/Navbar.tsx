@@ -53,7 +53,14 @@ export default function Navbar() {
             </Link>
             {isAuthenticated ? (
               <>
-                <Link href="/">
+                {user?.role === "admin" && (
+                  <Link href="/admin">
+                    <span className="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold text-white/82 transition-colors hover:bg-white/10 hover:text-white">
+                      관리자
+                    </span>
+                  </Link>
+                )}
+                <Link href={user?.role === "admin" ? "/admin" : "/"}>
                   <span className="text-sm text-white/70 transition-colors hover:text-white">
                     {user?.name || "계정"}
                   </span>
@@ -113,15 +120,27 @@ export default function Navbar() {
             </Link>
             <div className="mt-3 border-t border-white/14 pt-4">
               {isAuthenticated ? (
-                <button
-                  onClick={() => {
-                    logout();
-                    closeMobile();
-                  }}
-                  className="min-h-10 w-full rounded-full border border-white/20 text-sm font-semibold text-white/82"
-                >
-                  로그아웃
-                </button>
+                <div className="grid gap-2">
+                  {user?.role === "admin" && (
+                    <Link href="/admin">
+                      <span
+                        onClick={closeMobile}
+                        className="block w-full rounded-full border border-white/20 px-4 py-3 text-center text-sm font-semibold text-white/82"
+                      >
+                        관리자 페이지
+                      </span>
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      logout();
+                      closeMobile();
+                    }}
+                    className="min-h-10 w-full rounded-full border border-white/20 text-sm font-semibold text-white/82"
+                  >
+                    로그아웃
+                  </button>
+                </div>
               ) : (
                 <a href={getLoginUrl()} onClick={closeMobile}>
                   <button className="memorial-button-light min-h-10 w-full text-sm">

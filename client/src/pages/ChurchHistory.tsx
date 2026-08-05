@@ -5,11 +5,8 @@ import { churchConfig } from "@/config/church";
 import { trpc } from "@/lib/trpc";
 import { groupHistoryItemsByYear, sortHistoryDecades } from "@shared/history";
 import { Settings2 } from "lucide-react";
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-
-const HistoryAdminPanel = lazy(
-  () => import("@/components/history/HistoryAdminPanel")
-);
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
 
 type HistoryDecade = {
   id: number;
@@ -32,7 +29,6 @@ export default function ChurchHistory() {
   const { user } = useAuth();
   const historyQuery = trpc.history.public.useQuery();
   const [activeDecadeId, setActiveDecadeId] = useState<number | null>(null);
-  const [managerOpen, setManagerOpen] = useState(false);
   const isAdmin = user?.role === "admin";
 
   const decades = useMemo(
@@ -83,14 +79,12 @@ export default function ChurchHistory() {
               </div>
 
               {isAdmin && (
-                <button
-                  type="button"
-                  onClick={() => setManagerOpen(true)}
-                  className="memorial-button-primary self-start md:self-auto"
-                >
-                  <Settings2 className="h-4 w-4" />
-                  연혁 관리
-                </button>
+                <Link href="/admin/history">
+                  <span className="memorial-button-primary inline-flex cursor-pointer self-start md:self-auto">
+                    <Settings2 className="h-4 w-4" />
+                    연혁 관리
+                  </span>
+                </Link>
               )}
             </div>
           </div>
@@ -166,11 +160,6 @@ export default function ChurchHistory() {
       </main>
 
       <Footer />
-      {isAdmin && managerOpen && (
-        <Suspense fallback={null}>
-          <HistoryAdminPanel open onOpenChange={setManagerOpen} />
-        </Suspense>
-      )}
     </div>
   );
 }

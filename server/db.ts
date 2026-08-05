@@ -9,6 +9,7 @@ import {
   InsertMemorial,
   InsertUser,
   InsertMemorialVideo,
+  type User,
   memorialBookPages,
   memorialBooks,
   memorialFamilyRooms,
@@ -170,6 +171,246 @@ export async function getUserByEmail(email: string) {
     .limit(1);
 
   return result.length > 0 ? result[0] : undefined;
+}
+
+export async function listManagedUsers() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  return db
+    .select({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+      phone: users.phone,
+      loginMethod: users.loginMethod,
+      role: users.role,
+      approvalStatus: users.approvalStatus,
+      approvedAt: users.approvedAt,
+      createdAt: users.createdAt,
+      lastSignedIn: users.lastSignedIn,
+    })
+    .from(users)
+    .orderBy(desc(users.createdAt), desc(users.id));
+}
+
+export function validateManagedUserUpdate(input: {
+  actorId: number;
+  target: Pick<User, "id" | "role" | "approvalStatus">;
+  nextRole: User["role"];
+  nextApprovalStatus: User["approvalStatus"];
+  activeAdminCount: number;
+}) {
+  if (input.actorId === input.target.id) {
+    throw new Error("현재 로그인한 관리자 계정은 여기에서 변경할 수 없습니다.");
+  }
+
+  const removesActiveAdmin =
+    input.target.role === "admin" &&
+    input.target.approvalStatus === "approved" &&
+    (input.nextRole !== "admin" || input.nextApprovalStatus !== "approved");
+
+  if (removesActiveAdmin && input.activeAdminCount <= 1) {
+    throw new Error("마지막 활성 관리자 계정은 변경할 수 없습니다.");
+  }
+}
+
+export async function updateManagedUser(input: {
+  actorId: number;
+  targetId: number;
+  role: User["role"];
+  approvalStatus: User["approvalStatus"];
+}) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  await db.transaction(async tx => {
+    const [target] = await tx
+      .select({
+        id: users.id,
+        role: users.role,
+        approvalStatus: users.approvalStatus,
+        approvedAt: users.approvedAt,
+      })
+      .from(users)
+      .where(eq(users.id, input.targetId))
+      .limit(1);
+
+    if (!target) {
+      throw new Error("회원을 찾을 수 없습니다.");
+    }
+
+    const activeAdmins = await tx
+      .select({ id: users.id })
+      .from(users)
+      .where(and(eq(users.role, "admin"), eq(users.approvalStatus, "approved")))
+      .for("update");
+
+    validateManagedUserUpdate({
+      actorId: input.actorId,
+      target,
+      nextRole: input.role,
+      nextApprovalStatus: input.approvalStatus,
+      activeAdminCount: activeAdmins.length,
+    });
+
+    await tx
+      .update(users)
+      .set({
+        role: input.role,
+        approvalStatus: input.approvalStatus,
+        approvedAt:
+          input.approvalStatus === "approved"
+            ? (target.approvedAt ?? new Date())
+            : null,
+      })
+      .where(eq(users.id, input.targetId));
+  });
+
+  const usersAfterUpdate = await listManagedUsers();
+  return usersAfterUpdate.find(user => user.id === input.targetId) ?? null;
+}
+
+export async function listManagedMemorials() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  const rows = await db
+    .select({
+      id: memorials.id,
+      slug: memorials.slug,
+      name: memorials.name,
+      role: memorials.role,
+      birthDate: memorials.birthDate,
+      deathDate: memorials.deathDate,
+      church: memorials.church,
+      familyContact: memorials.familyContact,
+      familyPhone: memorials.familyPhone,
+      visibility: memorials.visibility,
+      status: memorials.status,
+      managerMemo: memorials.managerMemo,
+      accessPasswordHash: memorials.accessPasswordHash,
+      createdAt: memorials.createdAt,
+      updatedAt: memorials.updatedAt,
+      photoUrl: memorialGalleryPhotos.photoUrl,
+    })
+    .from(memorials)
+    .leftJoin(
+      memorialGalleryPhotos,
+      and(
+        eq(memorialGalleryPhotos.memorialId, memorials.id),
+        eq(memorialGalleryPhotos.isRepresentative, 1)
+      )
+    )
+    .orderBy(desc(memorials.createdAt), desc(memorials.id));
+
+  return rows.map(({ accessPasswordHash, ...memorial }) => ({
+    ...memorial,
+    hasAccessPassword: Boolean(accessPasswordHash),
+  }));
+}
+
+export async function updateManagedMemorialVisibility(input: {
+  id: number;
+  visibility: "public" | "link" | "private";
+}) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  const [target] = await db
+    .select({ accessPasswordHash: memorials.accessPasswordHash })
+    .from(memorials)
+    .where(eq(memorials.id, input.id))
+    .limit(1);
+
+  if (!target) {
+    return null;
+  }
+  if (input.visibility === "private" && !target.accessPasswordHash) {
+    throw new Error(
+      "입장 비밀번호가 없는 신앙기념관은 비공개로 변경할 수 없습니다."
+    );
+  }
+
+  await db
+    .update(memorials)
+    .set({ visibility: input.visibility })
+    .where(eq(memorials.id, input.id));
+
+  const memorialsAfterUpdate = await listManagedMemorials();
+  return (
+    memorialsAfterUpdate.find(memorial => memorial.id === input.id) ?? null
+  );
+}
+
+export async function listManagedLetters() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  const rows = await db
+    .select({
+      id: memorialLetters.id,
+      author: memorialLetters.author,
+      content: memorialLetters.content,
+      status: memorialLetters.status,
+      createdAt: memorialLetters.createdAt,
+      updatedAt: memorialLetters.updatedAt,
+      memorialId: memorialLetters.memorialId,
+      memorialSlug: memorials.slug,
+      memorialName: memorials.name,
+      memorialRole: memorials.role,
+      recipientName: memorialLetters.recipientName,
+      recipientRole: memorialLetters.recipientRole,
+    })
+    .from(memorialLetters)
+    .leftJoin(memorials, eq(memorialLetters.memorialId, memorials.id))
+    .orderBy(desc(memorialLetters.createdAt), desc(memorialLetters.id))
+    .limit(500);
+
+  return rows.map(row => ({
+    id: row.id,
+    author: row.author,
+    content: row.content,
+    status: row.status,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+    memorialId: row.memorialId,
+    memorialSlug: row.memorialSlug,
+    memorialName: row.memorialName ?? row.recipientName ?? "하늘",
+    memorialRole: row.memorialRole ?? row.recipientRole ?? "",
+  }));
+}
+
+export async function updateManagedLetterStatus(input: {
+  id: number;
+  status: "published" | "hidden";
+}) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database is not available");
+  }
+
+  const result = await db
+    .update(memorialLetters)
+    .set({ status: input.status })
+    .where(eq(memorialLetters.id, input.id));
+
+  if (result[0].affectedRows === 0) {
+    return null;
+  }
+
+  const lettersAfterUpdate = await listManagedLetters();
+  return lettersAfterUpdate.find(letter => letter.id === input.id) ?? null;
 }
 
 export async function hasAdminUser() {
