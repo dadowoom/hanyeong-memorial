@@ -1,0 +1,20 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F7F7F3"/>
+  <rect x="850" width="350" height="630" fill="#10283B"/>
+  <rect x="72" y="66" width="1056" height="498" stroke="#CAD2D5" stroke-width="2"/>
+  <path d="M124 192H226" stroke="#1C6B65" stroke-width="4"/>
+  <text x="124" y="162" fill="#52616A" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="600">한영교회 온라인 역사관</text>
+  <text x="124" y="294" fill="#10283B" font-family="Noto Serif KR, AppleMyungjo, serif" font-size="78" font-weight="600">한영교회 역사관</text>
+  <text x="126" y="366" fill="#43525A" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="27" font-weight="400">교회의 역사와 성도의 신앙을 함께 기록합니다</text>
+  <text x="126" y="458" fill="#1C6B65" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">HANYEONG CHURCH ARCHIVE · SINCE 1961</text>
+  <path d="M930 166V464" stroke="#76949B" stroke-width="2"/>
+  <circle cx="930" cy="192" r="8" fill="#E9C86C"/>
+  <circle cx="930" cy="316" r="8" fill="#E9C86C"/>
+  <circle cx="930" cy="438" r="8" fill="#E9C86C"/>
+  <text x="962" y="201" fill="#FFFFFF" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="700">1961</text>
+  <text x="962" y="325" fill="#FFFFFF" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="700">1999</text>
+  <text x="962" y="447" fill="#FFFFFF" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="700">2025</text>
+  <text x="962" y="230" fill="#B9C8CE" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="16">믿음의 시작</text>
+  <text x="962" y="354" fill="#B9C8CE" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="16">새 성전 입당</text>
+  <text x="962" y="476" fill="#B9C8CE" font-family="Noto Sans KR, Apple SD Gothic Neo, sans-serif" font-size="16">이어지는 역사</text>
+</svg>
