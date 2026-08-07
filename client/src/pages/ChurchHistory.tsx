@@ -100,7 +100,7 @@ export default function ChurchHistory() {
           ) : (
             <>
               <div className="overflow-x-auto border-b memorial-section">
-                <div className="flex min-w-max gap-1">
+                <div className="flex min-w-max justify-center gap-1">
                   {decades.map(decade => {
                     const active = decade.id === activeDecadeId;
                     return (
