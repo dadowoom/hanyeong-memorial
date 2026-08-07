@@ -56,7 +56,9 @@ type HistoryItem = {
   decadeId: number;
   year: number;
   month: number;
+  dateLabel: string | null;
   content: string;
+  imageUrl: string | null;
   sortOrder: number;
   isVisible: boolean;
 };
@@ -73,7 +75,9 @@ type ItemDraft = {
   id: number | null;
   year: string;
   month: string;
+  dateLabel: string;
   content: string;
+  imageUrl: string;
   isVisible: boolean;
 };
 
@@ -89,7 +93,9 @@ const emptyItemDraft: ItemDraft = {
   id: null,
   year: "",
   month: "",
+  dateLabel: "",
   content: "",
+  imageUrl: "",
   isVisible: true,
 };
 
@@ -271,7 +277,9 @@ export default function HistoryAdminPanel({
       decadeId: selectedDecade.id,
       year,
       month,
+      dateLabel: itemDraft.dateLabel.trim() || null,
       content: itemDraft.content.trim(),
+      imageUrl: itemDraft.imageUrl.trim() || null,
       isVisible: itemDraft.isVisible,
     };
     if (itemDraft.id) {
@@ -496,7 +504,9 @@ export default function HistoryAdminPanel({
                                   id: item.id,
                                   year: String(item.year),
                                   month: String(item.month),
+                                  dateLabel: item.dateLabel ?? "",
                                   content: item.content,
+                                  imageUrl: item.imageUrl ?? "",
                                   isVisible: item.isVisible,
                                 })
                               }
@@ -506,7 +516,9 @@ export default function HistoryAdminPanel({
                                   decadeId: item.decadeId,
                                   year: item.year,
                                   month: item.month,
+                                  dateLabel: item.dateLabel,
                                   content: item.content,
+                                  imageUrl: item.imageUrl,
                                   sortOrder: item.sortOrder,
                                   isVisible: !item.isVisible,
                                 })
@@ -664,7 +676,7 @@ function ItemForm({
           <X className="h-4 w-4" />
         </IconButton>
       </div>
-      <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_1fr_2fr]">
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <Field label="연도">
           <input
             className={inputClass}
@@ -689,7 +701,29 @@ function ItemForm({
             required
           />
         </Field>
-        <Field label="내용">
+        <Field label="날짜 표기" wide>
+          <input
+            className={inputClass}
+            value={draft.dateLabel}
+            onChange={event =>
+              setDraft({ ...draft, dateLabel: event.target.value })
+            }
+            placeholder="예: 2025. 2. 28~3. 3"
+            maxLength={40}
+          />
+        </Field>
+        <Field label="사진 주소" wide>
+          <input
+            className={inputClass}
+            value={draft.imageUrl}
+            onChange={event =>
+              setDraft({ ...draft, imageUrl: event.target.value })
+            }
+            placeholder="예: /history/2020.2.23-1.png"
+            maxLength={2048}
+          />
+        </Field>
+        <Field label="내용" wide>
           <textarea
             className={`${inputClass} min-h-28 resize-y py-3`}
             value={draft.content}
@@ -806,20 +840,20 @@ function SortableHistoryItem({
         transition,
         opacity: isDragging ? 0.55 : item.isVisible ? 1 : 0.55,
       }}
-      className="grid grid-cols-[36px_44px_minmax(0,1fr)_auto] items-start gap-2 bg-white py-4"
+      className="grid grid-cols-[36px_96px_minmax(0,1fr)_auto] items-start gap-2 bg-white py-4"
     >
       <button
         type="button"
         className="flex h-8 w-8 touch-none cursor-grab items-center justify-center active:cursor-grabbing"
         title="기록 순서 변경"
-        aria-label={`${item.year}년 ${item.month}월 기록 순서 변경`}
+        aria-label={`${formatHistoryDate(item)} 기록 순서 변경`}
         {...attributes}
         {...listeners}
       >
         <GripVertical className="h-4 w-4 text-[var(--memorial-slate)]" />
       </button>
       <span className="pt-1.5 text-xs font-semibold text-[var(--memorial-slate)]">
-        {String(item.month).padStart(2, "0")}
+        {formatHistoryDate(item)}
       </span>
       <p className="whitespace-pre-line pt-1 text-sm leading-6 text-[var(--memorial-ash)]">
         {item.content}
@@ -844,6 +878,12 @@ function SortableHistoryItem({
       </div>
     </div>
   );
+}
+
+function formatHistoryDate(
+  item: Pick<HistoryItem, "year" | "month" | "dateLabel">
+) {
+  return item.dateLabel?.trim() || `${item.year}. ${item.month}`;
 }
 
 function Field({

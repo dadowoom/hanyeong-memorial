@@ -21,7 +21,9 @@ type HistoryItem = {
   decadeId: number;
   year: number;
   month: number;
+  dateLabel: string | null;
   content: string;
+  imageUrl: string | null;
   sortOrder: number;
 };
 
@@ -138,14 +140,27 @@ export default function ChurchHistory() {
                           {group.items.map(item => (
                             <div
                               key={item.id}
-                              className="grid grid-cols-[48px_minmax(0,1fr)] gap-4"
+                              className="grid gap-3 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-6"
                             >
-                              <span className="pt-0.5 text-sm font-semibold text-[var(--memorial-slate)]">
-                                {String(item.month).padStart(2, "0")}
-                              </span>
-                              <p className="whitespace-pre-line text-sm leading-7 text-[var(--memorial-ash)] md:text-base md:leading-8">
-                                {item.content}
-                              </p>
+                              <time className="pt-0.5 text-sm font-semibold text-[var(--memorial-navy)]">
+                                {formatHistoryDate(item)}
+                              </time>
+                              <div className="min-w-0">
+                                {item.imageUrl && (
+                                  <figure className="mb-5 aspect-[16/10] w-full max-w-2xl overflow-hidden border memorial-section bg-[var(--memorial-cloud)]">
+                                    <img
+                                      src={item.imageUrl}
+                                      alt={`${formatHistoryDate(item)} ${item.content.split("\n")[0]}`}
+                                      loading="lazy"
+                                      decoding="async"
+                                      className="h-full w-full object-contain"
+                                    />
+                                  </figure>
+                                )}
+                                <p className="whitespace-pre-line text-sm leading-7 text-[var(--memorial-ash)] md:text-base md:leading-8">
+                                  {item.content}
+                                </p>
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -162,6 +177,12 @@ export default function ChurchHistory() {
       <Footer />
     </div>
   );
+}
+
+function formatHistoryDate(
+  item: Pick<HistoryItem, "year" | "month" | "dateLabel">
+) {
+  return item.dateLabel?.trim() || `${item.year}. ${item.month}`;
 }
 
 function CenteredMessage({ children }: { children: string }) {

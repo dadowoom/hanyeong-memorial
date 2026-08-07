@@ -52,7 +52,7 @@ export async function getPublicHistory() {
       )
     )
     .orderBy(
-      desc(historyItems.year),
+      asc(historyItems.year),
       asc(historyItems.month),
       asc(historyItems.sortOrder),
       asc(historyItems.id)
@@ -76,7 +76,7 @@ export async function getAllHistory() {
       .select()
       .from(historyItems)
       .orderBy(
-        desc(historyItems.year),
+        asc(historyItems.year),
         asc(historyItems.month),
         asc(historyItems.sortOrder),
         asc(historyItems.id)

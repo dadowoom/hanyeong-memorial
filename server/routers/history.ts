@@ -17,6 +17,16 @@ const idSchema = z.number().int().positive();
 const yearSchema = z.number().int().min(1800).max(2200);
 const monthSchema = z.number().int().min(1).max(12);
 const sortOrderSchema = z.number().int().min(0).max(9999).optional();
+const historyImageUrlSchema = z
+  .string()
+  .trim()
+  .max(2048)
+  .refine(
+    value => value.startsWith("/") || /^https?:\/\//i.test(value),
+    "사진 주소는 사이트 경로 또는 http(s) 주소여야 합니다."
+  )
+  .nullable()
+  .optional();
 
 const decadeFields = z
   .object({
@@ -35,7 +45,9 @@ const itemFields = z.object({
   decadeId: idSchema,
   year: yearSchema,
   month: monthSchema,
+  dateLabel: z.string().trim().max(40).nullable().optional(),
   content: z.string().trim().min(1).max(10000),
+  imageUrl: historyImageUrlSchema,
   sortOrder: sortOrderSchema,
   isVisible: z.boolean(),
 });

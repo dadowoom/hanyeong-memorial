@@ -15,22 +15,22 @@ describe("history ordering", () => {
     expect(result.map(item => item.id)).toEqual([2, 3, 1]);
   });
 
-  it("groups newest years first and months in ascending order", () => {
+  it("groups years and months in chronological order", () => {
     const items = [
       { id: 1, year: 2024, month: 12, sortOrder: 1 },
       { id: 2, year: 2025, month: 3, sortOrder: 1 },
       { id: 3, year: 2025, month: 1, sortOrder: 2 },
     ];
 
-    expect(sortHistoryItems(items).map(item => item.id)).toEqual([3, 2, 1]);
+    expect(sortHistoryItems(items).map(item => item.id)).toEqual([1, 3, 2]);
     expect(
       groupHistoryItemsByYear(items).map(group => ({
         year: group.year,
         ids: group.items.map(item => item.id),
       }))
     ).toEqual([
-      { year: 2025, ids: [3, 2] },
       { year: 2024, ids: [1] },
+      { year: 2025, ids: [3, 2] },
     ]);
   });
 });

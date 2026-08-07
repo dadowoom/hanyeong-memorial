@@ -134,6 +134,13 @@
       "when": 1785890000000,
       "tag": "0018_add_church_history",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1786073499099,
+      "tag": "0019_seed_official_hanyeong_history",
+      "breakpoints": true
     }
   ]
 }

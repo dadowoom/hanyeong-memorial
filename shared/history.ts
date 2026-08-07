@@ -21,7 +21,7 @@ export function sortHistoryDecades<T extends HistoryDecadeLike>(decades: T[]) {
 export function sortHistoryItems<T extends HistoryItemLike>(items: T[]) {
   return [...items].sort(
     (a, b) =>
-      b.year - a.year ||
+      a.year - b.year ||
       a.month - b.month ||
       a.sortOrder - b.sortOrder ||
       a.id - b.id

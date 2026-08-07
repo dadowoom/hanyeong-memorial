@@ -76,4 +76,21 @@ describe("history router", () => {
     ).rejects.toMatchObject({ code: "BAD_REQUEST" });
     expect(mockedHistoryDb.createHistoryDecade).not.toHaveBeenCalled();
   });
+
+  it("rejects unsafe history image URLs", async () => {
+    const caller = historyRouter.createCaller(createContext("admin"));
+
+    await expect(
+      caller.createItem({
+        decadeId: 1,
+        year: 2025,
+        month: 1,
+        dateLabel: "2025. 1. 1",
+        content: "신년 예배",
+        imageUrl: "javascript:alert(1)",
+        isVisible: true,
+      })
+    ).rejects.toMatchObject({ code: "BAD_REQUEST" });
+    expect(mockedHistoryDb.createHistoryItem).not.toHaveBeenCalled();
+  });
 });
