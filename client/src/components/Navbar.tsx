@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import LogoMark from "@/components/LogoMark";
 import { churchConfig, navItems, routes } from "@/config/church";
 import { getLoginUrl } from "@/const";
-import { Menu, Search, X } from "lucide-react";
+import { Landmark, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 
@@ -45,10 +45,10 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <Link href={routes.memorialSearch}>
+            <Link href={routes.history}>
               <button className="memorial-button-light min-h-9 px-4 text-xs">
-                <Search className="h-3.5 w-3.5" />
-                추모관
+                <Landmark className="h-3.5 w-3.5" />
+                교회 연혁
               </button>
             </Link>
             {isAuthenticated ? (

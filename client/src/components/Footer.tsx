@@ -22,7 +22,8 @@ export default function Footer() {
               </div>
             </div>
             <p className="max-w-sm text-sm leading-7">
-              소중한 분의 삶과 신앙을 교회 공동체가 함께 기억합니다.
+              한영교회의 역사와 성도들의 삶과 신앙을 함께 기록하고 다음 세대에
+              전합니다.
             </p>
           </div>
 
@@ -65,7 +66,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col justify-between gap-3 border-t border-white/14 pt-6 text-xs md:flex-row">
           <p>© 2026 {churchConfig.churchName}. All rights reserved.</p>
-          <p>{churchConfig.brandName} - 온라인 신앙기념관</p>
+          <p>{churchConfig.brandName} - 한영교회 온라인 아카이브</p>
         </div>
       </div>
     </footer>

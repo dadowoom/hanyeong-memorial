@@ -6,7 +6,7 @@ import {
   ArrowRight,
   BookOpenText,
   Flower2,
-  Plus,
+  Landmark,
   Search,
   Send,
 } from "lucide-react";
@@ -29,34 +29,33 @@ export default function Home() {
       <Navbar />
 
       <main className="pt-16">
-        <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden border-b memorial-section memorial-section-muted">
+        <section className="relative min-h-[calc(100svh-7rem)] overflow-hidden border-b memorial-section memorial-section-muted md:min-h-[min(780px,calc(100svh-7rem))]">
           <HeroBackground />
-          <div className="container relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-12 md:py-20">
+          <div className="container relative z-10 flex min-h-[calc(100svh-7rem)] flex-col justify-center py-12 md:min-h-[min(780px,calc(100svh-7rem))] md:py-20">
             <div className="max-w-3xl">
               <p className="memorial-eyebrow mb-6">
-                한영교회 온라인 신앙기념 서비스
+                HANYEONG CHURCH ARCHIVE · SINCE 1961
               </p>
               <h1 className="memorial-serif max-w-3xl text-[2.75rem] leading-[1.04] sm:text-[3.2rem] md:text-[5.1rem] md:leading-[1.08]">
                 <span className="block">한영교회</span>
                 <span className="block">역사관</span>
               </h1>
               <p className="mt-7 max-w-2xl text-[15px] leading-7 text-[var(--memorial-ash)] md:mt-8 md:text-lg md:leading-8">
-                한영교회 역사관은 <br className="hidden md:block" />
-                성도들의 삶 속에 담긴 믿음의 발자취를 소중히 기억하고,{" "}
-                <br className="hidden md:block" />그 신앙의 유산을 오늘과 다음
-                세대가 함께 이어가도록 돕는 공간입니다.
+                1961년 기도 모임에서 시작된 한영교회의 믿음의 역사와{" "}
+                <br className="hidden md:block" />
+                성도들의 삶 속에 남은 신앙의 발자취를 함께 기록합니다.
               </p>
               <div className="memorial-action-row mt-9 md:mt-10">
-                <Link href={`${routes.memorialGarden}#faith-memorials`}>
+                <Link href={routes.history}>
                   <button className="memorial-button-primary">
-                    <Search className="h-4 w-4" />
-                    신앙기념관 검색
+                    <Landmark className="h-4 w-4" />
+                    교회 연혁 보기
                   </button>
                 </Link>
-                <Link href={routes.memorialCreate}>
+                <Link href={`${routes.memorialGarden}#faith-memorials`}>
                   <button className="memorial-button-secondary">
-                    <Plus className="h-4 w-4" />
-                    신앙기념관 만들기
+                    <Search className="h-4 w-4" />
+                    신앙기념관 둘러보기
                   </button>
                 </Link>
               </div>
@@ -72,15 +71,15 @@ export default function Home() {
             <div className="mx-auto max-w-6xl border-y memorial-section py-10 md:py-12">
               <div className="grid gap-7 md:grid-cols-[220px_minmax(0,1fr)] md:items-start">
                 <div className="flex items-center gap-5 md:block">
-                  <p className="memorial-eyebrow">Values</p>
+                  <p className="memorial-eyebrow">Church Archive</p>
                   <div className="h-px flex-1 bg-[var(--memorial-ash)] md:mt-8 md:w-16" />
                 </div>
                 <h2 className="memorial-serif max-w-3xl text-[1.35rem] leading-[1.65] md:text-2xl md:leading-[1.7]">
-                  「{churchConfig.serviceName}」은 성도의 삶과 믿음과 사랑을{" "}
+                  한영교회의 역사와 성도의 신앙을 한곳에 기록하고{" "}
                   <br className="hidden md:block" />
-                  가족과 교회의 기억 속에 아름답게 보존하며,{" "}
+                  교회 공동체의 기억 속에 오래 보존하며,{" "}
                   <br className="hidden md:block" />
-                  다음 세대가 신앙의 이야기를 이어받도록 돕습니다.
+                  다음 세대가 믿음의 이야기를 이어받도록 합니다.
                 </h2>
               </div>
 
@@ -100,6 +99,12 @@ export default function Home() {
                   </article>
                 ))}
               </div>
+              <Link href={routes.history}>
+                <span className="mt-8 inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-[var(--memorial-navy)] transition-colors hover:text-[var(--memorial-ink)]">
+                  1961-2025 교회 연혁 전체 보기
+                  <ArrowRight className="h-4 w-4" />
+                </span>
+              </Link>
             </div>
           </div>
         </section>
@@ -112,14 +117,14 @@ export default function Home() {
             <div className="grid gap-8 border-y border-white/18 py-10 md:grid-cols-[minmax(0,0.82fr)_minmax(320px,0.58fr)] md:items-center md:py-12">
               <div>
                 <p className="mb-4 text-xs font-semibold uppercase text-white/62">
-                  Recent Memorials
+                  People Archive
                 </p>
                 <h2 className="memorial-serif text-[1.75rem] leading-tight text-white md:text-5xl">
-                  최근 등록 신앙기념관
+                  성도의 신앙기록
                 </h2>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68">
-                  새로 등록된 신앙기념관을 이름 중심으로 확인하고 바로 이동할 수
-                  있습니다.
+                  교회의 역사는 예배하고 기도하며 섬겨 온 성도들의 삶과 함께
+                  이어집니다.
                 </p>
               </div>
 
@@ -131,10 +136,7 @@ export default function Home() {
                 ) : recentMemorials.length > 0 ? (
                   <div className="divide-y divide-white/14">
                     {recentMemorials.map((memorial, index) => (
-                      <Link
-                        key={memorial.id}
-                        href={memorial.href}
-                      >
+                      <Link key={memorial.id} href={memorial.href}>
                         <article className="group grid cursor-pointer grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-4 px-5 py-5 transition-colors hover:bg-white/8">
                           <span className="text-sm text-white/42">
                             {String(index + 1).padStart(2, "0")}
@@ -168,12 +170,12 @@ export default function Home() {
                   Services
                 </p>
                 <h2 className="memorial-serif text-[1.75rem] leading-tight text-white md:text-5xl">
-                  세 가지 서비스
+                  역사관의 기록 공간
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-7 text-white/68">
-                등록부터 공유, 공동체 응원글까지 신앙기념관 운영 흐름을 단순하게
-                정리했습니다.
+                교회 연혁을 중심으로 성도의 신앙기념관과 추모 기록을 함께
+                이어갑니다.
               </p>
             </div>
 
@@ -269,20 +271,31 @@ export default function Home() {
 }
 
 function HeroBackground() {
+  const archiveImages = [
+    { src: "/history/1960-1.png", position: "object-center" },
+    { src: "/history/1999.12.26-1.png", position: "object-center" },
+    { src: "/history/2015.6.14-1.png", position: "object-center" },
+    { src: "/history/2020.2.23-1.png", position: "object-center" },
+  ];
+
   return (
     <div
-      className="pointer-events-none absolute inset-0 overflow-hidden bg-[#fbfaf6]"
+      className="pointer-events-none absolute inset-0 overflow-hidden bg-white"
       aria-hidden="true"
     >
-      <img
-        src="/memorial-assets/home-hero-hanyeong-faith.jpg"
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
-        loading="eager"
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,#ffffff_0%,rgba(255,255,255,0.98)_33%,rgba(255,255,255,0.82)_55%,rgba(255,255,255,0.18)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0)_28%,rgba(255,255,255,0.72)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent" />
+      <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 md:left-[42%]">
+        {archiveImages.map(image => (
+          <img
+            key={image.src}
+            src={image.src}
+            alt=""
+            className={`h-full w-full object-cover ${image.position}`}
+            loading="eager"
+          />
+        ))}
+      </div>
+      <div className="absolute inset-0 bg-white/82 md:bg-[linear-gradient(90deg,#ffffff_0%,#ffffff_38%,rgba(255,255,255,0.9)_52%,rgba(255,255,255,0.18)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent" />
     </div>
   );
 }
