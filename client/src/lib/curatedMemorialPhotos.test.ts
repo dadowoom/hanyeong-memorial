@@ -8,14 +8,14 @@ describe("resolveCuratedMemorialPhoto", () => {
         "lee-hanyeong",
         "/memorial-assets/lee-hanyeong/chapel-prayer.svg"
       )
-    ).toBe("/memorial-assets/lee-hanyeong/prayer-1979.webp");
+    ).toBe("/memorial-assets/lee-hanyeong/prayer-1979-v2.webp");
 
     expect(
       resolveCuratedMemorialPhoto(
         "lee-hanyeong",
         "http://115.68.224.123:3060/memorial-assets/lee-hanyeong/portrait.png"
       )
-    ).toBe("/memorial-assets/lee-hanyeong/portrait-2026.webp");
+    ).toBe("/memorial-assets/lee-hanyeong/portrait-2026-v2.webp");
   });
 
   it("leaves photos for other memorials unchanged", () => {
