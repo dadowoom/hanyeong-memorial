@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { churchConfig, getMemorialAccessStorageKey } from "@/config/church";
 import { toImgUrl } from "@/lib/imageUrl";
+import { resolveCuratedMemorialPhoto } from "@/lib/curatedMemorialPhotos";
 import {
   getMemorialShareMessage,
   shareMemorialLink,
@@ -89,15 +90,15 @@ export default function MemorialArchivePage() {
     memorialId: memorial?.id ?? 0,
     accessToken: accessToken || undefined,
   };
-  const photosQuery = trpc.gallery.listByMemorial.useQuery(
-    galleryQueryInput,
-    { enabled: Boolean(memorial?.id) }
-  );
+  const photosQuery = trpc.gallery.listByMemorial.useQuery(galleryQueryInput, {
+    enabled: Boolean(memorial?.id),
+  });
   const photos = (photosQuery.data ?? []) as ArchivePhoto[];
-  const heroPhoto =
+  const rawHeroPhoto =
     photos.find(photo => photo.isRepresentative === 1)?.photoUrl ??
     photos[0]?.photoUrl ??
     getFallbackPortrait(memorial);
+  const heroPhoto = resolveCuratedMemorialPhoto(memorial?.slug, rawHeroPhoto);
 
   const updateMemorial = trpc.memorial.update.useMutation({
     onSuccess: () => utils.memorial.bySlug.invalidate({ slug }),
@@ -169,7 +170,9 @@ export default function MemorialArchivePage() {
                 >
                   <button className="mb-10 inline-flex h-10 items-center gap-2 border border-[#e6ded1] bg-white px-4 text-sm text-[#4f4638] transition-colors hover:bg-[#faf9f7]">
                     <ArrowLeft className="h-4 w-4" strokeWidth={1.6} />
-                    {isMemorialHall ? "추모관으로 돌아가기" : "목록으로 돌아가기"}
+                    {isMemorialHall
+                      ? "추모관으로 돌아가기"
+                      : "목록으로 돌아가기"}
                   </button>
                 </Link>
 
@@ -252,7 +255,9 @@ export default function MemorialArchivePage() {
                       <ArchiveFact
                         icon={<CalendarDays className="h-4 w-4" />}
                         label={isMemorialHall ? "소천" : "직분"}
-                        value={isMemorialHall ? memorial.deathDate : memorial.role}
+                        value={
+                          isMemorialHall ? memorial.deathDate : memorial.role
+                        }
                       />
                       <ArchiveFact
                         icon={<Church className="h-4 w-4" />}
@@ -365,7 +370,9 @@ export default function MemorialArchivePage() {
               <div className="container">
                 <SectionHeader
                   eyebrow={isMemorialHall ? "Faith Story" : "Faith Journey"}
-                  title={isMemorialHall ? "신앙의 이야기" : "이어가는 신앙 여정"}
+                  title={
+                    isMemorialHall ? "신앙의 이야기" : "이어가는 신앙 여정"
+                  }
                   description={
                     isMemorialHall
                       ? "가족과 교회가 기억하는 믿음의 발자취를 담았습니다."
@@ -414,7 +421,9 @@ export default function MemorialArchivePage() {
                       className="text-2xl font-light"
                       style={{ ...serifStyle, color: warmText }}
                     >
-                      {isMemorialHall ? "기억으로 남은 삶" : "지금 이어가는 신앙"}
+                      {isMemorialHall
+                        ? "기억으로 남은 삶"
+                        : "지금 이어가는 신앙"}
                     </h2>
                     <div
                       className="mt-6 max-h-[360px] overflow-y-auto whitespace-pre-wrap break-words pr-3 font-light leading-7 md:max-h-[460px]"
@@ -447,6 +456,7 @@ export default function MemorialArchivePage() {
             <div id="gallery">
               <MemorialGallerySection
                 memorialId={memorial.id}
+                memorialSlug={memorial.slug}
                 isAdmin={isAdmin}
                 accessToken={accessToken || undefined}
               />
@@ -464,6 +474,7 @@ export default function MemorialArchivePage() {
             <div id="book">
               <MemorialBookSection
                 memorialId={memorial.id}
+                memorialSlug={memorial.slug}
                 isAdmin={isAdmin}
                 accessToken={accessToken || undefined}
               />

@@ -1,4 +1,5 @@
 import { compressImageFile } from "@/lib/imageCompression";
+import { resolveCuratedMemorialPhoto } from "@/lib/curatedMemorialPhotos";
 import { toImgUrl } from "@/lib/imageUrl";
 import { trpc } from "@/lib/trpc";
 import {
@@ -43,6 +44,7 @@ type MemorialBook = {
 
 type MemorialBookSectionProps = {
   memorialId: number;
+  memorialSlug?: string;
   isAdmin: boolean;
   accessToken?: string;
 };
@@ -105,46 +107,49 @@ const CoverPage = forwardRef<HTMLDivElement, { book: MemorialBook }>(
   }
 );
 
-const ContentPage = forwardRef<HTMLDivElement, { page: BookPage }>(
-  function ContentPage({ page }, ref) {
-    const date = formatDate(page.dateYear, page.dateMonth, page.dateDay);
-    return (
-      <div
-        ref={ref}
-        className="relative flex h-full flex-col overflow-hidden bg-[#fffefa] p-6 md:p-8"
-      >
-        {date && (
-          <p className="mb-3 text-xs uppercase tracking-[0.18em] text-[#7f673d]">
-            {date}
-          </p>
-        )}
-        {page.photoUrl && (
-          <div className="mb-4 h-[38%] shrink-0 overflow-hidden border border-[#e6ded1]">
-            <img
-              src={toImgUrl(page.photoUrl)}
-              alt={page.title || date || "기록 사진"}
-              className="h-full w-full object-cover"
-              style={{ filter: memorialPhotoFilter }}
-            />
-          </div>
-        )}
-        {page.title && (
-          <h4
-            className="mb-3 text-xl font-light leading-snug text-[#2e2218]"
-            style={{ fontFamily: "'Noto Serif KR', serif" }}
-          >
-            {page.title}
-          </h4>
-        )}
-        {page.content && (
-          <p className="min-h-0 flex-1 overflow-y-auto whitespace-pre-wrap text-sm leading-8 text-[#4f4638]">
-            {page.content}
-          </p>
-        )}
-      </div>
-    );
-  }
-);
+const ContentPage = forwardRef<
+  HTMLDivElement,
+  { page: BookPage; memorialSlug?: string }
+>(function ContentPage({ page, memorialSlug }, ref) {
+  const date = formatDate(page.dateYear, page.dateMonth, page.dateDay);
+  return (
+    <div
+      ref={ref}
+      className="relative flex h-full flex-col overflow-hidden bg-[#fffefa] p-6 md:p-8"
+    >
+      {date && (
+        <p className="mb-3 text-xs uppercase tracking-[0.18em] text-[#7f673d]">
+          {date}
+        </p>
+      )}
+      {page.photoUrl && (
+        <div className="mb-4 h-[38%] shrink-0 overflow-hidden border border-[#e6ded1]">
+          <img
+            src={toImgUrl(
+              resolveCuratedMemorialPhoto(memorialSlug, page.photoUrl)
+            )}
+            alt={page.title || date || "기록 사진"}
+            className="h-full w-full object-cover"
+            style={{ filter: memorialPhotoFilter }}
+          />
+        </div>
+      )}
+      {page.title && (
+        <h4
+          className="mb-3 text-xl font-light leading-snug text-[#2e2218]"
+          style={{ fontFamily: "'Noto Serif KR', serif" }}
+        >
+          {page.title}
+        </h4>
+      )}
+      {page.content && (
+        <p className="min-h-0 flex-1 overflow-y-auto whitespace-pre-wrap text-sm leading-8 text-[#4f4638]">
+          {page.content}
+        </p>
+      )}
+    </div>
+  );
+});
 
 const EndPage = forwardRef<HTMLDivElement>(function EndPage(_, ref) {
   return (
@@ -171,6 +176,7 @@ const BlankPage = forwardRef<HTMLDivElement>(function BlankPage(_, ref) {
 
 export default function MemorialBookSection({
   memorialId,
+  memorialSlug,
   isAdmin,
   accessToken,
 }: MemorialBookSectionProps) {
@@ -246,12 +252,14 @@ export default function MemorialBookSection({
     if (!selectedBook) return [];
     const pages = [
       <CoverPage key="cover" book={selectedBook} />,
-      ...sortedPages.map(page => <ContentPage key={page.id} page={page} />),
+      ...sortedPages.map(page => (
+        <ContentPage key={page.id} page={page} memorialSlug={memorialSlug} />
+      )),
       <EndPage key="end" />,
     ];
     if (pages.length % 2 !== 0) pages.push(<BlankPage key="blank" />);
     return pages;
-  }, [selectedBook, sortedPages]);
+  }, [memorialSlug, selectedBook, sortedPages]);
 
   if (!booksQuery.isLoading && books.length === 0 && !isAdmin) return null;
 
@@ -434,6 +442,7 @@ export default function MemorialBookSection({
           ) : (
             <TimelineView
               pages={sortedPages}
+              memorialSlug={memorialSlug}
               isAdmin={isAdmin}
               onEditPage={page =>
                 setEditingPage({ ...page, bookId: selectedBook.id })
@@ -619,11 +628,13 @@ function BookView({
 
 function TimelineView({
   pages,
+  memorialSlug,
   isAdmin,
   onEditPage,
   onDeletePage,
 }: {
   pages: BookPage[];
+  memorialSlug?: string;
   isAdmin: boolean;
   onEditPage: (page: BookPage) => void;
   onDeletePage: (page: BookPage) => void;
@@ -682,7 +693,9 @@ function TimelineView({
               </div>
               {page.photoUrl && (
                 <img
-                  src={toImgUrl(page.photoUrl)}
+                  src={toImgUrl(
+                    resolveCuratedMemorialPhoto(memorialSlug, page.photoUrl)
+                  )}
                   alt={page.title || date || "기록 사진"}
                   className="mt-5 max-h-[420px] w-full border border-[#e6ded1] object-contain"
                   style={{ filter: memorialPhotoFilter }}

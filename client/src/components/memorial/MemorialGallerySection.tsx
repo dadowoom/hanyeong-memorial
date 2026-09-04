@@ -1,5 +1,6 @@
 import InlineEditText from "@/components/InlineEditText";
 import { compressImageFile } from "@/lib/imageCompression";
+import { resolveCuratedMemorialPhoto } from "@/lib/curatedMemorialPhotos";
 import { toImgUrl } from "@/lib/imageUrl";
 import { trpc } from "@/lib/trpc";
 import {
@@ -28,6 +29,7 @@ type GalleryPhoto = {
 
 type MemorialGallerySectionProps = {
   memorialId: number;
+  memorialSlug?: string;
   isAdmin: boolean;
   accessToken?: string;
 };
@@ -36,6 +38,7 @@ const memorialPhotoFilter = "contrast(1.02) brightness(1.01) saturate(1.04)";
 
 export default function MemorialGallerySection({
   memorialId,
+  memorialSlug,
   isAdmin,
   accessToken,
 }: MemorialGallerySectionProps) {
@@ -240,7 +243,9 @@ export default function MemorialGallerySection({
                   onClick={() => setLightboxIndex(index)}
                 >
                   <img
-                    src={toImgUrl(photo.photoUrl)}
+                    src={toImgUrl(
+                      resolveCuratedMemorialPhoto(memorialSlug, photo.photoUrl)
+                    )}
                     alt={photo.caption || "추모 사진"}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     style={{ filter: memorialPhotoFilter }}
@@ -349,6 +354,7 @@ export default function MemorialGallerySection({
         <Lightbox
           photos={photos}
           index={lightboxIndex}
+          memorialSlug={memorialSlug}
           onClose={() => setLightboxIndex(null)}
           onPrev={() =>
             setLightboxIndex(value => Math.max(0, (value ?? 0) - 1))
@@ -367,12 +373,14 @@ export default function MemorialGallerySection({
 function Lightbox({
   photos,
   index,
+  memorialSlug,
   onClose,
   onPrev,
   onNext,
 }: {
   photos: GalleryPhoto[];
   index: number;
+  memorialSlug?: string;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
@@ -421,7 +429,9 @@ function Lightbox({
         onClick={event => event.stopPropagation()}
       >
         <img
-          src={toImgUrl(photo.photoUrl)}
+          src={toImgUrl(
+            resolveCuratedMemorialPhoto(memorialSlug, photo.photoUrl)
+          )}
           alt={photo.caption || "추모 사진"}
           className="max-h-[74vh] w-full object-contain"
           style={{ filter: memorialPhotoFilter }}
