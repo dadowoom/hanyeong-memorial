@@ -271,31 +271,20 @@ export default function Home() {
 }
 
 function HeroBackground() {
-  const archiveImages = [
-    { src: "/history/1960-1.png", position: "object-center" },
-    { src: "/history/1999.12.26-1.png", position: "object-center" },
-    { src: "/history/2015.6.14-1.png", position: "object-center" },
-    { src: "/history/2020.2.23-1.png", position: "object-center" },
-  ];
-
   return (
     <div
-      className="pointer-events-none absolute inset-0 overflow-hidden bg-white"
+      className="pointer-events-none absolute inset-0 overflow-hidden bg-[#fbfaf6]"
       aria-hidden="true"
     >
-      <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 md:left-[42%]">
-        {archiveImages.map(image => (
-          <img
-            key={image.src}
-            src={image.src}
-            alt=""
-            className={`h-full w-full object-cover ${image.position}`}
-            loading="eager"
-          />
-        ))}
-      </div>
-      <div className="absolute inset-0 bg-white/82 md:bg-[linear-gradient(90deg,#ffffff_0%,#ffffff_38%,rgba(255,255,255,0.9)_52%,rgba(255,255,255,0.18)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent" />
+      <img
+        src="/memorial-assets/home-hero-hanyeong-faith.jpg"
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
+        loading="eager"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,#ffffff_0%,rgba(255,255,255,0.98)_33%,rgba(255,255,255,0.82)_55%,rgba(255,255,255,0.18)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0)_28%,rgba(255,255,255,0.72)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent" />
     </div>
   );
 }
