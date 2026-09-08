@@ -114,6 +114,10 @@ class RestartBoundaryTests(unittest.TestCase):
         values.update(overrides)
         declarations = "\n".join(f"mock_{key}={shlex.quote(value)}" for key, value in values.items())
         mocks = r'''
+function /usr/bin/python3() {
+  [ "$*" = '-I /usr/local/lib/dadowoom-storage/upload-mount-guard.py hanyeong-memorial' ] || return 88
+  [ "${TEST_MOUNT_MISSING:-0}" != 1 ] || return 1
+}
 function /usr/bin/id() {
   if [ "$#" -eq 1 ] && [ "$1" = -u ]; then printf '%s\n' "$mock_caller_uid"; return; fi
   [ "$#" -eq 2 ] && [ "$2" = hanyeongapp ] || return 88
@@ -182,6 +186,15 @@ source "$1" hanyeong-memorial
             "restart", "hanyeong-memorial", "--uid", "1234", "--gid", "1234",
             "--no-vizion", "--update-env", "--silent",
         ])
+
+    def test_missing_disk_blocks_before_pm2_inspection(self):
+        harness = r'''
+cd() { printf 'UNEXPECTED_DIRECTORY_CHANGE\n'; }
+exec() { printf 'UNEXPECTED_RESTART\n'; }
+source "$1" hanyeong-memorial
+'''
+        result = self.run_mocked(harness, dict(os.environ, TEST_MOUNT_MISSING='1'))
+        self.assertEqual((result.returncode, result.stdout), (1, ''))
 
     def test_inspection_failure_prevents_restart(self):
         harness = r'''

@@ -28,6 +28,7 @@ done
 [ "$(/usr/bin/id -g hanyeongapp 2>/dev/null)" = "$group_gid" ] || fail_identity
 [ "$(/usr/bin/id -gn hanyeongapp 2>/dev/null)" = 'hanyeongapp' ] || fail_identity
 
+/usr/bin/python3 -I /usr/local/lib/dadowoom-storage/upload-mount-guard.py hanyeong-memorial
 cd /root
 /usr/bin/env -i HOME=/root PATH=/usr/bin:/bin PM2_HOME=/root/.pm2 \
   /usr/bin/python3 -I - <<'PY'
