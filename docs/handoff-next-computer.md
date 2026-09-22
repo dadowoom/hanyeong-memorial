@@ -17,8 +17,8 @@ GitHub 저장소 `dadowoom/hanyeong-memorial` 기준으로 작업한다.
 
 ## 현재 상태
 
-- 운영 URL: `http://115.68.224.123:3060/`
-- 교회 연혁: `http://115.68.224.123:3060/history`
+- 운영 URL: `https://hanyeong.dadowoomtest.co.kr/` (2026-09-23 도메인 연결, 옛 `http://115.68.224.123:3060` 은 닫음)
+- 교회 연혁: `https://hanyeong.dadowoomtest.co.kr/history`
 - PM2 프로세스명: `hanyeong-memorial`
 - 서버 작업 경로: `/var/www/hanyeong-memorial`
 - 브랜치: `main`
@@ -111,7 +111,7 @@ curl -sS -o /dev/null -w "KIM:%{http_code}\n" http://127.0.0.1:3060/memorial/kim
 - 신앙기념관 사진은 컬러
 - 추모관을 별도 화면으로 확장할 경우에만 흑백 톤 적용
 - 공개 인물 목록은 한 페이지당 12명
-- 카카오톡 공유를 실제로 사용하려면 카카오 디벨로퍼스에서 JavaScript SDK 도메인과 제품 링크 웹 도메인에 운영 도메인(`http://115.68.224.123:3060`)을 등록하고, 서버 빌드 환경에 `VITE_KAKAO_JAVASCRIPT_KEY`를 설정한 뒤 다시 빌드한다
+- 카카오톡 공유를 실제로 사용하려면 카카오 디벨로퍼스에서 JavaScript SDK 도메인과 제품 링크 웹 도메인에 운영 도메인(`https://hanyeong.dadowoomtest.co.kr`)을 등록하고, 서버 빌드 환경에 `VITE_KAKAO_JAVASCRIPT_KEY`를 설정한 뒤 다시 빌드한다
 
 ## 확인할 것
 
@@ -133,7 +133,7 @@ GitHub 저장소 dadowoom/hanyeong-memorial 기준으로 작업해줘.
 
 소망교회 원본 dadowoom/somang-memorial은 절대 건드리지 말고, 한영교회 프로젝트만 작업한다.
 
-현재 사이트는 한영교회 역사관으로 브랜딩되어 있고, 운영 URL은 http://115.68.224.123:3060/ 이다.
+현재 사이트는 한영교회 역사관으로 브랜딩되어 있고, 운영 URL은 https://hanyeong.dadowoomtest.co.kr/ 이다.
 
 작업 전 main 최신본을 pull 하고, pnpm install --frozen-lockfile, pnpm check, pnpm test, pnpm build로 상태를 확인해라.
 
