@@ -1,96 +1,90 @@
 import type { Express } from "express";
-import { sql } from "drizzle-orm";
-import { getDb } from "../db";
-
-type HealthDb = {
-  execute: (query: ReturnType<typeof sql>) => Promise<unknown>;
-};
-type HealthDeps = { getDb: () => Promise<HealthDb | null>; timeoutMs?: number };
+import mysql from "mysql2/promise";
 
 export type HealthResult = {
   status: 200 | 503;
   body: { ok: boolean; db: "ok" | "not_configured" | "error" };
 };
 
-function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error("timeout")), ms);
-    promise.then(
-      value => {
-        clearTimeout(timer);
-        resolve(value);
-      },
-      error => {
-        clearTimeout(timer);
-        reject(error);
-      }
-    );
-  });
-}
+/** DB 를 한 번 찔러 본다. 제한 시간 안에 반드시 끝나야 하고(성공=resolve, 실패=reject), 쓴 연결은 스스로 정리한다. */
+export type HealthProbe = (timeoutMs: number) => Promise<void>;
+
+export class DbNotConfiguredError extends Error {}
 
 /**
- * 서버와 DB 가 응답하는지 확인한다(사무실 서버·컨테이너 건강 검사용).
+ * 건강 검사 전용 MySQL 연결을 매번 새로 열고, 끝나면(성공·실패·시간 초과 모두) 바로 끊는다.
+ * 앱의 연결 풀을 쓰지 않으므로 DB 가 멈춰도 풀에 질의가 쌓이지 않는다.
+ */
+export const mysqlProbe: HealthProbe = async timeoutMs => {
+  const url = process.env.DATABASE_URL;
+  if (!url) throw new DbNotConfiguredError();
+  let conn: mysql.Connection | undefined;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const work = (async () => {
+    conn = await mysql.createConnection({
+      uri: url,
+      connectTimeout: timeoutMs,
+    });
+    await conn.query({ sql: "SELECT 1", timeout: timeoutMs });
+  })();
+  // 시간 초과 뒤에 늦게 열린 연결도 닫는다
+  work.then(
+    () => conn?.destroy(),
+    () => conn?.destroy()
+  );
+  try {
+    await Promise.race([
+      work,
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error("timeout")), timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+    conn?.destroy();
+  }
+};
+
+/**
+ * 같은 시각에 DB 검사는 하나만 한다. 검사 중에 들어온 요청은 그 결과를 함께 기다린다
+ * (정상인데 겹쳤다고 503 이 되지 않게). 검사는 제한 시간 안에 반드시 끝나므로 잠김이 남지 않는다.
  * 오류 내용은 밖으로 내보내지 않는다.
  */
-export async function checkHealth(
-  deps: HealthDeps = { getDb: getDb as HealthDeps["getDb"] }
-): Promise<HealthResult> {
-  const db = await deps.getDb();
-  if (!db) return { status: 503, body: { ok: false, db: "not_configured" } };
-  try {
-    await withTimeout(db.execute(sql`select 1`), deps.timeoutMs ?? 3000);
-    return { status: 200, body: { ok: true, db: "ok" } };
-  } catch {
-    return { status: 503, body: { ok: false, db: "error" } };
-  }
-}
+export function createHealthChecker(opts?: {
+  probe?: HealthProbe;
+  timeoutMs?: number;
+}) {
+  const probe = opts?.probe ?? mysqlProbe;
+  const timeoutMs = opts?.timeoutMs ?? 3000;
+  let current: Promise<HealthResult> | null = null;
 
-/**
- * 같은 시각에 DB 질의는 하나만 보낸다. 앞 질의가 아직 안 끝났으면(DB 가 멈춘 경우 등)
- * 새 질의를 보내지 않고 바로 503 을 돌려줘, 건강 검사가 연결 풀을 쌓아 막지 않게 한다.
- */
-export function createHealthChecker(deps?: HealthDeps) {
-  let busy = false;
-  const loadDb = deps?.getDb ?? (getDb as HealthDeps["getDb"]);
-  return async (): Promise<HealthResult> => {
-    if (busy) return { status: 503, body: { ok: false, db: "error" } };
-    busy = true;
-    let db: HealthDb | null;
+  const run = async (): Promise<HealthResult> => {
     try {
-      db = await loadDb();
-    } catch {
-      busy = false;
-      return { status: 503, body: { ok: false, db: "error" } };
-    }
-    if (!db) {
-      busy = false;
-      return { status: 503, body: { ok: false, db: "not_configured" } };
-    }
-    let query: Promise<unknown>;
-    try {
-      query = Promise.resolve(db.execute(sql`select 1`));
-    } catch {
-      busy = false;
-      return { status: 503, body: { ok: false, db: "error" } };
-    }
-    // 질의가 실제로 끝날 때(성공·실패·늦은 응답 모두) 비로소 다음 질의를 허용
-    query.then(
-      () => {
-        busy = false;
-      },
-      () => {
-        busy = false;
+      await probe(timeoutMs);
+      return { status: 200, body: { ok: true, db: "ok" } };
+    } catch (error) {
+      if (error instanceof DbNotConfiguredError) {
+        return { status: 503, body: { ok: false, db: "not_configured" } };
       }
-    );
-    return checkHealth({
-      getDb: async () => ({ execute: () => query }),
-      timeoutMs: deps?.timeoutMs,
-    });
+      return { status: 503, body: { ok: false, db: "error" } };
+    }
+  };
+
+  return (): Promise<HealthResult> => {
+    if (!current) {
+      current = run().finally(() => {
+        current = null;
+      });
+    }
+    return current;
   };
 }
 
-export function registerHealthRoute(app: Express, deps?: HealthDeps) {
-  const check = createHealthChecker(deps);
+export function registerHealthRoute(
+  app: Express,
+  opts?: Parameters<typeof createHealthChecker>[0]
+) {
+  const check = createHealthChecker(opts);
   app.get("/api/health", async (_req, res) => {
     const result = await check();
     res
