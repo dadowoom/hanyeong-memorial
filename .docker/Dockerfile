@@ -29,7 +29,8 @@ COPY --from=build /app/dist ./dist
 # 시험 DB 표 만들기용(drizzle-kit migrate): docker compose run --rm app node_modules/.bin/drizzle-kit migrate
 COPY --from=build /app/drizzle ./drizzle
 COPY --from=build /app/drizzle.config.ts ./drizzle.config.ts
-RUN mkdir -p /data/uploads && chown 10001:10001 /data/uploads
+# 저장소를 root·umask 027 로 받으면 파일이 640 이라 실행 사용자(10001)가 못 읽는다 → 읽기 권한을 넓혀 둔다(쓰기는 안 줌)
+RUN chmod -R a+rX /app/package.json /app/dist /app/drizzle /app/drizzle.config.ts  && mkdir -p /data/uploads && chown 10001:10001 /data/uploads
 USER 10001:10001
 EXPOSE 3000
 CMD ["node", "dist/index.js"]
