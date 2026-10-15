@@ -1,5 +1,5 @@
 import type { Express } from "express";
-import mysql from "mysql2/promise";
+import mysql from "mysql2";
 
 export type HealthResult = {
   status: 200 | 503;
@@ -13,36 +13,43 @@ export class DbNotConfiguredError extends Error {}
 
 /**
  * 건강 검사 전용 MySQL 연결을 매번 새로 열고, 끝나면(성공·실패·시간 초과 모두) 바로 끊는다.
- * 앱의 연결 풀을 쓰지 않으므로 DB 가 멈춰도 풀에 질의가 쌓이지 않는다.
+ * 연결 객체를 접속 시작과 동시에 잡아 두므로 접속·인증·질의 어느 단계에서 멈춰도
+ * 제한 시간이 되면 소켓까지 강제로 닫는다. 앱의 연결 풀은 쓰지 않는다.
  */
-export const mysqlProbe: HealthProbe = async timeoutMs => {
+export const mysqlProbe: HealthProbe = timeoutMs => {
   const url = process.env.DATABASE_URL;
-  if (!url) throw new DbNotConfiguredError();
-  let conn: mysql.Connection | undefined;
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  const work = (async () => {
-    conn = await mysql.createConnection({
+  if (!url) return Promise.reject(new DbNotConfiguredError());
+  return new Promise<void>((resolve, reject) => {
+    const conn = mysql.createConnection({
       uri: url,
       connectTimeout: timeoutMs,
     });
-    await conn.query({ sql: "SELECT 1", timeout: timeoutMs });
-  })();
-  // 시간 초과 뒤에 늦게 열린 연결도 닫는다
-  work.then(
-    () => conn?.destroy(),
-    () => conn?.destroy()
-  );
-  try {
-    await Promise.race([
-      work,
-      new Promise<never>((_, reject) => {
-        timer = setTimeout(() => reject(new Error("timeout")), timeoutMs);
-      }),
-    ]);
-  } finally {
-    if (timer) clearTimeout(timer);
-    conn?.destroy();
-  }
+    let settled = false;
+    const close = () => {
+      try {
+        conn.destroy();
+      } catch {
+        /* 이미 닫힘 */
+      }
+      // destroy() 는 쓰기 쪽만 닫을 수 있어 실제 소켓도 강제로 닫는다
+      const stream = (conn as unknown as { stream?: { destroy?: () => void } })
+        .stream;
+      stream?.destroy?.();
+    };
+    const finish = (error?: unknown) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      close();
+      if (error) reject(error);
+      else resolve();
+    };
+    const timer = setTimeout(() => finish(new Error("timeout")), timeoutMs);
+    conn.on("error", error => finish(error));
+    conn.query({ sql: "SELECT 1", timeout: timeoutMs }, error =>
+      finish(error ?? undefined)
+    );
+  });
 };
 
 /**

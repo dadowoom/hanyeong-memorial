@@ -83,17 +83,43 @@ describe("mysqlProbe", () => {
     await expect(mysqlProbe(200)).rejects.toBeInstanceOf(DbNotConfiguredError);
   });
 
-  it("DB 가 연결만 받고 아무 응답도 안 해도 제한 시간 안에 끝난다", async () => {
-    server = net.createServer(() => {
-      /* 연결을 받고 아무것도 보내지 않음(멈춘 DB 흉내) */
+  // 멈춘 DB 흉내: onSocket 이 연결마다 할 일. 서버 쪽에서 소켓이 닫혔는지 센다
+  async function stalledDb(onSocket: (socket: net.Socket) => void) {
+    let open = 0;
+    server = net.createServer(socket => {
+      open += 1;
+      socket.on("close", () => (open -= 1));
+      socket.on("error", () => {});
+      onSocket(socket);
     });
     await new Promise<void>(resolve =>
       server!.listen(0, "127.0.0.1", () => resolve())
     );
     const port = (server.address() as net.AddressInfo).port;
     process.env.DATABASE_URL = `mysql://u:p@127.0.0.1:${port}/db`;
+    return () => open;
+  }
+
+  it("DB 가 연결만 받고 아무 응답도 안 해도 제한 시간 안에 끝나고 소켓이 닫힌다", async () => {
+    const openCount = await stalledDb(() => {});
     const started = Date.now();
     await expect(mysqlProbe(200)).rejects.toBeTruthy();
     expect(Date.now() - started).toBeLessThan(1500);
+    await new Promise(resolve => setTimeout(resolve, 200));
+    expect(openCount()).toBe(0);
+  });
+
+  it("첫 응답 일부만 보내고 멈춰도(인증 단계) 제한 시간에 소켓까지 닫힌다", async () => {
+    // 패킷 머리(길이 10)만 보내고 본문은 안 보냄 → 드라이버의 접속 제한 시간이 풀린 뒤 멈춘 상태
+    const openCount = await stalledDb(socket => {
+      socket.write(Buffer.from([10, 0, 0, 0]));
+    });
+    for (let i = 0; i < 3; i++) {
+      const started = Date.now();
+      await expect(mysqlProbe(200)).rejects.toBeTruthy();
+      expect(Date.now() - started).toBeLessThan(1500);
+    }
+    await new Promise(resolve => setTimeout(resolve, 200));
+    expect(openCount()).toBe(0);
   });
 });
