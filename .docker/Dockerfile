@@ -1,10 +1,11 @@
 # 사무실 서버(office-server) 시험 실행용 이미지 — 운영(pm2) 배포 방식은 바꾸지 않는다.
 # 빌드: 서버의 site 도구가 `docker compose build` 로 만든다(context = 저장소 루트, 파일 = .docker/Dockerfile).
 # 검사 순서는 docs/OPERATIONS.md 와 같다: pnpm install --frozen-lockfile → pnpm build
+# 베이스는 운영(Ubuntu, glibc)과 같은 계열인 debian bookworm-slim (설계서 §3.3)
 ARG NODE_VERSION=22
 
 # ---------- 1단계: 빌드 ----------
-FROM node:${NODE_VERSION}-alpine AS build
+FROM node:${NODE_VERSION}-bookworm-slim AS build
 WORKDIR /app
 ENV CI=true
 RUN corepack enable
@@ -17,7 +18,7 @@ COPY . .
 RUN pnpm run build
 
 # ---------- 2단계: 실행 ----------
-FROM node:${NODE_VERSION}-alpine AS run
+FROM node:${NODE_VERSION}-bookworm-slim AS run
 WORKDIR /app
 ENV NODE_ENV=production \
     PORT=3000 \
