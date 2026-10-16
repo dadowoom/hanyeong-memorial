@@ -1,0 +1,10 @@
+# .docker/Dockerfile 전용 빌드 제외 목록(BuildKit 이 Dockerfile 옆의 이 파일을 쓴다)
+.git
+**/node_modules
+dist
+.env
+.env.*
+uploads
+.manus-logs
+*.log
+.DS_Store
